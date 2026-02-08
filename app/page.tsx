@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Menu, X, Home, TrendingUp, Users, Settings, Bell } from "lucide-react";
+import { Menu, X, Home as HomeIcon, TrendingUp, Users, Settings, Bell } from "lucide-react";
 import { CommunityFeed } from "@/components/community-feed";
 import { Leaderboard } from "@/components/leaderboard";
 import { ChatSidebar } from "@/components/chat-sidebar";
@@ -49,7 +49,7 @@ export default function Home() {
 
         <nav className="flex-1 p-4 space-y-2">
           <NavButton
-            icon={<Home className="h-5 w-5" />}
+            icon={<HomeIcon className="h-5 w-5" />}
             label="Feed"
             active={activeTab === "feed"}
             onClick={() => setActiveTab("feed")}
@@ -112,7 +112,7 @@ export default function Home() {
             className="border-t border-slate-800 p-4 space-y-2"
           >
             <NavButton
-              icon={<Home className="h-5 w-5" />}
+              icon={<HomeIcon className="h-5 w-5" />}
               label="Feed"
               active={activeTab === "feed"}
               onClick={() => {
