@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   User,
@@ -9,6 +10,7 @@ import {
   DollarSign,
   Target,
   CheckCircle2,
+  ChevronDown,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -16,15 +18,19 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { LevelBadge, XPProgressBar } from "@/components/ui/level-badge";
 import { Tooltip } from "@/components/ui/tooltip";
-import { MOCK_USERS, MOCK_POSTS, TRADING_LEVELS, MOCK_TRADE_HISTORY } from "@/lib/constants";
+import { MOCK_USERS, MOCK_POSTS, TRADING_LEVELS, MOCK_TRADE_HISTORY, MOCK_TRADING_ACCOUNTS } from "@/lib/constants";
 import { formatNumber, formatPercentage, getRelativeTime } from "@/lib/utils";
-import type { TradeHistory } from "@/lib/constants";
+import type { TradeHistory, TradingAccount } from "@/lib/constants";
 
 // Using the first user as the profile user
 const profileUser = MOCK_USERS[0];
 const userPosts = MOCK_POSTS.filter((post) => post.user.id === profileUser.id);
 
 export function UserProfile() {
+  const [selectedAccount, setSelectedAccount] = useState<TradingAccount>(
+    MOCK_TRADING_ACCOUNTS[0]
+  );
+
   return (
     <div className="space-y-6">
       {/* Profile Card */}
@@ -177,10 +183,16 @@ export function UserProfile() {
       {/* Trading History */}
       <Card className="glass-card border-slate-800">
         <CardHeader>
-          <CardTitle className="text-slate-100 flex items-center gap-2">
-            <Calendar className="w-5 h-5 text-success" />
-            Trading History
-          </CardTitle>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <CardTitle className="text-slate-100 flex items-center gap-2">
+              <Calendar className="w-5 h-5 text-success" />
+              Trading History
+            </CardTitle>
+            <AccountSelector
+              selectedAccount={selectedAccount}
+              onSelectAccount={setSelectedAccount}
+            />
+          </div>
         </CardHeader>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
@@ -197,7 +209,9 @@ export function UserProfile() {
                 </tr>
               </thead>
               <tbody>
-                {MOCK_TRADE_HISTORY.map((trade, index) => (
+                {MOCK_TRADE_HISTORY.filter(
+                  (trade) => trade.accountId === selectedAccount.id
+                ).map((trade, index) => (
                   <motion.tr
                     key={trade.id}
                     initial={{ opacity: 0, x: -20 }}
@@ -304,5 +318,78 @@ function StatCard({
         <p className="text-xs text-slate-500">{subtext}</p>
       </CardContent>
     </Card>
+  );
+}
+
+function AccountSelector({
+  selectedAccount,
+  onSelectAccount,
+}: {
+  selectedAccount: TradingAccount;
+  onSelectAccount: (account: TradingAccount) => void;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-2 px-4 py-2 rounded-lg glass-card-hover border border-slate-700 hover:border-slate-600 transition-all"
+      >
+        <div className="text-left">
+          <p className="text-sm font-semibold text-slate-100">
+            {selectedAccount.name}
+          </p>
+          <p className="text-xs text-slate-400">{selectedAccount.accountNumber}</p>
+        </div>
+        <ChevronDown
+          className={`w-4 h-4 text-slate-400 transition-transform ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+
+      {isOpen && (
+        <>
+          <div
+            className="fixed inset-0 z-40"
+            onClick={() => setIsOpen(false)}
+          />
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="absolute right-0 top-full mt-2 w-64 glass-card border border-slate-700 rounded-lg shadow-xl z-50 overflow-hidden"
+          >
+            {MOCK_TRADING_ACCOUNTS.map((account) => (
+              <button
+                key={account.id}
+                onClick={() => {
+                  onSelectAccount(account);
+                  setIsOpen(false);
+                }}
+                className={`w-full px-4 py-3 text-left hover:bg-slate-800/50 transition-colors border-b border-slate-800/50 last:border-0 ${
+                  selectedAccount.id === account.id ? "bg-slate-800/30" : ""
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <p className="text-sm font-semibold text-slate-100">
+                    {account.name}
+                  </p>
+                  {selectedAccount.id === account.id && (
+                    <CheckCircle2 className="w-4 h-4 text-success" />
+                  )}
+                </div>
+                <p className="text-xs text-slate-400 mb-1">
+                  {account.accountNumber} • {account.type}
+                </p>
+                <p className="text-xs font-semibold text-success">
+                  {formatNumber(account.balance)}
+                </p>
+              </button>
+            ))}
+          </motion.div>
+        </>
+      )}
+    </div>
   );
 }

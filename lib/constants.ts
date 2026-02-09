@@ -25,8 +25,17 @@ export type User = {
   level: TradingLevel;
 };
 
+export type TradingAccount = {
+  id: string;
+  name: string;
+  balance: number;
+  accountNumber: string;
+  type: string;
+};
+
 export type TradeHistory = {
   id: string;
+  accountId: string;
   symbol: string;
   time: Date;
   type: "buy" | "sell";
@@ -480,10 +489,36 @@ export const MOCK_CHANNELS: Channel[] = [
   },
 ];
 
+// Mock Trading Accounts
+export const MOCK_TRADING_ACCOUNTS: TradingAccount[] = [
+  {
+    id: "acc1",
+    name: "Main Account",
+    balance: 125680.50,
+    accountNumber: "#100345",
+    type: "Funded - $100k",
+  },
+  {
+    id: "acc2",
+    name: "Challenge Account",
+    balance: 58240.75,
+    accountNumber: "#100892",
+    type: "Evaluation - $50k",
+  },
+  {
+    id: "acc3",
+    name: "Swing Trading",
+    balance: 203450.20,
+    accountNumber: "#101247",
+    type: "Funded - $200k",
+  },
+];
+
 // Mock Trading History
 export const MOCK_TRADE_HISTORY: TradeHistory[] = [
   {
     id: "1",
+    accountId: "acc1",
     symbol: "XAU/USD",
     time: new Date(Date.now() - 2 * 60 * 60 * 1000),
     type: "buy",
@@ -494,6 +529,7 @@ export const MOCK_TRADE_HISTORY: TradeHistory[] = [
   },
   {
     id: "2",
+    accountId: "acc1",
     symbol: "EUR/USD",
     time: new Date(Date.now() - 5 * 60 * 60 * 1000),
     type: "sell",
@@ -504,6 +540,7 @@ export const MOCK_TRADE_HISTORY: TradeHistory[] = [
   },
   {
     id: "3",
+    accountId: "acc1",
     symbol: "NAS100",
     time: new Date(Date.now() - 8 * 60 * 60 * 1000),
     type: "buy",
@@ -514,6 +551,7 @@ export const MOCK_TRADE_HISTORY: TradeHistory[] = [
   },
   {
     id: "4",
+    accountId: "acc2",
     symbol: "XAU/USD",
     time: new Date(Date.now() - 24 * 60 * 60 * 1000),
     type: "buy",
@@ -524,6 +562,7 @@ export const MOCK_TRADE_HISTORY: TradeHistory[] = [
   },
   {
     id: "5",
+    accountId: "acc2",
     symbol: "GBP/USD",
     time: new Date(Date.now() - 36 * 60 * 60 * 1000),
     type: "sell",
@@ -534,6 +573,7 @@ export const MOCK_TRADE_HISTORY: TradeHistory[] = [
   },
   {
     id: "6",
+    accountId: "acc2",
     symbol: "BTC/USD",
     time: new Date(Date.now() - 48 * 60 * 60 * 1000),
     type: "buy",
@@ -544,6 +584,7 @@ export const MOCK_TRADE_HISTORY: TradeHistory[] = [
   },
   {
     id: "7",
+    accountId: "acc3",
     symbol: "US30",
     time: new Date(Date.now() - 60 * 60 * 60 * 1000),
     type: "sell",
@@ -554,6 +595,7 @@ export const MOCK_TRADE_HISTORY: TradeHistory[] = [
   },
   {
     id: "8",
+    accountId: "acc3",
     symbol: "EUR/JPY",
     time: new Date(Date.now() - 72 * 60 * 60 * 1000),
     type: "buy",
