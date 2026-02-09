@@ -125,7 +125,7 @@ function PostCard({ post, onLike }: { post: Post; onLike: () => void }) {
   const [showComments, setShowComments] = useState(false);
 
   return (
-    <Card className="glass-card border-slate-800 overflow-hidden">
+    <Card className="glass-card border-slate-800 overflow-visible">
       {/* Post Header */}
       <div className="p-6">
         <div className="flex items-start justify-between mb-4">
