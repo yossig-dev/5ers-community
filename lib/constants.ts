@@ -192,8 +192,8 @@ export const MOCK_USERS: User[] = [
     avatar: "👑",
     badges: [BADGES.contest1st, BADGES.funded, BADGES.club100k],
     verified: true,
-    xp: 16500,
-    level: getLevelByXP(16500),
+    xp: 8000,
+    level: getLevelByXP(8000),
   },
   {
     id: "2",
