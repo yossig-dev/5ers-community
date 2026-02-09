@@ -72,9 +72,6 @@ export function UserProfile() {
               <Button variant="outline" className="border-slate-700">
                 Edit Profile
               </Button>
-              <Button className="bg-success hover:bg-success/90 text-slate-950">
-                Follow
-              </Button>
             </div>
           </div>
         </CardContent>
