@@ -25,6 +25,17 @@ export type User = {
   level: TradingLevel;
 };
 
+export type TradeHistory = {
+  id: string;
+  symbol: string;
+  time: Date;
+  type: "buy" | "sell";
+  volume: number;
+  priceIn: number;
+  priceOut: number;
+  profit: number;
+};
+
 export type ChartData = {
   label: string;
   value: number;
@@ -466,5 +477,89 @@ export const MOCK_CHANNELS: Channel[] = [
     name: "Strategies",
     icon: "📊",
     unread: 2,
+  },
+];
+
+// Mock Trading History
+export const MOCK_TRADE_HISTORY: TradeHistory[] = [
+  {
+    id: "1",
+    symbol: "XAU/USD",
+    time: new Date(Date.now() - 2 * 60 * 60 * 1000),
+    type: "buy",
+    volume: 2.5,
+    priceIn: 2048.50,
+    priceOut: 2065.20,
+    profit: 4175,
+  },
+  {
+    id: "2",
+    symbol: "EUR/USD",
+    time: new Date(Date.now() - 5 * 60 * 60 * 1000),
+    type: "sell",
+    volume: 5.0,
+    priceIn: 1.0945,
+    priceOut: 1.0920,
+    profit: 1250,
+  },
+  {
+    id: "3",
+    symbol: "NAS100",
+    time: new Date(Date.now() - 8 * 60 * 60 * 1000),
+    type: "buy",
+    volume: 1.0,
+    priceIn: 16240.0,
+    priceOut: 16385.0,
+    profit: 1450,
+  },
+  {
+    id: "4",
+    symbol: "XAU/USD",
+    time: new Date(Date.now() - 24 * 60 * 60 * 1000),
+    type: "buy",
+    volume: 1.5,
+    priceIn: 2052.00,
+    priceOut: 2045.80,
+    profit: -930,
+  },
+  {
+    id: "5",
+    symbol: "GBP/USD",
+    time: new Date(Date.now() - 36 * 60 * 60 * 1000),
+    type: "sell",
+    volume: 3.0,
+    priceIn: 1.2650,
+    priceOut: 1.2615,
+    profit: 1050,
+  },
+  {
+    id: "6",
+    symbol: "BTC/USD",
+    time: new Date(Date.now() - 48 * 60 * 60 * 1000),
+    type: "buy",
+    volume: 0.5,
+    priceIn: 42800.0,
+    priceOut: 44200.0,
+    profit: 700,
+  },
+  {
+    id: "7",
+    symbol: "US30",
+    time: new Date(Date.now() - 60 * 60 * 60 * 1000),
+    type: "sell",
+    volume: 2.0,
+    priceIn: 38450.0,
+    priceOut: 38320.0,
+    profit: 2600,
+  },
+  {
+    id: "8",
+    symbol: "EUR/JPY",
+    time: new Date(Date.now() - 72 * 60 * 60 * 1000),
+    type: "buy",
+    volume: 4.0,
+    priceIn: 162.30,
+    priceOut: 162.95,
+    profit: 2600,
   },
 ];

@@ -16,8 +16,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { LevelBadge, XPProgressBar } from "@/components/ui/level-badge";
 import { Tooltip } from "@/components/ui/tooltip";
-import { MOCK_USERS, MOCK_POSTS, TRADING_LEVELS } from "@/lib/constants";
+import { MOCK_USERS, MOCK_POSTS, TRADING_LEVELS, MOCK_TRADE_HISTORY } from "@/lib/constants";
 import { formatNumber, formatPercentage, getRelativeTime } from "@/lib/utils";
+import type { TradeHistory } from "@/lib/constants";
 
 // Using the first user as the profile user
 const profileUser = MOCK_USERS[0];
@@ -173,41 +174,108 @@ export function UserProfile() {
         </CardContent>
       </Card>
 
-      {/* Recent Activity */}
+      {/* Trading History */}
       <Card className="glass-card border-slate-800">
         <CardHeader>
           <CardTitle className="text-slate-100 flex items-center gap-2">
             <Calendar className="w-5 h-5 text-success" />
-            Recent Activity
+            Trading History
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          {userPosts.map((post, index) => (
-            <motion.div
-              key={post.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="glass-card rounded-lg p-4 hover:bg-slate-800/30 transition-colors"
-            >
-              <div className="flex items-start justify-between mb-2">
-                <p className="text-sm text-slate-500">
-                  {getRelativeTime(post.timestamp)}
-                </p>
-                <Badge variant="outline" className="text-xs">
-                  Post
-                </Badge>
-              </div>
-              <p className="text-slate-300 text-sm leading-relaxed">
-                {post.content}
-              </p>
-              <div className="flex gap-4 mt-3 text-xs text-slate-400">
-                <span>{post.likes} likes</span>
-                <span>{post.comments} comments</span>
-                <span>{post.shares} shares</span>
-              </div>
-            </motion.div>
-          ))}
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="border-b border-slate-800">
+                <tr className="text-slate-400 text-xs">
+                  <th className="px-4 py-3 text-left font-medium">Symbol</th>
+                  <th className="px-4 py-3 text-left font-medium">Time</th>
+                  <th className="px-4 py-3 text-left font-medium">Type</th>
+                  <th className="px-4 py-3 text-right font-medium">Volume</th>
+                  <th className="px-4 py-3 text-right font-medium">Price In</th>
+                  <th className="px-4 py-3 text-right font-medium">Price Out</th>
+                  <th className="px-4 py-3 text-right font-medium">Profit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {MOCK_TRADE_HISTORY.map((trade, index) => (
+                  <motion.tr
+                    key={trade.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    className="border-b border-slate-800/50 hover:bg-slate-800/30 transition-colors"
+                  >
+                    {/* Symbol */}
+                    <td className="px-4 py-3">
+                      <span className="font-semibold text-slate-100">
+                        {trade.symbol}
+                      </span>
+                    </td>
+
+                    {/* Time */}
+                    <td className="px-4 py-3">
+                      <span className="text-sm text-slate-400">
+                        {getRelativeTime(trade.time)}
+                      </span>
+                    </td>
+
+                    {/* Type */}
+                    <td className="px-4 py-3">
+                      <Badge
+                        variant="outline"
+                        className={`${
+                          trade.type === "buy"
+                            ? "text-success border-success/30 bg-success/10"
+                            : "text-red-400 border-red-400/30 bg-red-400/10"
+                        } text-xs uppercase`}
+                      >
+                        {trade.type}
+                      </Badge>
+                    </td>
+
+                    {/* Volume */}
+                    <td className="px-4 py-3 text-right">
+                      <span className="text-sm text-slate-300">
+                        {trade.volume.toFixed(2)}
+                      </span>
+                    </td>
+
+                    {/* Price In */}
+                    <td className="px-4 py-3 text-right">
+                      <span className="text-sm text-slate-300">
+                        ${trade.priceIn.toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </span>
+                    </td>
+
+                    {/* Price Out */}
+                    <td className="px-4 py-3 text-right">
+                      <span className="text-sm text-slate-300">
+                        ${trade.priceOut.toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </span>
+                    </td>
+
+                    {/* Profit */}
+                    <td className="px-4 py-3 text-right">
+                      <span
+                        className={`text-sm font-semibold ${
+                          trade.profit >= 0 ? "text-success" : "text-red-500"
+                        }`}
+                      >
+                        {trade.profit >= 0 ? "+" : ""}
+                        {formatNumber(trade.profit)}
+                      </span>
+                    </td>
+                  </motion.tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </CardContent>
       </Card>
     </div>
