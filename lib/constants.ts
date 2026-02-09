@@ -35,6 +35,7 @@ export type TradingAccount = {
   currentStep: number;
   totalSteps: number;
   status: "Step 1" | "Step 2" | "Step 3" | "Funded";
+  accountStatus: "active" | "daily pause" | "terminated";
 };
 
 export type TradeHistory = {
@@ -505,6 +506,7 @@ export const MOCK_TRADING_ACCOUNTS: TradingAccount[] = [
     currentStep: 3,
     totalSteps: 3,
     status: "Funded",
+    accountStatus: "active",
   },
   {
     id: "acc2",
@@ -516,6 +518,7 @@ export const MOCK_TRADING_ACCOUNTS: TradingAccount[] = [
     currentStep: 2,
     totalSteps: 2,
     status: "Step 2",
+    accountStatus: "daily pause",
   },
   {
     id: "acc3",
@@ -527,6 +530,7 @@ export const MOCK_TRADING_ACCOUNTS: TradingAccount[] = [
     currentStep: 1,
     totalSteps: 1,
     status: "Step 1",
+    accountStatus: "terminated",
   },
   {
     id: "acc4",
@@ -538,119 +542,74 @@ export const MOCK_TRADING_ACCOUNTS: TradingAccount[] = [
     currentStep: 3,
     totalSteps: 3,
     status: "Funded",
+    accountStatus: "active",
   },
 ];
 
+// Helper function to generate mock trades
+function generateMockTrades(): TradeHistory[] {
+  const symbols = ["XAU/USD", "EUR/USD", "GBP/USD", "USD/JPY", "AUD/USD", "NAS100", "US30", "GER40", "BTC/USD", "ETH/USD", "EUR/JPY", "GBP/JPY", "USD/CAD", "NZD/USD", "EUR/GBP"];
+  const accounts = ["acc1", "acc2", "acc3", "acc4"];
+  const trades: TradeHistory[] = [];
+  let tradeId = 1;
+  
+  accounts.forEach((accountId, accIndex) => {
+    // Generate 50-60 trades per account
+    const numTrades = 50 + Math.floor(Math.random() * 11);
+    
+    for (let i = 0; i < numTrades; i++) {
+      const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+      const type: "buy" | "sell" = Math.random() > 0.5 ? "buy" : "sell";
+      const volume = Math.random() * 4 + 0.5;
+      const hoursAgo = i * 3 + Math.random() * 2;
+      
+      let priceIn: number, priceOut: number, profit: number;
+      
+      // Generate realistic prices based on symbol
+      if (symbol === "XAU/USD") {
+        priceIn = 2040 + Math.random() * 40;
+        const change = (Math.random() - 0.45) * 30;
+        priceOut = priceIn + change;
+        profit = Math.round((type === "buy" ? change : -change) * volume * 100) / 100;
+      } else if (symbol.includes("USD")) {
+        priceIn = 1.05 + Math.random() * 0.3;
+        const change = (Math.random() - 0.45) * 0.015;
+        priceOut = priceIn + change;
+        profit = Math.round((type === "buy" ? change : -change) * volume * 10000) / 100;
+      } else if (symbol.includes("JPY")) {
+        priceIn = 140 + Math.random() * 50;
+        const change = (Math.random() - 0.45) * 2;
+        priceOut = priceIn + change;
+        profit = Math.round((type === "buy" ? change : -change) * volume * 100) / 100;
+      } else if (symbol.includes("BTC") || symbol.includes("ETH")) {
+        priceIn = symbol === "BTC/USD" ? 42000 + Math.random() * 4000 : 2200 + Math.random() * 400;
+        const change = (Math.random() - 0.45) * (symbol === "BTC/USD" ? 2000 : 150);
+        priceOut = priceIn + change;
+        profit = Math.round((type === "buy" ? change : -change) * volume) / 100;
+      } else {
+        // Indices (NAS100, US30, GER40)
+        priceIn = 16000 + Math.random() * 22000;
+        const change = (Math.random() - 0.45) * 400;
+        priceOut = priceIn + change;
+        profit = Math.round((type === "buy" ? change : -change) * volume * 10) / 100;
+      }
+      
+      trades.push({
+        id: String(tradeId++),
+        accountId,
+        symbol,
+        time: new Date(Date.now() - hoursAgo * 60 * 60 * 1000),
+        type,
+        volume: Math.round(volume * 100) / 100,
+        priceIn: Math.round(priceIn * 100) / 100,
+        priceOut: Math.round(priceOut * 100) / 100,
+        profit: Math.round(profit * 100) / 100,
+      });
+    }
+  });
+  
+  return trades;
+}
+
 // Mock Trading History
-export const MOCK_TRADE_HISTORY: TradeHistory[] = [
-  {
-    id: "1",
-    accountId: "acc1",
-    symbol: "XAU/USD",
-    time: new Date(Date.now() - 2 * 60 * 60 * 1000),
-    type: "buy",
-    volume: 2.5,
-    priceIn: 2048.50,
-    priceOut: 2065.20,
-    profit: 4175,
-  },
-  {
-    id: "2",
-    accountId: "acc1",
-    symbol: "EUR/USD",
-    time: new Date(Date.now() - 5 * 60 * 60 * 1000),
-    type: "sell",
-    volume: 5.0,
-    priceIn: 1.0945,
-    priceOut: 1.0920,
-    profit: 1250,
-  },
-  {
-    id: "3",
-    accountId: "acc1",
-    symbol: "NAS100",
-    time: new Date(Date.now() - 8 * 60 * 60 * 1000),
-    type: "buy",
-    volume: 1.0,
-    priceIn: 16240.0,
-    priceOut: 16385.0,
-    profit: 1450,
-  },
-  {
-    id: "4",
-    accountId: "acc2",
-    symbol: "XAU/USD",
-    time: new Date(Date.now() - 24 * 60 * 60 * 1000),
-    type: "buy",
-    volume: 1.5,
-    priceIn: 2052.00,
-    priceOut: 2045.80,
-    profit: -930,
-  },
-  {
-    id: "5",
-    accountId: "acc2",
-    symbol: "GBP/USD",
-    time: new Date(Date.now() - 36 * 60 * 60 * 1000),
-    type: "sell",
-    volume: 3.0,
-    priceIn: 1.2650,
-    priceOut: 1.2615,
-    profit: 1050,
-  },
-  {
-    id: "6",
-    accountId: "acc2",
-    symbol: "BTC/USD",
-    time: new Date(Date.now() - 48 * 60 * 60 * 1000),
-    type: "buy",
-    volume: 0.5,
-    priceIn: 42800.0,
-    priceOut: 44200.0,
-    profit: 700,
-  },
-  {
-    id: "7",
-    accountId: "acc3",
-    symbol: "US30",
-    time: new Date(Date.now() - 60 * 60 * 60 * 1000),
-    type: "sell",
-    volume: 2.0,
-    priceIn: 38450.0,
-    priceOut: 38320.0,
-    profit: 2600,
-  },
-  {
-    id: "8",
-    accountId: "acc3",
-    symbol: "EUR/JPY",
-    time: new Date(Date.now() - 72 * 60 * 60 * 1000),
-    type: "buy",
-    volume: 4.0,
-    priceIn: 162.30,
-    priceOut: 162.95,
-    profit: 2600,
-  },
-  {
-    id: "9",
-    accountId: "acc4",
-    symbol: "XAU/USD",
-    time: new Date(Date.now() - 12 * 60 * 60 * 1000),
-    type: "buy",
-    volume: 1.0,
-    priceIn: 2055.00,
-    priceOut: 2062.50,
-    profit: 750,
-  },
-  {
-    id: "10",
-    accountId: "acc4",
-    symbol: "GBP/JPY",
-    time: new Date(Date.now() - 30 * 60 * 60 * 1000),
-    type: "sell",
-    volume: 2.5,
-    priceIn: 188.45,
-    priceOut: 187.90,
-    profit: 1375,
-  },
-];
+export const MOCK_TRADE_HISTORY: TradeHistory[] = generateMockTrades();

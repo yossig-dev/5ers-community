@@ -195,9 +195,9 @@ export function UserProfile() {
           </div>
         </CardHeader>
         <CardContent className="p-0">
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto max-h-[600px] overflow-y-auto custom-scrollbar">
             <table className="w-full">
-              <thead className="border-b border-slate-800">
+              <thead className="border-b border-slate-800 sticky top-0 bg-slate-900/95 backdrop-blur-sm z-10">
                 <tr className="text-slate-400 text-xs">
                   <th className="px-4 py-3 text-left font-medium">Symbol</th>
                   <th className="px-4 py-3 text-left font-medium">Time</th>
@@ -337,9 +337,22 @@ function AccountSelector({
         className="flex items-center gap-2 px-4 py-2 rounded-lg glass-card-hover border border-slate-700 hover:border-slate-600 transition-all"
       >
         <div className="text-left">
-          <p className="text-sm font-semibold text-slate-100">
-            {selectedAccount.programType} {selectedAccount.accountSize}
-          </p>
+          <div className="flex items-center gap-2">
+            <p className="text-sm font-semibold text-slate-100">
+              {selectedAccount.programType} {selectedAccount.accountSize}
+            </p>
+            <span
+              className={`px-2 py-0.5 rounded text-[10px] font-semibold uppercase ${
+                selectedAccount.accountStatus === "active"
+                  ? "bg-success/20 text-success"
+                  : selectedAccount.accountStatus === "daily pause"
+                  ? "bg-yellow-500/20 text-yellow-500"
+                  : "bg-red-500/20 text-red-500"
+              }`}
+            >
+              {selectedAccount.accountStatus}
+            </span>
+          </div>
           <p className="text-xs text-slate-400">
             {selectedAccount.accountNumber} • {selectedAccount.status}
           </p>
@@ -374,9 +387,22 @@ function AccountSelector({
                 }`}
               >
                 <div className="flex items-center justify-between mb-1">
-                  <p className="text-sm font-semibold text-slate-100">
-                    {account.programType} {account.accountSize}
-                  </p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm font-semibold text-slate-100">
+                      {account.programType} {account.accountSize}
+                    </p>
+                    <span
+                      className={`px-1.5 py-0.5 rounded text-[9px] font-semibold uppercase ${
+                        account.accountStatus === "active"
+                          ? "bg-success/20 text-success"
+                          : account.accountStatus === "daily pause"
+                          ? "bg-yellow-500/20 text-yellow-500"
+                          : "bg-red-500/20 text-red-500"
+                      }`}
+                    >
+                      {account.accountStatus}
+                    </span>
+                  </div>
                   {selectedAccount.id === account.id && (
                     <CheckCircle2 className="w-4 h-4 text-success" />
                   )}
@@ -386,7 +412,7 @@ function AccountSelector({
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-slate-500">
-                    {account.accountSize} • {account.status}
+                    {account.status}
                   </span>
                   <span className="text-xs font-semibold text-success">
                     {formatNumber(account.balance)}
