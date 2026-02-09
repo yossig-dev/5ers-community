@@ -30,7 +30,11 @@ export type TradingAccount = {
   name: string;
   balance: number;
   accountNumber: string;
-  type: string;
+  programType: "Bootcamp" | "High Stakes" | "Hyper Growth";
+  accountSize: string;
+  currentStep: number;
+  totalSteps: number;
+  status: "Step 1" | "Step 2" | "Step 3" | "Funded";
 };
 
 export type TradeHistory = {
@@ -493,24 +497,47 @@ export const MOCK_CHANNELS: Channel[] = [
 export const MOCK_TRADING_ACCOUNTS: TradingAccount[] = [
   {
     id: "acc1",
-    name: "Main Account",
-    balance: 125680.50,
-    accountNumber: "#100345",
-    type: "Funded - $100k",
+    name: "Bootcamp",
+    balance: 108450.75,
+    accountNumber: "#BC-100345",
+    programType: "Bootcamp",
+    accountSize: "$100k",
+    currentStep: 3,
+    totalSteps: 3,
+    status: "Funded",
   },
   {
     id: "acc2",
-    name: "Challenge Account",
-    balance: 58240.75,
-    accountNumber: "#100892",
-    type: "Evaluation - $50k",
+    name: "High Stakes",
+    balance: 27840.20,
+    accountNumber: "#HS-200892",
+    programType: "High Stakes",
+    accountSize: "$25k",
+    currentStep: 2,
+    totalSteps: 2,
+    status: "Step 2",
   },
   {
     id: "acc3",
-    name: "Swing Trading",
-    balance: 203450.20,
-    accountNumber: "#101247",
-    type: "Funded - $200k",
+    name: "Hyper Growth",
+    balance: 11650.50,
+    accountNumber: "#HG-301247",
+    programType: "Hyper Growth",
+    accountSize: "$10k",
+    currentStep: 1,
+    totalSteps: 1,
+    status: "Step 1",
+  },
+  {
+    id: "acc4",
+    name: "Bootcamp",
+    balance: 27120.30,
+    accountNumber: "#BC-100567",
+    programType: "Bootcamp",
+    accountSize: "$25k",
+    currentStep: 3,
+    totalSteps: 3,
+    status: "Funded",
   },
 ];
 
@@ -603,5 +630,27 @@ export const MOCK_TRADE_HISTORY: TradeHistory[] = [
     priceIn: 162.30,
     priceOut: 162.95,
     profit: 2600,
+  },
+  {
+    id: "9",
+    accountId: "acc4",
+    symbol: "XAU/USD",
+    time: new Date(Date.now() - 12 * 60 * 60 * 1000),
+    type: "buy",
+    volume: 1.0,
+    priceIn: 2055.00,
+    priceOut: 2062.50,
+    profit: 750,
+  },
+  {
+    id: "10",
+    accountId: "acc4",
+    symbol: "GBP/JPY",
+    time: new Date(Date.now() - 30 * 60 * 60 * 1000),
+    type: "sell",
+    volume: 2.5,
+    priceIn: 188.45,
+    priceOut: 187.90,
+    profit: 1375,
   },
 ];

@@ -338,9 +338,11 @@ function AccountSelector({
       >
         <div className="text-left">
           <p className="text-sm font-semibold text-slate-100">
-            {selectedAccount.name}
+            {selectedAccount.programType} {selectedAccount.accountSize}
           </p>
-          <p className="text-xs text-slate-400">{selectedAccount.accountNumber}</p>
+          <p className="text-xs text-slate-400">
+            {selectedAccount.accountNumber} • {selectedAccount.status}
+          </p>
         </div>
         <ChevronDown
           className={`w-4 h-4 text-slate-400 transition-transform ${
@@ -373,18 +375,23 @@ function AccountSelector({
               >
                 <div className="flex items-center justify-between mb-1">
                   <p className="text-sm font-semibold text-slate-100">
-                    {account.name}
+                    {account.programType} {account.accountSize}
                   </p>
                   {selectedAccount.id === account.id && (
                     <CheckCircle2 className="w-4 h-4 text-success" />
                   )}
                 </div>
                 <p className="text-xs text-slate-400 mb-1">
-                  {account.accountNumber} • {account.type}
+                  {account.accountNumber}
                 </p>
-                <p className="text-xs font-semibold text-success">
-                  {formatNumber(account.balance)}
-                </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-slate-500">
+                    {account.accountSize} • {account.status}
+                  </span>
+                  <span className="text-xs font-semibold text-success">
+                    {formatNumber(account.balance)}
+                  </span>
+                </div>
               </button>
             ))}
           </motion.div>
