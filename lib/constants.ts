@@ -138,7 +138,7 @@ export const BADGES: Record<string, Badge> = {
   funded: {
     id: "funded",
     name: "Funded Trader",
-    icon: "🏆",
+    icon: "💲",
     color: "text-yellow-400",
   },
   club100k: {
@@ -165,6 +165,12 @@ export const BADGES: Record<string, Badge> = {
     icon: "🚀",
     color: "text-green-400",
   },
+  contest1st: {
+    id: "contest1st",
+    name: "Contest 1st Place",
+    icon: "🏆",
+    color: "text-yellow-500",
+  },
 };
 
 // Mock Users
@@ -173,7 +179,7 @@ export const MOCK_USERS: User[] = [
     id: "1",
     username: "TradeKing",
     avatar: "👑",
-    badges: [BADGES.funded, BADGES.club100k],
+    badges: [BADGES.contest1st, BADGES.funded, BADGES.club100k],
     verified: true,
     xp: 16500,
     level: getLevelByXP(16500),
@@ -218,7 +224,7 @@ export const MOCK_USERS: User[] = [
     id: "6",
     username: "SwingTrader_99",
     avatar: "🔥",
-    badges: [BADGES.topTrader, BADGES.club100k],
+    badges: [BADGES.contest1st, BADGES.topTrader, BADGES.club100k],
     verified: true,
     xp: 14800,
     level: getLevelByXP(14800),
