@@ -1,8 +1,11 @@
 export type Badge = {
   id: string;
   name: string;
+  description: string;
   icon: string;
   color: string;
+  category: string;
+  requirement: string;
 };
 
 export type TradingLevel = {
@@ -174,40 +177,150 @@ export const BADGES: Record<string, Badge> = {
   funded: {
     id: "funded",
     name: "Funded Trader",
+    description: "Successfully passed the evaluation and received funding",
     icon: "💲",
     color: "text-yellow-400",
+    category: "Milestones",
+    requirement: "Pass any evaluation program",
   },
   club100k: {
     id: "club100k",
     name: "100k Club",
+    description: "Reached $100,000 in account size",
     icon: "💎",
     color: "text-blue-400",
+    category: "Milestones",
+    requirement: "Reach $100k account size",
   },
   topTrader: {
     id: "topTrader",
     name: "Top Trader",
+    description: "Ranked in the top 10 on the leaderboard",
     icon: "⭐",
     color: "text-purple-400",
+    category: "Rankings",
+    requirement: "Reach top 10 on leaderboard",
   },
   goldExpert: {
     id: "goldExpert",
     name: "Gold Expert",
+    description: "Mastered trading Gold (XAU/USD)",
     icon: "🥇",
     color: "text-amber-400",
+    category: "Trading",
+    requirement: "50 profitable Gold trades",
   },
   earlySupporter: {
     id: "earlySupporter",
     name: "Early Supporter",
+    description: "Joined the community in its early days",
     icon: "🚀",
     color: "text-green-400",
+    category: "Community",
+    requirement: "Join before launch",
   },
   contest1st: {
     id: "contest1st",
     name: "Contest 1st Place",
+    description: "Won 1st place in a trading contest",
     icon: "🏆",
     color: "text-yellow-500",
+    category: "Contests",
+    requirement: "Win a trading contest",
+  },
+  winStreak: {
+    id: "winStreak",
+    name: "Win Streak",
+    description: "10 consecutive profitable trades",
+    icon: "🔥",
+    color: "text-orange-500",
+    category: "Trading",
+    requirement: "10 wins in a row",
+  },
+  nightOwl: {
+    id: "nightOwl",
+    name: "Night Owl",
+    description: "Trade successfully during Asian session",
+    icon: "🦉",
+    color: "text-indigo-400",
+    category: "Trading",
+    requirement: "20 profitable Asian session trades",
+  },
+  riskManager: {
+    id: "riskManager",
+    name: "Risk Manager",
+    description: "Maintained strict risk management for 30 days",
+    icon: "🛡️",
+    color: "text-cyan-500",
+    category: "Trading",
+    requirement: "30 days with max 1% risk",
+  },
+  socialButterfly: {
+    id: "socialButterfly",
+    name: "Social Butterfly",
+    description: "Active community member",
+    icon: "🦋",
+    color: "text-pink-400",
+    category: "Community",
+    requirement: "100 comments on posts",
+  },
+  mentor: {
+    id: "mentor",
+    name: "Mentor",
+    description: "Helped other traders succeed",
+    icon: "🎓",
+    color: "text-blue-500",
+    category: "Community",
+    requirement: "10 helpful posts",
+  },
+  profitMachine: {
+    id: "profitMachine",
+    name: "Profit Machine",
+    description: "Achieved 30% monthly return",
+    icon: "💰",
+    color: "text-green-500",
+    category: "Trading",
+    requirement: "30% monthly profit",
+  },
+  forexKing: {
+    id: "forexKing",
+    name: "Forex King",
+    description: "Master of currency trading",
+    icon: "👑",
+    color: "text-purple-500",
+    category: "Trading",
+    requirement: "100 profitable forex trades",
+  },
+  cryptoWhale: {
+    id: "cryptoWhale",
+    name: "Crypto Whale",
+    description: "Expert in cryptocurrency trading",
+    icon: "🐋",
+    color: "text-blue-600",
+    category: "Trading",
+    requirement: "50 profitable crypto trades",
+  },
+  indicesGuru: {
+    id: "indicesGuru",
+    name: "Indices Guru",
+    description: "Mastered trading stock indices",
+    icon: "📊",
+    color: "text-teal-500",
+    category: "Trading",
+    requirement: "50 profitable indices trades",
+  },
+  marathon: {
+    id: "marathon",
+    name: "Marathon Trader",
+    description: "Traded for 90 consecutive days",
+    icon: "🏃",
+    color: "text-red-500",
+    category: "Milestones",
+    requirement: "90 days active trading",
   },
 };
+
+export const ALL_ACHIEVEMENTS = Object.values(BADGES);
 
 // Mock Users
 export const MOCK_USERS: User[] = [

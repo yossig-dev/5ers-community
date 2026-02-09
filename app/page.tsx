@@ -6,10 +6,10 @@ import { Menu, X, Home as HomeIcon, TrendingUp, Users, Settings, Bell } from "lu
 import { CommunityFeed } from "@/components/community-feed";
 import { Leaderboard } from "@/components/leaderboard";
 import { UserProfile } from "@/components/user-profile";
+import { AchievementsPage } from "@/components/achievements-page";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-type TabType = "feed" | "leaderboard" | "profile";
+type TabType = "feed" | "leaderboard" | "profile" | "achievements";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<TabType>("feed");
@@ -153,7 +153,8 @@ export default function Home() {
         >
           {activeTab === "feed" && <CommunityFeed />}
           {activeTab === "leaderboard" && <Leaderboard />}
-          {activeTab === "profile" && <UserProfile />}
+          {activeTab === "profile" && <UserProfile onViewAchievements={() => setActiveTab("achievements")} />}
+          {activeTab === "achievements" && <AchievementsPage onBack={() => setActiveTab("profile")} />}
         </motion.div>
       </main>
     </div>

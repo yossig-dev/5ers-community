@@ -26,7 +26,7 @@ import type { TradeHistory, TradingAccount } from "@/lib/constants";
 const profileUser = MOCK_USERS[0];
 const userPosts = MOCK_POSTS.filter((post) => post.user.id === profileUser.id);
 
-export function UserProfile() {
+export function UserProfile({ onViewAchievements }: { onViewAchievements?: () => void }) {
   const [selectedAccount, setSelectedAccount] = useState<TradingAccount>(
     MOCK_TRADING_ACCOUNTS[0]
   );
@@ -151,6 +151,7 @@ export function UserProfile() {
             <Button
               variant="outline"
               size="sm"
+              onClick={onViewAchievements}
               className="border-slate-700 hover:border-slate-600 text-slate-300 hover:text-slate-100"
             >
               View All
