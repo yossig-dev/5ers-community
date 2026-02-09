@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ALL_ACHIEVEMENTS, MOCK_USERS } from "@/lib/constants";
+import { USER_ACHIEVEMENT_PROGRESS } from "@/lib/achievement-progress";
 import type { Badge as AchievementBadge } from "@/lib/constants";
 
 export function AchievementsPage({ onBack }: { onBack: () => void }) {
@@ -21,11 +22,6 @@ export function AchievementsPage({ onBack }: { onBack: () => void }) {
     name: category,
     achievements: ALL_ACHIEVEMENTS.filter((a) => a.category === category),
   }));
-
-  // Calculate progress
-  const unlockedCount = userAchievements.length;
-  const totalCount = ALL_ACHIEVEMENTS.length;
-  const progressPercent = (unlockedCount / totalCount) * 100;
 
   return (
     <div className="space-y-6">
@@ -53,34 +49,6 @@ export function AchievementsPage({ onBack }: { onBack: () => void }) {
         </div>
       </div>
 
-      {/* Overall Progress */}
-      <Card className="glass-card border-slate-800">
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <p className="text-slate-400 text-sm mb-1">Overall Progress</p>
-              <p className="text-2xl font-bold text-slate-100">
-                {unlockedCount} / {totalCount}
-              </p>
-            </div>
-            <div className="text-right">
-              <p className="text-3xl font-bold text-success">
-                {progressPercent.toFixed(0)}%
-              </p>
-              <p className="text-slate-400 text-sm">Complete</p>
-            </div>
-          </div>
-          <div className="w-full bg-slate-800 rounded-full h-3 overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: `${progressPercent}%` }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="bg-gradient-to-r from-success to-emerald-600 h-full rounded-full"
-            />
-          </div>
-        </CardContent>
-      </Card>
-
       {/* Achievements by Category */}
       {achievementsByCategory.map((category, categoryIndex) => (
         <motion.div
@@ -97,14 +65,18 @@ export function AchievementsPage({ onBack }: { onBack: () => void }) {
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {category.achievements.map((achievement, index) => (
-              <AchievementCard
-                key={achievement.id}
-                achievement={achievement}
-                unlocked={userAchievements.includes(achievement.id)}
-                delay={index * 0.05}
-              />
-            ))}
+            {category.achievements.map((achievement, index) => {
+              const progress = USER_ACHIEVEMENT_PROGRESS[achievement.id];
+              return (
+                <AchievementCard
+                  key={achievement.id}
+                  achievement={achievement}
+                  unlocked={userAchievements.includes(achievement.id)}
+                  progress={progress}
+                  delay={index * 0.05}
+                />
+              );
+            })}
           </div>
         </motion.div>
       ))}
@@ -115,12 +87,17 @@ export function AchievementsPage({ onBack }: { onBack: () => void }) {
 function AchievementCard({
   achievement,
   unlocked,
+  progress,
   delay,
 }: {
   achievement: AchievementBadge;
   unlocked: boolean;
+  progress?: { current: number; required: number };
   delay: number;
 }) {
+  const progressPercent = progress
+    ? (progress.current / progress.required) * 100
+    : 0;
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -166,18 +143,42 @@ function AchievementCard({
                 )}
               </div>
 
-              {/* Requirement */}
-              <div className="flex items-center gap-2 text-xs">
-                <Badge
-                  variant="outline"
-                  className={`${
-                    unlocked
-                      ? "border-success/30 bg-success/10 text-success"
-                      : "border-slate-700 bg-slate-800/50 text-slate-500"
-                  }`}
-                >
-                  {unlocked ? "Unlocked" : achievement.requirement}
-                </Badge>
+              {/* Requirement / Progress */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-xs">
+                  <Badge
+                    variant="outline"
+                    className={`${
+                      unlocked
+                        ? "border-success/30 bg-success/10 text-success"
+                        : "border-slate-700 bg-slate-800/50 text-slate-500"
+                    }`}
+                  >
+                    {unlocked ? "Unlocked" : achievement.requirement}
+                  </Badge>
+                </div>
+
+                {/* Progress Bar for In-Progress Achievements */}
+                {!unlocked && progress && progress.current > 0 && (
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-slate-400">
+                        {progress.current} / {progress.required}
+                      </span>
+                      <span className="text-slate-400 font-semibold">
+                        {progressPercent.toFixed(0)}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${progressPercent}%` }}
+                        transition={{ duration: 0.5, delay: delay + 0.2 }}
+                        className="bg-gradient-to-r from-success to-emerald-600 h-full rounded-full"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
