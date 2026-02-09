@@ -13,6 +13,28 @@ import { formatNumber, formatPercentage } from "@/lib/utils";
 export function Leaderboard() {
   return (
     <div className="space-y-6">
+      {/* Stats Overview */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <StatCard
+          icon={<TrendingUp className="w-6 h-6 text-success" />}
+          label="Avg Gain"
+          value="+32.8%"
+          trend="+5.2%"
+        />
+        <StatCard
+          icon={<DollarSign className="w-6 h-6 text-success" />}
+          label="Total Profit"
+          value="$272k"
+          trend="+12.4%"
+        />
+        <StatCard
+          icon={<Award className="w-6 h-6 text-yellow-400" />}
+          label="Active Traders"
+          value="1,234"
+          trend="+89"
+        />
+      </div>
+
       {/* Leaderboard Table */}
       <Card className="glass-card border-slate-800">
         <CardContent className="p-0">
