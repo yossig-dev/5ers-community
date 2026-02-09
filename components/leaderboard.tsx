@@ -50,9 +50,6 @@ export function Leaderboard() {
 
       {/* Leaderboard Table */}
       <Card className="glass-card border-slate-800">
-        <CardHeader>
-          <CardTitle className="text-slate-100">Rankings</CardTitle>
-        </CardHeader>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
             <table className="w-full">

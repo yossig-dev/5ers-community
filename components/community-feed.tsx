@@ -44,19 +44,6 @@ export function CommunityFeed() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-3xl font-bold text-slate-100">Community Feed</h2>
-          <p className="text-slate-400 mt-1">
-            Stay updated with the latest from our trading community
-          </p>
-        </div>
-        <Button className="bg-success hover:bg-success/90 text-slate-950 font-semibold">
-          Create Post
-        </Button>
-      </div>
-
       {/* Topic Tabs */}
       <div className="flex gap-2 flex-wrap">
         <FilterButton 
