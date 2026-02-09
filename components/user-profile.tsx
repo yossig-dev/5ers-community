@@ -143,10 +143,19 @@ export function UserProfile() {
       {/* Achievements */}
       <Card className="glass-card border-slate-800">
         <CardHeader>
-          <CardTitle className="text-slate-100 flex items-center gap-2">
-            <Award className="w-5 h-5 text-success" />
-            All Achievements
-          </CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-slate-100 flex items-center gap-2">
+              <Award className="w-5 h-5 text-success" />
+              Your Achievements
+            </CardTitle>
+            <Button
+              variant="outline"
+              size="sm"
+              className="border-slate-700 hover:border-slate-600 text-slate-300 hover:text-slate-100"
+            >
+              View All
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
