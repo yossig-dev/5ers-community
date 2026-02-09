@@ -62,7 +62,7 @@ export function UserProfile() {
                     </span>
                   </Tooltip>
                 ))}
-                <LevelBadge level={profileUser.level} showIcon={true} />
+                <LevelBadge level={profileUser.level} className="text-xl" />
               </div>
               <div className="flex gap-6 text-sm">
                 <div>

@@ -131,7 +131,7 @@ function PostCard({ post, onLike }: { post: Post; onLike: () => void }) {
                     </span>
                   </Tooltip>
                 ))}
-                <LevelBadge level={post.user.level} showIcon={true} />
+                <LevelBadge level={post.user.level} />
               </div>
               <p className="text-xs text-slate-500 mt-1">
                 {getRelativeTime(post.timestamp)}

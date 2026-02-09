@@ -113,7 +113,7 @@ export function Leaderboard() {
                             ))}
                           </div>
                           <div className="flex gap-1 mt-1 items-center">
-                            <LevelBadge level={entry.user.level} showIcon={true} />
+                            <LevelBadge level={entry.user.level} />
                           </div>
                         </div>
                       </div>

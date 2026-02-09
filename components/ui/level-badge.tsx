@@ -1,24 +1,19 @@
 import { cn } from "@/lib/utils";
 import type { TradingLevel } from "@/lib/constants";
+import { Tooltip } from "./tooltip";
 
 interface LevelBadgeProps {
   level: TradingLevel;
-  showIcon?: boolean;
   className?: string;
 }
 
-export function LevelBadge({ level, showIcon = true, className }: LevelBadgeProps) {
+export function LevelBadge({ level, className }: LevelBadgeProps) {
   return (
-    <div
-      className={cn(
-        "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border",
-        `${level.color} border-current/30 bg-current/10`,
-        className
-      )}
-    >
-      {showIcon && <span>{level.icon}</span>}
-      <span>{level.title}</span>
-    </div>
+    <Tooltip content={level.title}>
+      <span className={cn(`text-base ${level.color} cursor-help`, className)}>
+        {level.icon}
+      </span>
+    </Tooltip>
   );
 }
 
