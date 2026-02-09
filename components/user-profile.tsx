@@ -383,29 +383,26 @@ function AccountSelector({
                   setIsOpen(false);
                 }}
                 className={`w-full px-4 py-3 text-left hover:bg-slate-800/50 transition-colors border-b border-slate-800/50 last:border-0 ${
-                  selectedAccount.id === account.id ? "bg-slate-800/30" : ""
+                  selectedAccount.id === account.id 
+                    ? "bg-slate-800/50 border-l-2 border-l-success" 
+                    : ""
                 }`}
               >
                 <div className="flex items-center justify-between mb-1">
-                  <div className="flex items-center gap-2">
-                    <p className="text-sm font-semibold text-slate-100">
-                      {account.programType} {account.accountSize}
-                    </p>
-                    <span
-                      className={`px-1.5 py-0.5 rounded text-[9px] font-semibold uppercase ${
-                        account.accountStatus === "active"
-                          ? "bg-success/20 text-success"
-                          : account.accountStatus === "daily pause"
-                          ? "bg-yellow-500/20 text-yellow-500"
-                          : "bg-red-500/20 text-red-500"
-                      }`}
-                    >
-                      {account.accountStatus}
-                    </span>
-                  </div>
-                  {selectedAccount.id === account.id && (
-                    <CheckCircle2 className="w-4 h-4 text-success" />
-                  )}
+                  <p className="text-sm font-semibold text-slate-100">
+                    {account.programType} {account.accountSize}
+                  </p>
+                  <span
+                    className={`px-1.5 py-0.5 rounded text-[9px] font-semibold uppercase ${
+                      account.accountStatus === "active"
+                        ? "bg-success/20 text-success"
+                        : account.accountStatus === "daily pause"
+                        ? "bg-yellow-500/20 text-yellow-500"
+                        : "bg-red-500/20 text-red-500"
+                    }`}
+                  >
+                    {account.accountStatus}
+                  </span>
                 </div>
                 <p className="text-xs text-slate-400 mb-1">
                   {account.accountNumber}
