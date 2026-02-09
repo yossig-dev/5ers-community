@@ -15,6 +15,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { LevelBadge } from "@/components/ui/level-badge";
 import { MOCK_POSTS } from "@/lib/constants";
 import { getRelativeTime } from "@/lib/utils";
 import type { Post } from "@/lib/constants";
@@ -115,13 +116,14 @@ function PostCard({ post, onLike }: { post: Post; onLike: () => void }) {
               </AvatarFallback>
             </Avatar>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <h3 className="font-semibold text-slate-100">
                   {post.user.username}
                 </h3>
                 {post.user.verified && (
                   <CheckCircle2 className="w-4 h-4 text-success fill-success" />
                 )}
+                <LevelBadge level={post.user.level} showIcon={true} />
               </div>
               <div className="flex items-center gap-2 mt-1 flex-wrap">
                 {post.user.badges.slice(0, 2).map((badge) => (

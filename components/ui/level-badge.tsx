@@ -1,0 +1,66 @@
+import { cn } from "@/lib/utils";
+import type { TradingLevel } from "@/lib/constants";
+
+interface LevelBadgeProps {
+  level: TradingLevel;
+  showIcon?: boolean;
+  className?: string;
+}
+
+export function LevelBadge({ level, showIcon = true, className }: LevelBadgeProps) {
+  return (
+    <div
+      className={cn(
+        "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border",
+        `${level.color} border-current/30 bg-current/10`,
+        className
+      )}
+    >
+      {showIcon && <span>{level.icon}</span>}
+      <span>{level.title}</span>
+    </div>
+  );
+}
+
+interface XPProgressBarProps {
+  xp: number;
+  level: TradingLevel;
+  nextLevel?: TradingLevel;
+  className?: string;
+}
+
+export function XPProgressBar({ xp, level, nextLevel, className }: XPProgressBarProps) {
+  const xpInLevel = xp - level.minXP;
+  const xpNeeded = level.maxXP - level.minXP;
+  const progress = Math.min((xpInLevel / xpNeeded) * 100, 100);
+  const xpToNext = nextLevel ? nextLevel.minXP - xp : 0;
+
+  return (
+    <div className={cn("space-y-2", className)}>
+      <div className="flex items-center justify-between text-sm">
+        <span className="text-slate-400">Level Progress</span>
+        <span className={`font-semibold ${level.color}`}>
+          {xpInLevel.toLocaleString()} / {xpNeeded.toLocaleString()} XP
+        </span>
+      </div>
+      <div className="relative h-3 bg-slate-800 rounded-full overflow-hidden">
+        <div
+          className={`absolute inset-y-0 left-0 rounded-full transition-all duration-500 ${level.color.replace('text-', 'bg-')}`}
+          style={{ width: `${progress}%` }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse" />
+        </div>
+      </div>
+      {nextLevel && xpToNext > 0 && (
+        <p className="text-xs text-slate-500">
+          {xpToNext.toLocaleString()} XP to {nextLevel.title}
+        </p>
+      )}
+      {!nextLevel && (
+        <p className="text-xs text-purple-400 font-semibold">
+          🎉 Max Level Achieved!
+        </p>
+      )}
+    </div>
+  );
+}

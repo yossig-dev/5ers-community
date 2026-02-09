@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { LevelBadge } from "@/components/ui/level-badge";
 import { MOCK_CHANNELS, MOCK_CHAT_MESSAGES } from "@/lib/constants";
 import { getRelativeTime } from "@/lib/utils";
 
@@ -163,10 +164,11 @@ function ChatMessage({ message }: { message: any }) {
         </AvatarFallback>
       </Avatar>
       <div className="flex-1 min-w-0">
-        <div className="flex items-baseline gap-2 mb-1">
+        <div className="flex items-center gap-2 mb-1 flex-wrap">
           <p className="font-semibold text-slate-200 text-sm">
             {message.user.username}
           </p>
+          <LevelBadge level={message.user.level} showIcon={false} className="text-[10px] px-1.5 py-0" />
           <span className="text-xs text-slate-500">
             {getRelativeTime(message.timestamp)}
           </span>

@@ -5,12 +5,24 @@ export type Badge = {
   color: string;
 };
 
+export type TradingLevel = {
+  id: string;
+  name: string;
+  title: string;
+  minXP: number;
+  maxXP: number;
+  color: string;
+  icon: string;
+};
+
 export type User = {
   id: string;
   username: string;
   avatar: string;
   badges: Badge[];
   verified: boolean;
+  xp: number;
+  level: TradingLevel;
 };
 
 export type Post = {
@@ -47,6 +59,79 @@ export type Channel = {
   icon: string;
   unread?: number;
 };
+
+// Trading Levels System
+export const TRADING_LEVELS: TradingLevel[] = [
+  {
+    id: "bronze",
+    name: "Bronze",
+    title: "Bronze Trader",
+    minXP: 0,
+    maxXP: 999,
+    color: "text-amber-700",
+    icon: "🥉",
+  },
+  {
+    id: "silver",
+    name: "Silver",
+    title: "Silver Trader",
+    minXP: 1000,
+    maxXP: 2999,
+    color: "text-slate-400",
+    icon: "🥈",
+  },
+  {
+    id: "gold",
+    name: "Gold",
+    title: "Gold Trader",
+    minXP: 3000,
+    maxXP: 5999,
+    color: "text-yellow-500",
+    icon: "🥇",
+  },
+  {
+    id: "platinum",
+    name: "Platinum",
+    title: "Platinum Trader",
+    minXP: 6000,
+    maxXP: 9999,
+    color: "text-cyan-400",
+    icon: "💠",
+  },
+  {
+    id: "diamond",
+    name: "Diamond",
+    title: "Diamond Trader",
+    minXP: 10000,
+    maxXP: 14999,
+    color: "text-blue-400",
+    icon: "💎",
+  },
+  {
+    id: "master",
+    name: "Master",
+    title: "Master Trader",
+    minXP: 15000,
+    maxXP: 999999,
+    color: "text-purple-500",
+    icon: "👑",
+  },
+];
+
+export function getLevelByXP(xp: number): TradingLevel {
+  for (let i = TRADING_LEVELS.length - 1; i >= 0; i--) {
+    if (xp >= TRADING_LEVELS[i].minXP) {
+      return TRADING_LEVELS[i];
+    }
+  }
+  return TRADING_LEVELS[0];
+}
+
+export function getXPProgress(xp: number, level: TradingLevel): number {
+  const xpInLevel = xp - level.minXP;
+  const xpNeeded = level.maxXP - level.minXP;
+  return (xpInLevel / xpNeeded) * 100;
+}
 
 // Mock Badges
 export const BADGES: Record<string, Badge> = {
@@ -90,6 +175,8 @@ export const MOCK_USERS: User[] = [
     avatar: "👑",
     badges: [BADGES.funded, BADGES.club100k],
     verified: true,
+    xp: 16500,
+    level: getLevelByXP(16500),
   },
   {
     id: "2",
@@ -97,6 +184,8 @@ export const MOCK_USERS: User[] = [
     avatar: "⚡",
     badges: [BADGES.goldExpert, BADGES.funded],
     verified: true,
+    xp: 12300,
+    level: getLevelByXP(12300),
   },
   {
     id: "3",
@@ -104,6 +193,8 @@ export const MOCK_USERS: User[] = [
     avatar: "🎯",
     badges: [BADGES.topTrader],
     verified: false,
+    xp: 4200,
+    level: getLevelByXP(4200),
   },
   {
     id: "4",
@@ -111,6 +202,8 @@ export const MOCK_USERS: User[] = [
     avatar: "🥷",
     badges: [BADGES.funded, BADGES.earlySupporter],
     verified: true,
+    xp: 8700,
+    level: getLevelByXP(8700),
   },
   {
     id: "5",
@@ -118,6 +211,8 @@ export const MOCK_USERS: User[] = [
     avatar: "📈",
     badges: [BADGES.funded],
     verified: false,
+    xp: 2100,
+    level: getLevelByXP(2100),
   },
   {
     id: "6",
@@ -125,6 +220,8 @@ export const MOCK_USERS: User[] = [
     avatar: "🔥",
     badges: [BADGES.topTrader, BADGES.club100k],
     verified: true,
+    xp: 14800,
+    level: getLevelByXP(14800),
   },
   {
     id: "7",
@@ -132,6 +229,8 @@ export const MOCK_USERS: User[] = [
     avatar: "👸",
     badges: [BADGES.funded, BADGES.goldExpert],
     verified: true,
+    xp: 11200,
+    level: getLevelByXP(11200),
   },
   {
     id: "8",
@@ -139,6 +238,8 @@ export const MOCK_USERS: User[] = [
     avatar: "🧙",
     badges: [BADGES.earlySupporter],
     verified: false,
+    xp: 650,
+    level: getLevelByXP(650),
   },
 ];
 

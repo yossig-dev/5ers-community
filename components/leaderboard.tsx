@@ -5,6 +5,7 @@ import { Trophy, TrendingUp, DollarSign, Award, Medal } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { LevelBadge } from "@/components/ui/level-badge";
 import { MOCK_LEADERBOARD } from "@/lib/constants";
 import { formatNumber, formatPercentage } from "@/lib/utils";
 
@@ -101,12 +102,8 @@ export function Leaderboard() {
                           <p className="font-semibold text-slate-100">
                             {entry.user.username}
                           </p>
-                          <div className="flex gap-1 mt-1">
-                            {entry.user.badges.slice(0, 2).map((badge) => (
-                              <span key={badge.id} className="text-xs">
-                                {badge.icon}
-                              </span>
-                            ))}
+                          <div className="flex gap-1 mt-1 items-center">
+                            <LevelBadge level={entry.user.level} showIcon={true} />
                           </div>
                         </div>
                       </div>

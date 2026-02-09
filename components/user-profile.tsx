@@ -14,7 +14,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MOCK_USERS, MOCK_POSTS } from "@/lib/constants";
+import { LevelBadge, XPProgressBar } from "@/components/ui/level-badge";
+import { MOCK_USERS, MOCK_POSTS, TRADING_LEVELS } from "@/lib/constants";
 import { formatNumber, formatPercentage, getRelativeTime } from "@/lib/utils";
 
 // Using the first user as the profile user
@@ -46,13 +47,14 @@ export function UserProfile() {
               </AvatarFallback>
             </Avatar>
             <div className="flex-1 mt-16 sm:mt-20">
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
                 <h3 className="text-2xl font-bold text-slate-100">
                   {profileUser.username}
                 </h3>
                 {profileUser.verified && (
                   <CheckCircle2 className="w-6 h-6 text-success fill-success" />
                 )}
+                <LevelBadge level={profileUser.level} showIcon={true} />
               </div>
               <div className="flex gap-2 flex-wrap mb-4">
                 {profileUser.badges.map((badge) => (
@@ -90,6 +92,34 @@ export function UserProfile() {
               </Button>
             </div>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* XP Progress Card - Only visible to own profile */}
+      <Card className="glass-card border-slate-800">
+        <CardContent className="p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="text-4xl">{profileUser.level.icon}</div>
+              <div>
+                <h3 className={`text-xl font-bold ${profileUser.level.color}`}>
+                  {profileUser.level.title}
+                </h3>
+                <p className="text-sm text-slate-400">
+                  {profileUser.xp.toLocaleString()} Total XP
+                </p>
+              </div>
+            </div>
+          </div>
+          <XPProgressBar
+            xp={profileUser.xp}
+            level={profileUser.level}
+            nextLevel={
+              TRADING_LEVELS.find(
+                (l) => l.minXP > profileUser.level.minXP
+              )
+            }
+          />
         </CardContent>
       </Card>
 
