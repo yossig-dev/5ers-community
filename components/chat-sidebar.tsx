@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { LevelBadge } from "@/components/ui/level-badge";
+import { Tooltip } from "@/components/ui/tooltip";
 import { MOCK_CHANNELS, MOCK_CHAT_MESSAGES } from "@/lib/constants";
 import { getRelativeTime } from "@/lib/utils";
 
@@ -47,6 +48,12 @@ export function ChatSidebar() {
                 <h3 className="font-semibold text-slate-100 flex items-center gap-2">
                   <Hash className="w-5 h-5 text-success" />
                   Live Chat
+                  <Tooltip content="Chat is live and active">
+                    <span className="relative flex h-3 w-3">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-success"></span>
+                    </span>
+                  </Tooltip>
                 </h3>
                 <button
                   onClick={() => setIsOpen(false)}
