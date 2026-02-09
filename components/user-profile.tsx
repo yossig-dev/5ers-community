@@ -15,6 +15,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { LevelBadge, XPProgressBar } from "@/components/ui/level-badge";
+import { Tooltip } from "@/components/ui/tooltip";
 import { MOCK_USERS, MOCK_POSTS, TRADING_LEVELS } from "@/lib/constants";
 import { formatNumber, formatPercentage, getRelativeTime } from "@/lib/utils";
 
@@ -54,19 +55,14 @@ export function UserProfile() {
                 {profileUser.verified && (
                   <CheckCircle2 className="w-6 h-6 text-success fill-success" />
                 )}
-                <LevelBadge level={profileUser.level} showIcon={true} />
-              </div>
-              <div className="flex gap-2 flex-wrap mb-4">
                 {profileUser.badges.map((badge) => (
-                  <Badge
-                    key={badge.id}
-                    variant="outline"
-                    className={`${badge.color} border-current/20 bg-current/5`}
-                  >
-                    <span className="mr-1">{badge.icon}</span>
-                    {badge.name}
-                  </Badge>
+                  <Tooltip key={badge.id} content={badge.name}>
+                    <span className={`text-xl ${badge.color} cursor-help`}>
+                      {badge.icon}
+                    </span>
+                  </Tooltip>
                 ))}
+                <LevelBadge level={profileUser.level} showIcon={true} />
               </div>
               <div className="flex gap-6 text-sm">
                 <div>

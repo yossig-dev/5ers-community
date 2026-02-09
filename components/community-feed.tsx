@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { LevelBadge } from "@/components/ui/level-badge";
+import { Tooltip } from "@/components/ui/tooltip";
 import { MOCK_POSTS } from "@/lib/constants";
 import { getRelativeTime } from "@/lib/utils";
 import type { Post } from "@/lib/constants";
@@ -123,19 +124,14 @@ function PostCard({ post, onLike }: { post: Post; onLike: () => void }) {
                 {post.user.verified && (
                   <CheckCircle2 className="w-4 h-4 text-success fill-success" />
                 )}
-                <LevelBadge level={post.user.level} showIcon={true} />
-              </div>
-              <div className="flex items-center gap-2 mt-1 flex-wrap">
-                {post.user.badges.slice(0, 2).map((badge) => (
-                  <Badge
-                    key={badge.id}
-                    variant="outline"
-                    className={`${badge.color} border-current/20 bg-current/5 text-xs`}
-                  >
-                    <span className="mr-1">{badge.icon}</span>
-                    {badge.name}
-                  </Badge>
+                {post.user.badges.slice(0, 3).map((badge) => (
+                  <Tooltip key={badge.id} content={badge.name}>
+                    <span className={`text-base ${badge.color} cursor-help`}>
+                      {badge.icon}
+                    </span>
+                  </Tooltip>
                 ))}
+                <LevelBadge level={post.user.level} showIcon={true} />
               </div>
               <p className="text-xs text-slate-500 mt-1">
                 {getRelativeTime(post.timestamp)}

@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { LevelBadge } from "@/components/ui/level-badge";
+import { Tooltip } from "@/components/ui/tooltip";
 import { MOCK_LEADERBOARD } from "@/lib/constants";
 import { formatNumber, formatPercentage } from "@/lib/utils";
 
@@ -99,9 +100,18 @@ export function Leaderboard() {
                           </AvatarFallback>
                         </Avatar>
                         <div>
-                          <p className="font-semibold text-slate-100">
-                            {entry.user.username}
-                          </p>
+                          <div className="flex items-center gap-1.5">
+                            <p className="font-semibold text-slate-100">
+                              {entry.user.username}
+                            </p>
+                            {entry.user.badges.slice(0, 2).map((badge) => (
+                              <Tooltip key={badge.id} content={badge.name}>
+                                <span className={`text-sm ${badge.color} cursor-help`}>
+                                  {badge.icon}
+                                </span>
+                              </Tooltip>
+                            ))}
+                          </div>
                           <div className="flex gap-1 mt-1 items-center">
                             <LevelBadge level={entry.user.level} showIcon={true} />
                           </div>
