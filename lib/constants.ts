@@ -25,11 +25,22 @@ export type User = {
   level: TradingLevel;
 };
 
+export type ChartData = {
+  label: string;
+  value: number;
+  color?: string;
+};
+
 export type Post = {
   id: string;
   user: User;
   content: string;
   image?: string;
+  chart?: {
+    type: "line" | "bar";
+    title: string;
+    data: ChartData[];
+  };
   timestamp: Date;
   likes: number;
   comments: number;
@@ -256,6 +267,19 @@ export const MOCK_POSTS: Post[] = [
     user: MOCK_USERS[0],
     content:
       "Just closed a massive Gold trade! +$8,450 in 45 minutes. The key was waiting for the London open breakout. Patience pays! 🚀📈",
+    chart: {
+      type: "line",
+      title: "XAU/USD - 1H Chart",
+      data: [
+        { label: "09:00", value: 2048 },
+        { label: "10:00", value: 2051 },
+        { label: "11:00", value: 2049 },
+        { label: "12:00", value: 2053 },
+        { label: "13:00", value: 2058 },
+        { label: "14:00", value: 2062 },
+        { label: "15:00", value: 2065 },
+      ],
+    },
     timestamp: new Date(Date.now() - 15 * 60000),
     likes: 234,
     comments: 45,
@@ -296,6 +320,17 @@ export const MOCK_POSTS: Post[] = [
     user: MOCK_USERS[6],
     content:
       "Weekly recap: +$12,340 (+15.4%). My best trades were on Gold and NAS100. Key lesson: trading less = making more. Quality over quantity every time. 📊✨",
+    chart: {
+      type: "bar",
+      title: "Weekly P&L by Day",
+      data: [
+        { label: "Mon", value: 2340, color: "text-success" },
+        { label: "Tue", value: -450, color: "text-red-500" },
+        { label: "Wed", value: 3200, color: "text-success" },
+        { label: "Thu", value: 1890, color: "text-success" },
+        { label: "Fri", value: 5360, color: "text-success" },
+      ],
+    },
     timestamp: new Date(Date.now() - 300 * 60000),
     likes: 423,
     comments: 67,

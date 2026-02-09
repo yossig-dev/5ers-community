@@ -17,6 +17,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { LevelBadge } from "@/components/ui/level-badge";
 import { Tooltip } from "@/components/ui/tooltip";
+import { MiniChart } from "@/components/ui/mini-chart";
 import { MOCK_POSTS } from "@/lib/constants";
 import { getRelativeTime } from "@/lib/utils";
 import type { Post } from "@/lib/constants";
@@ -175,6 +176,17 @@ function PostCard({ post, onLike }: { post: Post; onLike: () => void }) {
         <div className="mb-4">
           <p className="text-slate-300 leading-relaxed">{post.content}</p>
         </div>
+
+        {/* Post Chart */}
+        {post.chart && (
+          <div className="mb-4">
+            <MiniChart
+              type={post.chart.type}
+              title={post.chart.title}
+              data={post.chart.data}
+            />
+          </div>
+        )}
 
         {/* Post Image */}
         {post.image && (
