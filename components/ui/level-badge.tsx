@@ -40,7 +40,7 @@ export function XPProgressBar({ xp, level, nextLevel, className }: XPProgressBar
       </div>
       <div className="relative h-3 bg-slate-800 rounded-full overflow-hidden">
         <div
-          className={`absolute inset-y-0 left-0 rounded-full transition-all duration-500 ${level.color.replace('text-', 'bg-')}`}
+          className="absolute inset-y-0 left-0 rounded-full transition-all duration-500 bg-purple-500"
           style={{ width: `${progress}%` }}
         >
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse" />
