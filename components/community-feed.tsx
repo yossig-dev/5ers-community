@@ -5,11 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Heart,
   MessageCircle,
-  Share2,
-  MoreHorizontal,
-  TrendingUp,
-  Clock,
   CheckCircle2,
+  Landmark,
+  DollarSign,
+  TrendingUp,
+  Bitcoin,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -21,8 +21,11 @@ import { MOCK_POSTS } from "@/lib/constants";
 import { getRelativeTime } from "@/lib/utils";
 import type { Post } from "@/lib/constants";
 
+type TopicType = "all" | "materials" | "forex" | "stocks" | "crypto";
+
 export function CommunityFeed() {
   const [posts, setPosts] = useState<Post[]>(MOCK_POSTS);
+  const [activeTopic, setActiveTopic] = useState<TopicType>("all");
 
   const handleLike = (postId: string) => {
     setPosts(
@@ -53,12 +56,37 @@ export function CommunityFeed() {
         </Button>
       </div>
 
-      {/* Filter Tabs */}
+      {/* Topic Tabs */}
       <div className="flex gap-2 flex-wrap">
-        <FilterButton label="All Posts" active />
-        <FilterButton label="Following" />
-        <FilterButton label="Trending" icon={<TrendingUp className="w-4 h-4" />} />
-        <FilterButton label="Recent" icon={<Clock className="w-4 h-4" />} />
+        <FilterButton 
+          label="All Topics" 
+          active={activeTopic === "all"} 
+          onClick={() => setActiveTopic("all")}
+        />
+        <FilterButton 
+          label="Materials" 
+          icon={<Landmark className="w-4 h-4" />}
+          active={activeTopic === "materials"} 
+          onClick={() => setActiveTopic("materials")}
+        />
+        <FilterButton 
+          label="Forex" 
+          icon={<DollarSign className="w-4 h-4" />}
+          active={activeTopic === "forex"} 
+          onClick={() => setActiveTopic("forex")}
+        />
+        <FilterButton 
+          label="Stocks" 
+          icon={<TrendingUp className="w-4 h-4" />}
+          active={activeTopic === "stocks"} 
+          onClick={() => setActiveTopic("stocks")}
+        />
+        <FilterButton 
+          label="Crypto" 
+          icon={<Bitcoin className="w-4 h-4" />}
+          active={activeTopic === "crypto"} 
+          onClick={() => setActiveTopic("crypto")}
+        />
       </div>
 
       {/* Posts */}
@@ -83,13 +111,16 @@ function FilterButton({
   label,
   active = false,
   icon,
+  onClick,
 }: {
   label: string;
   active?: boolean;
   icon?: React.ReactNode;
+  onClick?: () => void;
 }) {
   return (
     <button
+      onClick={onClick}
       className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
         active
           ? "bg-success/10 text-success border border-success/20"
@@ -138,9 +169,6 @@ function PostCard({ post, onLike }: { post: Post; onLike: () => void }) {
               </p>
             </div>
           </div>
-          <Button variant="ghost" size="icon" className="hover:bg-slate-800">
-            <MoreHorizontal className="w-5 h-5 text-slate-400" />
-          </Button>
         </div>
 
         {/* Post Content */}
@@ -167,10 +195,6 @@ function PostCard({ post, onLike }: { post: Post; onLike: () => void }) {
             <MessageCircle className="w-4 h-4" />
             {post.comments}
           </span>
-          <span className="flex items-center gap-1">
-            <Share2 className="w-4 h-4" />
-            {post.shares}
-          </span>
         </div>
 
         {/* Action Buttons */}
@@ -186,7 +210,6 @@ function PostCard({ post, onLike }: { post: Post; onLike: () => void }) {
             label="Comment"
             onClick={() => setShowComments(!showComments)}
           />
-          <ActionButton icon={<Share2 className="w-5 h-5" />} label="Share" />
         </div>
 
         {/* Comments Section */}

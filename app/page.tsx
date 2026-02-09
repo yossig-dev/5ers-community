@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { Menu, X, Home as HomeIcon, TrendingUp, Users, Settings, Bell } from "lucide-react";
 import { CommunityFeed } from "@/components/community-feed";
 import { Leaderboard } from "@/components/leaderboard";
-import { ChatSidebar } from "@/components/chat-sidebar";
 import { UserProfile } from "@/components/user-profile";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -157,9 +156,6 @@ export default function Home() {
           {activeTab === "profile" && <UserProfile />}
         </motion.div>
       </main>
-
-      {/* Chat Sidebar */}
-      <ChatSidebar />
     </div>
   );
 }
