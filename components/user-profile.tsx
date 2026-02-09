@@ -26,17 +26,6 @@ const userPosts = MOCK_POSTS.filter((post) => post.user.id === profileUser.id);
 export function UserProfile() {
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h2 className="text-3xl font-bold text-slate-100 flex items-center gap-3">
-          <User className="w-8 h-8 text-success" />
-          Community Profile
-        </h2>
-        <p className="text-slate-400 mt-1">
-          Your trading journey and achievements
-        </p>
-      </div>
-
       {/* Profile Card */}
       <Card className="glass-card border-slate-800 overflow-hidden">
         <div className="h-32 bg-gradient-to-r from-success/20 via-emerald-500/20 to-success/20" />
