@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Package, Calendar, DollarSign, TrendingUp } from "lucide-react";
+import { Package, Calendar, DollarSign, TrendingUp, Key } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MOCK_PROGRAMS, getProgramTypeColor, getProgramTypeLabel } from "@/lib/programs";
@@ -103,10 +103,10 @@ function ProgramCard({ program, delay }: { program: Program; delay: number }) {
       <Card className={`glass-card border-slate-800 border-l-4 ${borderColorClass} hover:border-slate-700 transition-all`}>
         <CardContent className="p-5">
           <div className="flex items-center gap-6">
-            {/* Type Badge */}
-            <Badge className={`${bgColorClass} ${textColorClass} border-0 px-3 py-1 flex-shrink-0`}>
-              {typeLabel}
-            </Badge>
+            {/* Key Icon */}
+            <div className="flex-shrink-0">
+              <Key className={`w-5 h-5 ${textColorClass}`} />
+            </div>
 
             {/* Program Info */}
             <div className="flex-1 min-w-0">
