@@ -47,79 +47,49 @@ export default function Home() {
           </div>
         </div>
 
-        <nav className="flex-1 p-4 space-y-4 overflow-y-auto">
-          {/* My Plans Section */}
-          {sidebarOpen && (
-            <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider px-3 mb-2">
-              My Plans
-            </div>
-          )}
-          <div className="space-y-1">
-            <NavButton
-              icon={<Package className="h-5 w-5" />}
-              label="My Programs"
-              active={activeTab === "programs"}
-              onClick={() => setActiveTab("programs")}
-              collapsed={!sidebarOpen}
-            />
-          </div>
-
-          {/* Community Section */}
-          {sidebarOpen && (
-            <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider px-3 mb-2 mt-6">
-              Community
-            </div>
-          )}
-          <div className="space-y-1">
-            <NavButton
-              icon={<HomeIcon className="h-5 w-5" />}
-              label="Trade Talk"
-              active={activeTab === "feed"}
-              onClick={() => setActiveTab("feed")}
-              collapsed={!sidebarOpen}
-            />
-            <NavButton
-              icon={<Trophy className="h-5 w-5" />}
-              label="Contests"
-              active={activeTab === "contests"}
-              onClick={() => setActiveTab("contests")}
-              collapsed={!sidebarOpen}
-            />
-            <NavButton
-              icon={<TrendingUp className="h-5 w-5" />}
-              label="Leaderboard"
-              active={activeTab === "leaderboard"}
-              onClick={() => setActiveTab("leaderboard")}
-              collapsed={!sidebarOpen}
-            />
-          </div>
-
-          {/* Academy Section */}
-          {sidebarOpen && (
-            <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider px-3 mb-2 mt-6">
-              Academy
-            </div>
-          )}
-          <div className="space-y-1">
-            <NavButton
-              icon={<GraduationCap className="h-5 w-5" />}
-              label="Academy"
-              active={activeTab === "academy"}
-              onClick={() => setActiveTab("academy")}
-              collapsed={!sidebarOpen}
-            />
-          </div>
-
-          {/* Profile at bottom */}
-          <div className="pt-6 mt-auto">
-            <NavButton
-              icon={<Users className="h-5 w-5" />}
-              label="Profile"
-              active={activeTab === "profile"}
-              onClick={() => setActiveTab("profile")}
-              collapsed={!sidebarOpen}
-            />
-          </div>
+        <nav className="flex-1 p-4 space-y-2">
+          <NavButton
+            icon={<Package className="h-5 w-5" />}
+            label="My Programs"
+            active={activeTab === "programs"}
+            onClick={() => setActiveTab("programs")}
+            collapsed={!sidebarOpen}
+          />
+          <NavButton
+            icon={<HomeIcon className="h-5 w-5" />}
+            label="Trade Talk"
+            active={activeTab === "feed"}
+            onClick={() => setActiveTab("feed")}
+            collapsed={!sidebarOpen}
+          />
+          <NavButton
+            icon={<Trophy className="h-5 w-5" />}
+            label="Contests"
+            active={activeTab === "contests"}
+            onClick={() => setActiveTab("contests")}
+            collapsed={!sidebarOpen}
+          />
+          <NavButton
+            icon={<TrendingUp className="h-5 w-5" />}
+            label="Leaderboard"
+            active={activeTab === "leaderboard"}
+            onClick={() => setActiveTab("leaderboard")}
+            collapsed={!sidebarOpen}
+          />
+          <NavButton
+            icon={<GraduationCap className="h-5 w-5" />}
+            label="Academy"
+            active={activeTab === "academy"}
+            onClick={() => setActiveTab("academy")}
+            collapsed={!sidebarOpen}
+          />
+          <NavButton
+            icon={<Users className="h-5 w-5" />}
+            label="Profile"
+            active={activeTab === "profile"}
+            onClick={() => setActiveTab("profile")}
+            collapsed={!sidebarOpen}
+          />
         </nav>
 
         <div className="p-4 border-t border-slate-800 space-y-2">
@@ -162,10 +132,6 @@ export default function Home() {
             exit={{ height: 0, opacity: 0 }}
             className="border-t border-slate-800 p-4 space-y-2"
           >
-            {/* My Plans */}
-            <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2 mt-4">
-              My Plans
-            </div>
             <NavButton
               icon={<Package className="h-5 w-5" />}
               label="My Programs"
@@ -175,11 +141,6 @@ export default function Home() {
                 setMobileSidebarOpen(false);
               }}
             />
-
-            {/* Community */}
-            <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2 mt-4">
-              Community
-            </div>
             <NavButton
               icon={<HomeIcon className="h-5 w-5" />}
               label="Trade Talk"
@@ -207,11 +168,6 @@ export default function Home() {
                 setMobileSidebarOpen(false);
               }}
             />
-
-            {/* Academy */}
-            <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2 mt-4">
-              Academy
-            </div>
             <NavButton
               icon={<GraduationCap className="h-5 w-5" />}
               label="Academy"
@@ -221,19 +177,15 @@ export default function Home() {
                 setMobileSidebarOpen(false);
               }}
             />
-
-            {/* Profile */}
-            <div className="border-t border-slate-800 mt-4 pt-4">
-              <NavButton
-                icon={<Users className="h-5 w-5" />}
-                label="Profile"
-                active={activeTab === "profile"}
-                onClick={() => {
-                  setActiveTab("profile");
-                  setMobileSidebarOpen(false);
-                }}
-              />
-            </div>
+            <NavButton
+              icon={<Users className="h-5 w-5" />}
+              label="Profile"
+              active={activeTab === "profile"}
+              onClick={() => {
+                setActiveTab("profile");
+                setMobileSidebarOpen(false);
+              }}
+            />
           </motion.div>
         )}
       </div>
