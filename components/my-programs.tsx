@@ -12,7 +12,7 @@ export function MyPrograms() {
   return (
     <div className="space-y-6">
       {/* Stats Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <StatCard
           icon={<Package className="w-6 h-6 text-success" />}
           label="Total Programs"
@@ -24,19 +24,14 @@ export function MyPrograms() {
           value={MOCK_PROGRAMS.filter((p) => p.status === "active").length.toString()}
         />
         <StatCard
-          icon={<DollarSign className="w-6 h-6 text-success" />}
-          label="Total Invested"
-          value={`$${MOCK_PROGRAMS.reduce((sum, p) => sum + p.cost, 0).toLocaleString()}`}
-        />
-        <StatCard
           icon={<DollarSign className="w-6 h-6 text-yellow-400" />}
           label="Total Balance"
           value={`$${Math.round(MOCK_PROGRAMS.reduce((sum, p) => sum + p.balance, 0)).toLocaleString()}`}
         />
       </div>
 
-      {/* Programs Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      {/* Programs List - Vertical Strips */}
+      <div className="space-y-3">
         {MOCK_PROGRAMS.map((program, index) => (
           <ProgramCard key={program.id} program={program} delay={index * 0.05} />
         ))}
@@ -101,52 +96,50 @@ function ProgramCard({ program, delay }: { program: Program; delay: number }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ delay }}
     >
       <Card className={`glass-card border-slate-800 border-l-4 ${borderColorClass} hover:border-slate-700 transition-all`}>
-        <CardContent className="p-6">
-          {/* Header */}
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <h3 className="text-lg font-bold text-slate-100 mb-1">
-                {program.programName}
-              </h3>
-              <p className="text-sm text-slate-400">{program.accountNumber}</p>
-            </div>
-            <Badge className={`${bgColorClass} ${textColorClass} border-0`}>
+        <CardContent className="p-5">
+          <div className="flex items-center gap-6">
+            {/* Type Badge */}
+            <Badge className={`${bgColorClass} ${textColorClass} border-0 px-3 py-1 flex-shrink-0`}>
               {typeLabel}
             </Badge>
-          </div>
 
-          {/* Details Grid */}
-          <div className="grid grid-cols-2 gap-4 mb-4">
+            {/* Program Info */}
+            <div className="flex-1 min-w-0">
+              <h3 className="text-base font-bold text-slate-100 truncate">
+                {program.programName}
+              </h3>
+              <p className="text-xs text-slate-400">{program.accountNumber}</p>
+            </div>
+
             {/* Size & Cost */}
-            <div>
-              <p className="text-xs text-slate-500 mb-1">Size - Cost</p>
+            <div className="flex-shrink-0">
+              <p className="text-xs text-slate-500">Size - Cost</p>
               <p className="text-sm font-semibold text-slate-100">
                 {program.size} - ${program.cost}
               </p>
             </div>
 
             {/* Balance */}
-            <div>
-              <p className="text-xs text-slate-500 mb-1">Balance</p>
+            <div className="flex-shrink-0">
+              <p className="text-xs text-slate-500">Balance</p>
               <p className="text-sm font-semibold text-success">
                 {formatNumber(program.balance)}
               </p>
             </div>
 
             {/* Asset */}
-            <div>
-              <p className="text-xs text-slate-500 mb-1">Asset</p>
+            <div className="flex-shrink-0">
+              <p className="text-xs text-slate-500">Asset</p>
               <p className="text-sm font-semibold text-slate-100">{program.asset}</p>
             </div>
 
             {/* Status */}
-            <div>
-              <p className="text-xs text-slate-500 mb-1">Status</p>
+            <div className="flex-shrink-0">
               <Badge
                 variant="outline"
                 className={`text-xs ${
@@ -158,34 +151,31 @@ function ProgramCard({ program, delay }: { program: Program; delay: number }) {
                 {program.status}
               </Badge>
             </div>
-          </div>
 
-          {/* Expiration */}
-          <div className="flex items-center gap-2 pt-4 border-t border-slate-800">
-            <Calendar className="w-4 h-4 text-slate-400" />
-            <div className="flex-1">
-              <p className="text-xs text-slate-500">Expiration</p>
-              <p
-                className={`text-sm font-semibold ${
-                  isExpired
-                    ? "text-red-400"
-                    : daysUntilExpiration <= 7
-                    ? "text-yellow-500"
-                    : "text-slate-300"
-                }`}
-              >
-                {isExpired
-                  ? "Expired"
-                  : daysUntilExpiration === 0
-                  ? "Today"
-                  : daysUntilExpiration === 1
-                  ? "Tomorrow"
-                  : `${daysUntilExpiration} days`}
-              </p>
+            {/* Expiration */}
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <Calendar className="w-4 h-4 text-slate-400" />
+              <div>
+                <p className="text-xs text-slate-500">Expiration</p>
+                <p
+                  className={`text-sm font-semibold ${
+                    isExpired
+                      ? "text-red-400"
+                      : daysUntilExpiration <= 7
+                      ? "text-yellow-500"
+                      : "text-slate-300"
+                  }`}
+                >
+                  {isExpired
+                    ? "Expired"
+                    : daysUntilExpiration === 0
+                    ? "Today"
+                    : daysUntilExpiration === 1
+                    ? "Tomorrow"
+                    : `${daysUntilExpiration} days`}
+                </p>
+              </div>
             </div>
-            <p className="text-xs text-slate-500">
-              {program.expirationDate.toLocaleDateString()}
-            </p>
           </div>
         </CardContent>
       </Card>
