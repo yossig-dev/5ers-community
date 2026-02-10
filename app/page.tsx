@@ -2,14 +2,15 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Menu, X, Home as HomeIcon, TrendingUp, Users, Settings, Bell } from "lucide-react";
+import { Menu, X, Home as HomeIcon, TrendingUp, Users, Settings, Bell, Package } from "lucide-react";
 import { CommunityFeed } from "@/components/community-feed";
 import { Leaderboard } from "@/components/leaderboard";
 import { UserProfile } from "@/components/user-profile";
 import { AchievementsPage } from "@/components/achievements-page";
+import { MyPrograms } from "@/components/my-programs";
 import { Button } from "@/components/ui/button";
 
-type TabType = "feed" | "leaderboard" | "profile" | "achievements";
+type TabType = "feed" | "leaderboard" | "profile" | "achievements" | "programs";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<TabType>("feed");
@@ -59,6 +60,13 @@ export default function Home() {
             label="Leaderboard"
             active={activeTab === "leaderboard"}
             onClick={() => setActiveTab("leaderboard")}
+            collapsed={!sidebarOpen}
+          />
+          <NavButton
+            icon={<Package className="h-5 w-5" />}
+            label="My Programs"
+            active={activeTab === "programs"}
+            onClick={() => setActiveTab("programs")}
             collapsed={!sidebarOpen}
           />
           <NavButton
@@ -129,6 +137,15 @@ export default function Home() {
               }}
             />
             <NavButton
+              icon={<Package className="h-5 w-5" />}
+              label="My Programs"
+              active={activeTab === "programs"}
+              onClick={() => {
+                setActiveTab("programs");
+                setMobileSidebarOpen(false);
+              }}
+            />
+            <NavButton
               icon={<Users className="h-5 w-5" />}
               label="Profile"
               active={activeTab === "profile"}
@@ -153,6 +170,7 @@ export default function Home() {
         >
           {activeTab === "feed" && <CommunityFeed />}
           {activeTab === "leaderboard" && <Leaderboard />}
+          {activeTab === "programs" && <MyPrograms />}
           {activeTab === "profile" && <UserProfile onViewAchievements={() => setActiveTab("achievements")} />}
           {activeTab === "achievements" && <AchievementsPage onBack={() => setActiveTab("profile")} />}
         </motion.div>
