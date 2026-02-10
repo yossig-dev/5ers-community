@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Menu, X, Home as HomeIcon, TrendingUp, Users, Settings, Bell, Package, Trophy, GraduationCap } from "lucide-react";
+import { Menu, X, Home as HomeIcon, TrendingUp, Users, Settings, Bell, Package, Trophy, GraduationCap, HelpCircle } from "lucide-react";
 import { CommunityFeed } from "@/components/community-feed";
 import { Leaderboard } from "@/components/leaderboard";
 import { UserProfile } from "@/components/user-profile";
@@ -87,9 +87,8 @@ export default function Home() {
 
         <div className="p-4 border-t border-slate-800 space-y-2">
           <NavButton
-            icon={<Bell className="h-5 w-5" />}
-            label="Notifications"
-            badge={3}
+            icon={<HelpCircle className="h-5 w-5" />}
+            label="Help"
             collapsed={!sidebarOpen}
           />
           <NavButton
