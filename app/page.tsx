@@ -83,13 +83,6 @@ export default function Home() {
             onClick={() => setActiveTab("academy")}
             collapsed={!sidebarOpen}
           />
-          <NavButton
-            icon={<Users className="h-5 w-5" />}
-            label="Profile"
-            active={activeTab === "profile"}
-            onClick={() => setActiveTab("profile")}
-            collapsed={!sidebarOpen}
-          />
         </nav>
 
         <div className="p-4 border-t border-slate-800 space-y-2">
@@ -177,15 +170,19 @@ export default function Home() {
                 setMobileSidebarOpen(false);
               }}
             />
-            <NavButton
-              icon={<Users className="h-5 w-5" />}
-              label="Profile"
-              active={activeTab === "profile"}
-              onClick={() => {
-                setActiveTab("profile");
-                setMobileSidebarOpen(false);
-              }}
-            />
+            
+            {/* Profile button for mobile */}
+            <div className="border-t border-slate-800 pt-4 mt-4">
+              <NavButton
+                icon={<Users className="h-5 w-5" />}
+                label="Profile"
+                active={activeTab === "profile"}
+                onClick={() => {
+                  setActiveTab("profile");
+                  setMobileSidebarOpen(false);
+                }}
+              />
+            </div>
           </motion.div>
         )}
       </div>
@@ -207,7 +204,10 @@ export default function Home() {
             </button>
 
             {/* Profile Picture */}
-            <button className="flex items-center gap-2 p-1 pr-3 rounded-lg hover:bg-slate-800 transition-colors">
+            <button 
+              onClick={() => setActiveTab("profile")}
+              className="flex items-center gap-2 p-1 pr-3 rounded-lg hover:bg-slate-800 transition-colors"
+            >
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-success to-emerald-600 flex items-center justify-center">
                 <span className="text-sm font-bold text-slate-950">T</span>
               </div>
