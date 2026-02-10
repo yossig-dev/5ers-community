@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Menu, X, Home as HomeIcon, TrendingUp, Users, Settings, Bell, Package } from "lucide-react";
+import { Menu, X, Home as HomeIcon, TrendingUp, Users, Settings, Bell, Package, Trophy, GraduationCap } from "lucide-react";
 import { CommunityFeed } from "@/components/community-feed";
 import { Leaderboard } from "@/components/leaderboard";
 import { UserProfile } from "@/components/user-profile";
@@ -10,7 +10,7 @@ import { AchievementsPage } from "@/components/achievements-page";
 import { MyPrograms } from "@/components/my-programs";
 import { Button } from "@/components/ui/button";
 
-type TabType = "feed" | "leaderboard" | "profile" | "achievements" | "programs";
+type TabType = "feed" | "leaderboard" | "profile" | "achievements" | "programs" | "contests" | "academy";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<TabType>("feed");
@@ -47,35 +47,79 @@ export default function Home() {
           </div>
         </div>
 
-        <nav className="flex-1 p-4 space-y-2">
-          <NavButton
-            icon={<HomeIcon className="h-5 w-5" />}
-            label="Trade Talk"
-            active={activeTab === "feed"}
-            onClick={() => setActiveTab("feed")}
-            collapsed={!sidebarOpen}
-          />
-          <NavButton
-            icon={<TrendingUp className="h-5 w-5" />}
-            label="Leaderboard"
-            active={activeTab === "leaderboard"}
-            onClick={() => setActiveTab("leaderboard")}
-            collapsed={!sidebarOpen}
-          />
-          <NavButton
-            icon={<Package className="h-5 w-5" />}
-            label="My Programs"
-            active={activeTab === "programs"}
-            onClick={() => setActiveTab("programs")}
-            collapsed={!sidebarOpen}
-          />
-          <NavButton
-            icon={<Users className="h-5 w-5" />}
-            label="Profile"
-            active={activeTab === "profile"}
-            onClick={() => setActiveTab("profile")}
-            collapsed={!sidebarOpen}
-          />
+        <nav className="flex-1 p-4 space-y-4 overflow-y-auto">
+          {/* My Plans Section */}
+          {sidebarOpen && (
+            <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider px-3 mb-2">
+              My Plans
+            </div>
+          )}
+          <div className="space-y-1">
+            <NavButton
+              icon={<Package className="h-5 w-5" />}
+              label="My Programs"
+              active={activeTab === "programs"}
+              onClick={() => setActiveTab("programs")}
+              collapsed={!sidebarOpen}
+            />
+          </div>
+
+          {/* Community Section */}
+          {sidebarOpen && (
+            <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider px-3 mb-2 mt-6">
+              Community
+            </div>
+          )}
+          <div className="space-y-1">
+            <NavButton
+              icon={<HomeIcon className="h-5 w-5" />}
+              label="Trade Talk"
+              active={activeTab === "feed"}
+              onClick={() => setActiveTab("feed")}
+              collapsed={!sidebarOpen}
+            />
+            <NavButton
+              icon={<Trophy className="h-5 w-5" />}
+              label="Contests"
+              active={activeTab === "contests"}
+              onClick={() => setActiveTab("contests")}
+              collapsed={!sidebarOpen}
+            />
+            <NavButton
+              icon={<TrendingUp className="h-5 w-5" />}
+              label="Leaderboard"
+              active={activeTab === "leaderboard"}
+              onClick={() => setActiveTab("leaderboard")}
+              collapsed={!sidebarOpen}
+            />
+          </div>
+
+          {/* Academy Section */}
+          {sidebarOpen && (
+            <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider px-3 mb-2 mt-6">
+              Academy
+            </div>
+          )}
+          <div className="space-y-1">
+            <NavButton
+              icon={<GraduationCap className="h-5 w-5" />}
+              label="Academy"
+              active={activeTab === "academy"}
+              onClick={() => setActiveTab("academy")}
+              collapsed={!sidebarOpen}
+            />
+          </div>
+
+          {/* Profile at bottom */}
+          <div className="pt-6 mt-auto">
+            <NavButton
+              icon={<Users className="h-5 w-5" />}
+              label="Profile"
+              active={activeTab === "profile"}
+              onClick={() => setActiveTab("profile")}
+              collapsed={!sidebarOpen}
+            />
+          </div>
         </nav>
 
         <div className="p-4 border-t border-slate-800 space-y-2">
@@ -118,12 +162,39 @@ export default function Home() {
             exit={{ height: 0, opacity: 0 }}
             className="border-t border-slate-800 p-4 space-y-2"
           >
+            {/* My Plans */}
+            <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2 mt-4">
+              My Plans
+            </div>
+            <NavButton
+              icon={<Package className="h-5 w-5" />}
+              label="My Programs"
+              active={activeTab === "programs"}
+              onClick={() => {
+                setActiveTab("programs");
+                setMobileSidebarOpen(false);
+              }}
+            />
+
+            {/* Community */}
+            <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2 mt-4">
+              Community
+            </div>
             <NavButton
               icon={<HomeIcon className="h-5 w-5" />}
               label="Trade Talk"
               active={activeTab === "feed"}
               onClick={() => {
                 setActiveTab("feed");
+                setMobileSidebarOpen(false);
+              }}
+            />
+            <NavButton
+              icon={<Trophy className="h-5 w-5" />}
+              label="Contests"
+              active={activeTab === "contests"}
+              onClick={() => {
+                setActiveTab("contests");
                 setMobileSidebarOpen(false);
               }}
             />
@@ -136,24 +207,33 @@ export default function Home() {
                 setMobileSidebarOpen(false);
               }}
             />
+
+            {/* Academy */}
+            <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 mb-2 mt-4">
+              Academy
+            </div>
             <NavButton
-              icon={<Package className="h-5 w-5" />}
-              label="My Programs"
-              active={activeTab === "programs"}
+              icon={<GraduationCap className="h-5 w-5" />}
+              label="Academy"
+              active={activeTab === "academy"}
               onClick={() => {
-                setActiveTab("programs");
+                setActiveTab("academy");
                 setMobileSidebarOpen(false);
               }}
             />
-            <NavButton
-              icon={<Users className="h-5 w-5" />}
-              label="Profile"
-              active={activeTab === "profile"}
-              onClick={() => {
-                setActiveTab("profile");
-                setMobileSidebarOpen(false);
-              }}
-            />
+
+            {/* Profile */}
+            <div className="border-t border-slate-800 mt-4 pt-4">
+              <NavButton
+                icon={<Users className="h-5 w-5" />}
+                label="Profile"
+                active={activeTab === "profile"}
+                onClick={() => {
+                  setActiveTab("profile");
+                  setMobileSidebarOpen(false);
+                }}
+              />
+            </div>
           </motion.div>
         )}
       </div>
@@ -168,9 +248,27 @@ export default function Home() {
           transition={{ duration: 0.3 }}
           className="container mx-auto px-4 py-8 max-w-4xl"
         >
-          {activeTab === "feed" && <CommunityFeed />}
-          {activeTab === "leaderboard" && <Leaderboard />}
           {activeTab === "programs" && <MyPrograms />}
+          {activeTab === "feed" && <CommunityFeed />}
+          {activeTab === "contests" && (
+            <div className="flex items-center justify-center h-[60vh]">
+              <div className="text-center">
+                <Trophy className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+                <h2 className="text-2xl font-bold text-slate-300 mb-2">Contests Coming Soon</h2>
+                <p className="text-slate-500">Stay tuned for exciting trading competitions!</p>
+              </div>
+            </div>
+          )}
+          {activeTab === "leaderboard" && <Leaderboard />}
+          {activeTab === "academy" && (
+            <div className="flex items-center justify-center h-[60vh]">
+              <div className="text-center">
+                <GraduationCap className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+                <h2 className="text-2xl font-bold text-slate-300 mb-2">Academy Coming Soon</h2>
+                <p className="text-slate-500">Educational content and courses will be available here!</p>
+              </div>
+            </div>
+          )}
           {activeTab === "profile" && <UserProfile onViewAchievements={() => setActiveTab("achievements")} />}
           {activeTab === "achievements" && <AchievementsPage onBack={() => setActiveTab("profile")} />}
         </motion.div>
