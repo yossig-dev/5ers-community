@@ -49,7 +49,7 @@ export default function Home() {
         <nav className="flex-1 p-4 space-y-2">
           <NavButton
             icon={<HomeIcon className="h-5 w-5" />}
-            label="Feed"
+            label="Trade Talk"
             active={activeTab === "feed"}
             onClick={() => setActiveTab("feed")}
             collapsed={!sidebarOpen}
@@ -112,7 +112,7 @@ export default function Home() {
           >
             <NavButton
               icon={<HomeIcon className="h-5 w-5" />}
-              label="Feed"
+              label="Trade Talk"
               active={activeTab === "feed"}
               onClick={() => {
                 setActiveTab("feed");
