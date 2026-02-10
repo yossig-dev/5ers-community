@@ -191,14 +191,38 @@ export default function Home() {
       </div>
 
       {/* Main Content Area */}
-      <main className="flex-1 overflow-y-auto pt-16 lg:pt-0">
+      <main className="flex-1 overflow-y-auto pt-16 lg:pt-0 flex flex-col">
+        {/* Top Bar - Desktop Only */}
+        <div className="hidden lg:flex items-center justify-end px-8 py-4 border-b border-slate-800 bg-slate-900/50 backdrop-blur-xl sticky top-0 z-40">
+          <div className="flex items-center gap-4">
+            {/* New Order CTA */}
+            <Button className="bg-success hover:bg-success/90 text-slate-950 font-semibold">
+              + New Order
+            </Button>
+
+            {/* Notification Bell */}
+            <button className="relative p-2 rounded-lg hover:bg-slate-800 transition-colors">
+              <Bell className="w-5 h-5 text-slate-300" />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+            </button>
+
+            {/* Profile Picture */}
+            <button className="flex items-center gap-2 p-1 pr-3 rounded-lg hover:bg-slate-800 transition-colors">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-success to-emerald-600 flex items-center justify-center">
+                <span className="text-sm font-bold text-slate-950">T</span>
+              </div>
+              <span className="text-sm font-medium text-slate-300">TradeKing</span>
+            </button>
+          </div>
+        </div>
+
         <motion.div
           key={activeTab}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3 }}
-          className="container mx-auto px-4 py-8 max-w-4xl"
+          className="container mx-auto px-4 py-8 max-w-4xl flex-1"
         >
           {activeTab === "programs" && <MyPrograms />}
           {activeTab === "feed" && <CommunityFeed />}
