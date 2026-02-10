@@ -32,7 +32,7 @@ export default function Home() {
                 animate={{ opacity: 1 }}
                 className="text-xl font-bold bg-gradient-to-r from-success to-emerald-400 bg-clip-text text-transparent"
               >
-                PropFirm
+                The 5ers
               </motion.h1>
             )}
             <Button
@@ -89,7 +89,7 @@ export default function Home() {
       <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-xl border-b border-slate-800">
         <div className="flex items-center justify-between p-4">
           <h1 className="text-xl font-bold bg-gradient-to-r from-success to-emerald-400 bg-clip-text text-transparent">
-            PropFirm
+            The 5ers
           </h1>
           <Button
             variant="ghost"
