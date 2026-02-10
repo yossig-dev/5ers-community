@@ -86,19 +86,8 @@ export default function Home() {
         </nav>
 
         <div className="p-4 border-t border-slate-800 space-y-2">
-          <NavButton
-            icon={<HelpCircle className="h-5 w-5" />}
-            label="Help"
-            collapsed={!sidebarOpen}
-          />
-          <NavButton
-            icon={<Settings className="h-5 w-5" />}
-            label="Settings"
-            collapsed={!sidebarOpen}
-          />
-          
           {/* Social Media Links */}
-          <div className={`flex ${sidebarOpen ? 'gap-3 pt-4' : 'flex-col gap-2 pt-4'} items-center ${sidebarOpen ? 'justify-start px-3' : 'justify-center'}`}>
+          <div className={`flex ${sidebarOpen ? 'gap-3 pb-4' : 'flex-col gap-2 pb-4'} items-center ${sidebarOpen ? 'justify-start px-3' : 'justify-center'}`}>
             <a
               href="https://youtube.com"
               target="_blank"
@@ -132,6 +121,17 @@ export default function Home() {
               </svg>
             </a>
           </div>
+          
+          <NavButton
+            icon={<HelpCircle className="h-5 w-5" />}
+            label="Help"
+            collapsed={!sidebarOpen}
+          />
+          <NavButton
+            icon={<Settings className="h-5 w-5" />}
+            label="Settings"
+            collapsed={!sidebarOpen}
+          />
         </div>
       </aside>
 
