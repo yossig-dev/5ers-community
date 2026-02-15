@@ -13,6 +13,14 @@ export function ClanLeaderboard() {
 
   return (
     <div className="space-y-6">
+      {/* Title */}
+      <div>
+        <h2 className="text-3xl font-bold text-slate-100">Clan Leaderboard</h2>
+        <p className="text-slate-400 mt-1">
+          Top performing trading clans this month
+        </p>
+      </div>
+
       {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <StatCard
