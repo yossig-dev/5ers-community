@@ -176,7 +176,7 @@ function ChatMessage({ message }: { message: any }) {
             {message.user.username}
           </p>
           <LevelBadge level={message.user.level} className="text-xs" />
-          <span className="text-xs text-slate-500">
+          <span className="text-xs text-slate-500" suppressHydrationWarning>
             {getRelativeTime(message.timestamp)}
           </span>
         </div>
