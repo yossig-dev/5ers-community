@@ -18,6 +18,18 @@ export type TradingLevel = {
   icon: string;
 };
 
+export type Clan = {
+  id: string;
+  name: string;
+  icon: string;
+  color: string;
+  memberCount: number;
+  totalProfit: number;
+  totalGain: number;
+  profitFactor: number;
+  description: string;
+};
+
 export type User = {
   id: string;
   username: string;
@@ -26,6 +38,7 @@ export type User = {
   verified: boolean;
   xp: number;
   level: TradingLevel;
+  clanId?: string;
 };
 
 export type TradingAccount = {
@@ -322,6 +335,98 @@ export const BADGES: Record<string, Badge> = {
 
 export const ALL_ACHIEVEMENTS = Object.values(BADGES);
 
+// Mock Clans
+export const MOCK_CLANS: Clan[] = [
+  {
+    id: "clan1",
+    name: "Gold Rush Traders",
+    icon: "🏆",
+    color: "text-yellow-500",
+    memberCount: 24,
+    totalProfit: 1245680,
+    totalGain: 42.8,
+    profitFactor: 2.45,
+    description: "Elite gold traders dominating the markets",
+  },
+  {
+    id: "clan2",
+    name: "Forex Legends",
+    icon: "💎",
+    color: "text-blue-500",
+    memberCount: 18,
+    totalProfit: 982450,
+    totalGain: 38.5,
+    profitFactor: 2.28,
+    description: "Masters of currency trading",
+  },
+  {
+    id: "clan3",
+    name: "Crypto Wolves",
+    icon: "🐺",
+    color: "text-purple-500",
+    memberCount: 31,
+    totalProfit: 875320,
+    totalGain: 35.2,
+    profitFactor: 2.15,
+    description: "Cryptocurrency trading specialists",
+  },
+  {
+    id: "clan4",
+    name: "Day Trade Kings",
+    icon: "👑",
+    color: "text-amber-500",
+    memberCount: 15,
+    totalProfit: 756890,
+    totalGain: 31.8,
+    profitFactor: 2.05,
+    description: "Fast-paced day trading experts",
+  },
+  {
+    id: "clan5",
+    name: "Swing Masters",
+    icon: "⚡",
+    color: "text-cyan-500",
+    memberCount: 22,
+    totalProfit: 654720,
+    totalGain: 28.4,
+    profitFactor: 1.95,
+    description: "Strategic swing trading pros",
+  },
+  {
+    id: "clan6",
+    name: "Profit Hunters",
+    icon: "🎯",
+    color: "text-green-500",
+    memberCount: 19,
+    totalProfit: 589340,
+    totalGain: 25.6,
+    profitFactor: 1.88,
+    description: "Precision traders hunting profits",
+  },
+  {
+    id: "clan7",
+    name: "Market Sharks",
+    icon: "🦈",
+    color: "text-indigo-500",
+    memberCount: 27,
+    totalProfit: 512680,
+    totalGain: 22.3,
+    profitFactor: 1.75,
+    description: "Aggressive market players",
+  },
+  {
+    id: "clan8",
+    name: "Bull Brigade",
+    icon: "🐂",
+    color: "text-red-500",
+    memberCount: 16,
+    totalProfit: 445920,
+    totalGain: 19.8,
+    profitFactor: 1.68,
+    description: "Bullish market enthusiasts",
+  },
+];
+
 // Mock Users
 export const MOCK_USERS: User[] = [
   {
@@ -332,6 +437,7 @@ export const MOCK_USERS: User[] = [
     verified: true,
     xp: 8000,
     level: getLevelByXP(8000),
+    clanId: "clan1",
   },
   {
     id: "2",

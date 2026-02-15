@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Menu, X, Home as HomeIcon, TrendingUp, Users, Settings, Bell, Package, Trophy, GraduationCap, HelpCircle } from "lucide-react";
 import { CommunityFeed } from "@/components/community-feed";
 import { Leaderboard } from "@/components/leaderboard";
+import { ClanLeaderboard } from "@/components/clan-leaderboard";
 import { UserProfile } from "@/components/user-profile";
 import { AchievementsPage } from "@/components/achievements-page";
 import { MyPrograms } from "@/components/my-programs";
@@ -274,7 +275,7 @@ export default function Home() {
               </div>
             </div>
           )}
-          {activeTab === "leaderboard" && <Leaderboard />}
+          {activeTab === "leaderboard" && <ClanLeaderboard />}
           {activeTab === "academy" && (
             <div className="flex items-center justify-center h-[60vh]">
               <div className="text-center">
