@@ -238,7 +238,7 @@ export function UserProfile({ onViewAchievements }: { onViewAchievements?: () =>
 
                     {/* Time */}
                     <td className="px-4 py-3">
-                      <span className="text-sm text-slate-400">
+                      <span className="text-sm text-slate-400" suppressHydrationWarning>
                         {getRelativeTime(trade.time)}
                       </span>
                     </td>

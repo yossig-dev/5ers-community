@@ -152,7 +152,7 @@ function PostCard({ post, onLike }: { post: Post; onLike: () => void }) {
                 ))}
                 <LevelBadge level={post.user.level} />
               </div>
-              <p className="text-xs text-slate-500 mt-1">
+              <p className="text-xs text-slate-500 mt-1" suppressHydrationWarning>
                 {getRelativeTime(post.timestamp)}
               </p>
             </div>
