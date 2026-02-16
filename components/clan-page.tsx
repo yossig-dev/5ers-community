@@ -13,21 +13,31 @@ import type { Clan } from "@/lib/constants";
 import { formatNumber, formatPercentage } from "@/lib/utils";
 
 export function ClanPage() {
-  // Check if current user has a clan (using TradeKing as example)
+  // State to track user's clan membership
   const currentUser = MOCK_USERS[0];
-  const userClan = currentUser.clanId 
+  const initialClan = currentUser.clanId 
     ? MOCK_CLANS.find(c => c.id === currentUser.clanId)
     : null;
+  
+  const [userClan, setUserClan] = useState<Clan | null>(initialClan);
+
+  const handleJoinClan = (clan: Clan) => {
+    setUserClan(clan);
+  };
+
+  const handleLeaveClan = () => {
+    setUserClan(null);
+  };
 
   return userClan ? (
-    <ClanView clan={userClan} />
+    <ClanView clan={userClan} onLeaveClan={handleLeaveClan} />
   ) : (
-    <ClanSearchView />
+    <ClanSearchView onJoinClan={handleJoinClan} />
   );
 }
 
 // View for users without a clan
-function ClanSearchView() {
+function ClanSearchView({ onJoinClan }: { onJoinClan: (clan: Clan) => void }) {
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredClans = MOCK_CLANS.filter(clan =>
@@ -60,7 +70,7 @@ function ClanSearchView() {
       {/* Clans Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {filteredClans.map((clan, index) => (
-          <ClanCard key={clan.id} clan={clan} delay={index * 0.05} />
+          <ClanCard key={clan.id} clan={clan} delay={index * 0.05} onJoin={onJoinClan} />
         ))}
       </div>
 
@@ -74,7 +84,7 @@ function ClanSearchView() {
   );
 }
 
-function ClanCard({ clan, delay }: { clan: Clan; delay: number }) {
+function ClanCard({ clan, delay, onJoin }: { clan: Clan; delay: number; onJoin: (clan: Clan) => void }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -116,7 +126,10 @@ function ClanCard({ clan, delay }: { clan: Clan; delay: number }) {
             </div>
           </div>
 
-          <Button className="w-full bg-success hover:bg-success/90 text-slate-950 font-semibold">
+          <Button 
+            onClick={() => onJoin(clan)}
+            className="w-full bg-success hover:bg-success/90 text-slate-950 font-semibold"
+          >
             Join Clan
           </Button>
         </CardContent>
@@ -126,7 +139,7 @@ function ClanCard({ clan, delay }: { clan: Clan; delay: number }) {
 }
 
 // View for users who are in a clan
-function ClanView({ clan }: { clan: Clan }) {
+function ClanView({ clan, onLeaveClan }: { clan: Clan; onLeaveClan: () => void }) {
   const [chatMessage, setChatMessage] = useState("");
 
   // Mock clan members - using actual leaderboard data
@@ -150,7 +163,11 @@ function ClanView({ clan }: { clan: Clan }) {
                 <p className="text-sm text-slate-400">{clan.description}</p>
               </div>
             </div>
-            <Button variant="outline" className="border-slate-700 text-slate-300">
+            <Button 
+              variant="outline" 
+              onClick={onLeaveClan}
+              className="border-slate-700 text-slate-300 hover:border-red-500 hover:text-red-500 hover:bg-red-500/10"
+            >
               Leave Clan
             </Button>
           </div>
