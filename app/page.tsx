@@ -10,6 +10,7 @@ import { ClanPage } from "@/components/clan-page";
 import { UserProfile } from "@/components/user-profile";
 import { AchievementsPage } from "@/components/achievements-page";
 import { MyPrograms } from "@/components/my-programs";
+import { NotificationsDropdown } from "@/components/notifications-dropdown";
 import { Button } from "@/components/ui/button";
 
 type TabType = "feed" | "leaderboard" | "profile" | "achievements" | "programs" | "contests" | "academy" | "clan";
@@ -255,10 +256,7 @@ export default function Home() {
             </Button>
 
             {/* Notification Bell */}
-            <button className="relative p-2 rounded-lg hover:bg-slate-800 transition-colors">
-              <Bell className="w-5 h-5 text-slate-300" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-            </button>
+            <NotificationsDropdown onNavigate={(page) => setActiveTab(page as TabType)} />
 
             {/* Profile Picture */}
             <button 
