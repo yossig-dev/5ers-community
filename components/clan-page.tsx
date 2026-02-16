@@ -129,7 +129,7 @@ function ClanCard({ clan, delay }: { clan: Clan; delay: number }) {
 function ClanView({ clan }: { clan: Clan }) {
   const [chatMessage, setChatMessage] = useState("");
 
-  // Mock clan members from leaderboard
+  // Mock clan members - using actual leaderboard data
   const clanMembers = MOCK_LEADERBOARD.slice(0, 5);
 
   return (
@@ -217,7 +217,7 @@ function ClanView({ clan }: { clan: Clan }) {
                   </div>
                   <div className="text-right">
                     <p className="text-sm font-semibold text-success">
-                      {formatPercentage(member.gain)}
+                      {formatPercentage(member.gainPercent)}
                     </p>
                     <p className="text-xs text-slate-500">
                       {formatNumber(member.totalProfit)}
