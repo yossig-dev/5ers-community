@@ -2,16 +2,17 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Menu, X, Home as HomeIcon, TrendingUp, Users, Settings, Bell, Package, Trophy, GraduationCap, HelpCircle } from "lucide-react";
+import { Menu, X, Home as HomeIcon, TrendingUp, Users, Settings, Bell, Package, Trophy, GraduationCap, HelpCircle, Shield } from "lucide-react";
 import { CommunityFeed } from "@/components/community-feed";
 import { Leaderboard } from "@/components/leaderboard";
 import { ClanLeaderboard } from "@/components/clan-leaderboard";
+import { ClanPage } from "@/components/clan-page";
 import { UserProfile } from "@/components/user-profile";
 import { AchievementsPage } from "@/components/achievements-page";
 import { MyPrograms } from "@/components/my-programs";
 import { Button } from "@/components/ui/button";
 
-type TabType = "feed" | "leaderboard" | "profile" | "achievements" | "programs" | "contests" | "academy";
+type TabType = "feed" | "leaderboard" | "profile" | "achievements" | "programs" | "contests" | "academy" | "clan";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<TabType>("feed");
@@ -68,6 +69,13 @@ export default function Home() {
             label="Contests"
             active={activeTab === "contests"}
             onClick={() => setActiveTab("contests")}
+            collapsed={!sidebarOpen}
+          />
+          <NavButton
+            icon={<Shield className="h-5 w-5" />}
+            label="Clan"
+            active={activeTab === "clan"}
+            onClick={() => setActiveTab("clan")}
             collapsed={!sidebarOpen}
           />
           <NavButton
@@ -193,6 +201,15 @@ export default function Home() {
               }}
             />
             <NavButton
+              icon={<Shield className="h-5 w-5" />}
+              label="Clan"
+              active={activeTab === "clan"}
+              onClick={() => {
+                setActiveTab("clan");
+                setMobileSidebarOpen(false);
+              }}
+            />
+            <NavButton
               icon={<TrendingUp className="h-5 w-5" />}
               label="Leaderboard"
               active={activeTab === "leaderboard"}
@@ -266,6 +283,7 @@ export default function Home() {
         >
           {activeTab === "programs" && <MyPrograms />}
           {activeTab === "feed" && <CommunityFeed />}
+          {activeTab === "clan" && <ClanPage />}
           {activeTab === "contests" && (
             <div className="flex items-center justify-center h-[60vh]">
               <div className="text-center">
