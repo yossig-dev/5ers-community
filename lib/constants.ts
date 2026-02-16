@@ -35,11 +35,17 @@ export type Clan = {
   };
 };
 
+export type UserBadge = {
+  badge: Badge;
+  unlockedAt: Date;
+};
+
 export type User = {
   id: string;
   username: string;
   avatar: string;
   badges: Badge[];
+  unlockedBadges?: UserBadge[]; // Badges with unlock dates
   verified: boolean;
   xp: number;
   level: TradingLevel;
@@ -459,6 +465,20 @@ export const MOCK_USERS: User[] = [
     username: "TradeKing",
     avatar: "👑",
     badges: [BADGES.contest1st, BADGES.funded, BADGES.club100k],
+    unlockedBadges: [
+      {
+        badge: BADGES.contest1st,
+        unlockedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+      },
+      {
+        badge: BADGES.funded,
+        unlockedAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000), // 15 days ago
+      },
+      {
+        badge: BADGES.club100k,
+        unlockedAt: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000), // 45 days ago
+      },
+    ],
     verified: true,
     xp: 8000,
     level: getLevelByXP(8000),

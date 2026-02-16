@@ -160,17 +160,20 @@ export function UserProfile({ onViewAchievements }: { onViewAchievements?: () =>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {profileUser.badges.map((badge, index) => (
+            {(profileUser.unlockedBadges || []).map((userBadge, index) => (
               <motion.div
-                key={badge.id}
+                key={userBadge.badge.id}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.1 }}
                 className="glass-card-hover rounded-lg p-4 text-center"
               >
-                <div className="text-4xl mb-2">{badge.icon}</div>
-                <p className={`text-sm font-semibold ${badge.color}`}>
-                  {badge.name}
+                <div className="text-4xl mb-2">{userBadge.badge.icon}</div>
+                <p className={`text-sm font-semibold ${userBadge.badge.color} mb-1`}>
+                  {userBadge.badge.name}
+                </p>
+                <p className="text-xs text-slate-500" suppressHydrationWarning>
+                  {getRelativeTime(userBadge.unlockedAt)}
                 </p>
               </motion.div>
             ))}
@@ -178,7 +181,7 @@ export function UserProfile({ onViewAchievements }: { onViewAchievements?: () =>
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: profileUser.badges.length * 0.1 }}
+              transition={{ delay: (profileUser.unlockedBadges?.length || 0) * 0.1 }}
               className="glass-card rounded-lg p-4 text-center opacity-30"
             >
               <div className="text-4xl mb-2">🔒</div>
