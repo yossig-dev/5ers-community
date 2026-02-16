@@ -8,9 +8,24 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { MOCK_CLANS, MOCK_USERS, MOCK_LEADERBOARD } from "@/lib/constants";
+import { MOCK_CLANS, MOCK_USERS, MOCK_LEADERBOARD, BADGES } from "@/lib/constants";
 import type { Clan } from "@/lib/constants";
 import { formatNumber, formatPercentage } from "@/lib/utils";
+
+// Helper function to check if user meets clan requirements
+function meetsRequirement(clan: Clan): boolean {
+  if (!clan.requirement) return true;
+  
+  const currentUser = MOCK_USERS[0]; // TradeKing
+  
+  if (clan.requirement.type === "badge") {
+    return currentUser.badges.some(badge => badge.id === clan.requirement!.value);
+  } else if (clan.requirement.type === "xp") {
+    return currentUser.xp >= (clan.requirement.value as number);
+  }
+  
+  return false;
+}
 
 export function ClanPage() {
   // State to track user's clan membership
@@ -85,6 +100,8 @@ function ClanSearchView({ onJoinClan }: { onJoinClan: (clan: Clan) => void }) {
 }
 
 function ClanCard({ clan, delay, onJoin }: { clan: Clan; delay: number; onJoin: (clan: Clan) => void }) {
+  const canJoin = meetsRequirement(clan);
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -126,11 +143,32 @@ function ClanCard({ clan, delay, onJoin }: { clan: Clan; delay: number; onJoin: 
             </div>
           </div>
 
+          {/* Requirement Badge */}
+          {clan.requirement && (
+            <div className="mb-4">
+              <Badge
+                variant="outline"
+                className={`text-xs ${
+                  canJoin
+                    ? "border-success/30 bg-success/10 text-success"
+                    : "border-yellow-500/30 bg-yellow-500/10 text-yellow-500"
+                }`}
+              >
+                {canJoin ? "✓ " : "🔒 "}Requires: {clan.requirement.label}
+              </Badge>
+            </div>
+          )}
+
           <Button 
             onClick={() => onJoin(clan)}
-            className="w-full bg-success hover:bg-success/90 text-slate-950 font-semibold"
+            disabled={!canJoin}
+            className={`w-full font-semibold ${
+              canJoin
+                ? "bg-success hover:bg-success/90 text-slate-950"
+                : "bg-slate-800 text-slate-500 cursor-not-allowed opacity-60"
+            }`}
           >
-            Join Clan
+            {canJoin ? "Join Clan" : "Requirements Not Met"}
           </Button>
         </CardContent>
       </Card>

@@ -28,6 +28,11 @@ export type Clan = {
   totalGain: number;
   profitFactor: number;
   description: string;
+  requirement?: {
+    type: "badge" | "xp";
+    value: string | number; // badge ID or XP amount
+    label: string; // Display text like "Funded Trader" or "Level 50"
+  };
 };
 
 export type User = {
@@ -358,6 +363,11 @@ export const MOCK_CLANS: Clan[] = [
     totalGain: 38.5,
     profitFactor: 2.28,
     description: "Masters of currency trading",
+    requirement: {
+      type: "badge",
+      value: "funded",
+      label: "Funded Trader",
+    },
   },
   {
     id: "clan3",
@@ -369,6 +379,11 @@ export const MOCK_CLANS: Clan[] = [
     totalGain: 35.2,
     profitFactor: 2.15,
     description: "Cryptocurrency trading specialists",
+    requirement: {
+      type: "xp",
+      value: 10000,
+      label: "Diamond Trader",
+    },
   },
   {
     id: "clan4",
@@ -391,6 +406,11 @@ export const MOCK_CLANS: Clan[] = [
     totalGain: 28.4,
     profitFactor: 1.95,
     description: "Strategic swing trading pros",
+    requirement: {
+      type: "badge",
+      value: "club100k",
+      label: "100k Club",
+    },
   },
   {
     id: "clan6",
@@ -424,6 +444,11 @@ export const MOCK_CLANS: Clan[] = [
     totalGain: 19.8,
     profitFactor: 1.68,
     description: "Bullish market enthusiasts",
+    requirement: {
+      type: "xp",
+      value: 6000,
+      label: "Platinum Trader",
+    },
   },
 ];
 
