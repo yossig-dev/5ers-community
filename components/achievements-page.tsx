@@ -11,7 +11,13 @@ import type { Badge as AchievementBadge } from "@/lib/constants";
 
 export function AchievementsPage({ onBack }: { onBack: () => void }) {
   // Get the current user's achievements (TradeKing)
-  const userAchievements = MOCK_USERS[0].badges.map((b) => b.id);
+  const currentUser = MOCK_USERS[0];
+  const userAchievements = currentUser.badges.map((b) => b.id);
+  
+  // Create a map of badge ID to unlock date
+  const unlockDates = new Map(
+    (currentUser.unlockedBadges || []).map((ub) => [ub.badge.id, ub.unlockedAt])
+  );
 
   // Group achievements by category
   const categories = Array.from(
@@ -67,12 +73,14 @@ export function AchievementsPage({ onBack }: { onBack: () => void }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {category.achievements.map((achievement, index) => {
               const progress = USER_ACHIEVEMENT_PROGRESS[achievement.id];
+              const unlockDate = unlockDates.get(achievement.id);
               return (
                 <AchievementCard
                   key={achievement.id}
                   achievement={achievement}
                   unlocked={userAchievements.includes(achievement.id)}
                   progress={progress}
+                  unlockDate={unlockDate}
                   delay={index * 0.05}
                 />
               );
@@ -88,16 +96,29 @@ function AchievementCard({
   achievement,
   unlocked,
   progress,
+  unlockDate,
   delay,
 }: {
   achievement: AchievementBadge;
   unlocked: boolean;
   progress?: { current: number; required: number };
+  unlockDate?: Date;
   delay: number;
 }) {
   const progressPercent = progress
     ? (progress.current / progress.required) * 100
     : 0;
+  
+  const getRelativeTime = (date: Date): string => {
+    const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
+    if (seconds < 60) return "just now";
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return `${minutes}m ago`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours}h ago`;
+    const days = Math.floor(hours / 24);
+    return `${days}d ago`;
+  };
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -145,7 +166,7 @@ function AchievementCard({
 
               {/* Requirement / Progress */}
               <div className="space-y-2">
-                <div className="flex items-center gap-2 text-xs">
+                <div className="flex items-center gap-2 text-xs flex-wrap">
                   <Badge
                     variant="outline"
                     className={`${
@@ -156,6 +177,11 @@ function AchievementCard({
                   >
                     {unlocked ? "Unlocked" : achievement.requirement}
                   </Badge>
+                  {unlocked && unlockDate && (
+                    <span className="text-xs text-slate-500" suppressHydrationWarning>
+                      {getRelativeTime(unlockDate)}
+                    </span>
+                  )}
                 </div>
 
                 {/* Progress Bar for In-Progress Achievements */}
