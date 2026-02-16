@@ -143,9 +143,9 @@ function ClanCard({ clan, delay, onJoin }: { clan: Clan; delay: number; onJoin: 
             </div>
           </div>
 
-          {/* Requirement Badge */}
-          {clan.requirement && (
-            <div className="mb-4">
+          {/* Requirement Badge - Fixed height container */}
+          <div className="mb-4 h-8 flex items-center">
+            {clan.requirement && (
               <Badge
                 variant="outline"
                 className={`text-xs ${
@@ -156,8 +156,8 @@ function ClanCard({ clan, delay, onJoin }: { clan: Clan; delay: number; onJoin: 
               >
                 {canJoin ? "✓ " : "🔒 "}Requires: {clan.requirement.label}
               </Badge>
-            </div>
-          )}
+            )}
+          </div>
 
           <Button 
             onClick={() => onJoin(clan)}
