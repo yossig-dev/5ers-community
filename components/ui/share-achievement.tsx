@@ -72,7 +72,7 @@ export function ShareAchievement({
         {isOpen && (
           <>
             <div
-              className="fixed inset-0 z-[100]"
+              className="fixed inset-0 z-[10000]"
               onClick={() => setIsOpen(false)}
             />
             <motion.div
@@ -80,7 +80,7 @@ export function ShareAchievement({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -10 }}
               transition={{ duration: 0.15 }}
-              className="absolute right-0 top-full mt-2 w-72 z-[101]"
+              className="absolute right-0 top-full mt-2 w-72 z-[10001]"
             >
               <Card className="glass-card border-slate-700 shadow-2xl">
                 <CardContent className="p-4">
