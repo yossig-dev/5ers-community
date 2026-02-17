@@ -43,19 +43,12 @@ export function ShareAchievement({
       const spaceBelow = window.innerHeight - rect.bottom;
       const spaceAbove = rect.top;
       
-      // Find the parent card element for better positioning
-      let cardRect = rect;
-      const parentCard = buttonRef.current.closest('.glass-card-hover, .glass-card');
-      if (parentCard) {
-        cardRect = parentCard.getBoundingClientRect();
-      }
-      
       // Check if we should show above or below
       const shouldShowAbove = spaceBelow < dropdownHeight && spaceAbove > spaceBelow;
       setShowAbove(shouldShowAbove);
       
-      // Position to the right of the card, slightly overlapping
-      let leftPos = cardRect.right + window.scrollX - dropdownWidth + 20;
+      // Position directly adjacent to the button (right-aligned)
+      let leftPos = rect.right + window.scrollX - dropdownWidth;
       
       // Ensure dropdown doesn't go off the left edge
       if (leftPos < 16) {
@@ -70,15 +63,15 @@ export function ShareAchievement({
       let topPos: number;
       
       if (shouldShowAbove) {
-        // Position above, aligned with top of card
-        topPos = cardRect.top + window.scrollY - dropdownHeight + 40;
+        // Position above the button
+        topPos = rect.top + window.scrollY - dropdownHeight - 8;
         // Ensure it doesn't go above the viewport
         if (topPos < window.scrollY + 16) {
           topPos = window.scrollY + 16; // 16px padding from top
         }
       } else {
-        // Position below, aligned with top of card
-        topPos = cardRect.top + window.scrollY - 40;
+        // Position below the button, aligned with button top
+        topPos = rect.top + window.scrollY;
         // Ensure it doesn't go below the viewport
         const maxTop = window.scrollY + window.innerHeight - dropdownHeight - 16;
         if (topPos > maxTop) {
@@ -151,14 +144,15 @@ export function ShareAchievement({
                 onClick={() => setIsOpen(false)}
               />
               <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: -10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                transition={{ duration: 0.15 }}
+                initial={{ opacity: 0, scale: 0.9, x: 20 }}
+                animate={{ opacity: 1, scale: 1, x: 0 }}
+                exit={{ opacity: 0, scale: 0.9, x: 20 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
                 className="fixed w-72 z-[10001]"
                 style={{
                   top: `${position.top}px`,
                   left: `${position.left}px`,
+                  transformOrigin: "top right",
                 }}
               >
                 <Card className="glass-card border-slate-700 shadow-2xl">
