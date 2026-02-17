@@ -293,14 +293,14 @@ export const BADGES: Record<string, Badge> = {
     requirement: "Get 1st place",
   },
 
-  // ===== TRADE AMOUNT (Tiered) =====
+  // ===== TRADING EXPERIENCE (Tiered) =====
   totalTrades: {
     id: "totalTrades",
-    name: "Active Trader",
+    name: "Experienced Trader",
     description: "Complete trades to level up",
     icon: "📊",
     color: "text-blue-500",
-    category: "Trade Amount",
+    category: "Trading Experience",
     requirement: "Complete trades",
     isTiered: true,
     maxTiers: 5,
@@ -318,7 +318,7 @@ export const BADGES: Record<string, Badge> = {
     description: "Complete sell trades from short positions",
     icon: "📉",
     color: "text-red-500",
-    category: "Trade Amount",
+    category: "Trading Experience",
     requirement: "Complete sell trades",
     isTiered: true,
     maxTiers: 5,
@@ -336,7 +336,7 @@ export const BADGES: Record<string, Badge> = {
     description: "Complete buy trades from long positions",
     icon: "📈",
     color: "text-green-500",
-    category: "Trade Amount",
+    category: "Trading Experience",
     requirement: "Complete buy trades",
     isTiered: true,
     maxTiers: 5,
@@ -354,7 +354,7 @@ export const BADGES: Record<string, Badge> = {
     description: "Trade the same asset repeatedly",
     icon: "🎯",
     color: "text-purple-500",
-    category: "Trade Amount",
+    category: "Trading Experience",
     requirement: "Trade same asset repeatedly",
     isTiered: true,
     maxTiers: 5,
@@ -506,7 +506,7 @@ export const ALL_ACHIEVEMENTS = Object.values(BADGES);
 export const WEARABLE_BADGE_IDS = [
   "funded",          // Funded Trader
   "contest1st",      // Contest 1st Place
-  "totalTrades",     // Active Trader
+  "totalTrades",     // Experienced Trader
   "accountDollarProfit", // Profit Builder
 ];
 
