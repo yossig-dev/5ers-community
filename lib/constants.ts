@@ -447,11 +447,11 @@ export const BADGES: Record<string, Badge> = {
   singleTradeDollarProfit: {
     id: "singleTradeDollarProfit",
     name: "Big Win",
-    description: "Earn high dollar profit on a single trade",
+    description: "Earn $5,000 in profits in a single day",
     icon: "💵",
     color: "text-green-600",
     category: "Successful Trading",
-    requirement: "Single trade profit $",
+    requirement: "Single day profit $",
     isTiered: true,
     maxTiers: 5,
     tierRequirements: [
