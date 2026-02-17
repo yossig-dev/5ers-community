@@ -35,26 +35,24 @@ export function AchievementsPage({ onBack }: { onBack: () => void }) {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={onBack}
-            className="border-slate-700 hover:border-slate-600 text-slate-300 hover:text-slate-100"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
-          </Button>
-          <div>
-            <h2 className="text-3xl font-bold text-slate-100 flex items-center gap-3">
-              <Award className="w-8 h-8 text-success" />
-              All Achievements
-            </h2>
-            <p className="text-slate-400 mt-1">
-              Track your progress and unlock badges
-            </p>
-          </div>
+        <div>
+          <h2 className="text-3xl font-bold text-slate-100 flex items-center gap-3">
+            <Award className="w-8 h-8 text-success" />
+            All Achievements
+          </h2>
+          <p className="text-slate-400 mt-1">
+            Track your progress and unlock badges
+          </p>
         </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={onBack}
+          className="border-slate-700 hover:border-slate-600 text-slate-300 hover:text-slate-100"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Back
+        </Button>
       </div>
 
       {/* Achievements by Category */}
