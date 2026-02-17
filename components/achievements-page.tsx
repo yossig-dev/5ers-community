@@ -198,15 +198,7 @@ function AchievementCard({
                   <p className={`text-sm mb-2 ${
                     unlocked ? "text-slate-400" : "text-slate-500"
                   }`}>
-                    {achievement.isTiered
-                      ? unlocked && currentTierRequirement
-                        ? `Make ${currentTierRequirement.requirement.toLowerCase()}`
-                        : unlocked && !currentTierRequirement
-                          ? "Max tier achieved!"
-                          : achievement.tierRequirements?.[0]
-                            ? `Make ${achievement.tierRequirements[0].requirement.toLowerCase()}`
-                            : achievement.description
-                      : achievement.description}
+                    {achievement.description}
                   </p>
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
