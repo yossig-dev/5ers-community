@@ -87,7 +87,7 @@ export function CommunityFeed({ wornBadges }: { wornBadges: Set<string> }) {
             exit={{ opacity: 0, y: -20 }}
             transition={{ delay: index * 0.1 }}
           >
-            <PostCard post={post} onLike={() => handleLike(post.id)} />
+            <PostCard post={post} onLike={() => handleLike(post.id)} wornBadges={wornBadges} />
           </motion.div>
         ))}
       </AnimatePresence>
@@ -121,7 +121,7 @@ function FilterButton({
   );
 }
 
-function PostCard({ post, onLike }: { post: Post; onLike: () => void }) {
+function PostCard({ post, onLike, wornBadges }: { post: Post; onLike: () => void; wornBadges: Set<string> }) {
   const [showComments, setShowComments] = useState(false);
 
   return (
