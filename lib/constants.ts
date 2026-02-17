@@ -407,14 +407,14 @@ export const BADGES: Record<string, Badge> = {
     ],
   },
 
-  // ===== PROFIT AMOUNT (Tiered) =====
+  // ===== SUCCESSFUL TRADING (Tiered) =====
   singleTradePercentProfit: {
     id: "singleTradePercentProfit",
     name: "Percentage Master",
     description: "Achieve high profit percentage on a single trade",
     icon: "📊",
     color: "text-teal-500",
-    category: "Profit Amount",
+    category: "Successful Trading",
     requirement: "Single trade profit %",
     isTiered: true,
     maxTiers: 5,
@@ -432,7 +432,7 @@ export const BADGES: Record<string, Badge> = {
     description: "Earn high dollar profit on a single trade",
     icon: "💵",
     color: "text-green-600",
-    category: "Profit Amount",
+    category: "Successful Trading",
     requirement: "Single trade profit $",
     isTiered: true,
     maxTiers: 5,
@@ -450,7 +450,7 @@ export const BADGES: Record<string, Badge> = {
     description: "Grow your account by percentage",
     icon: "📈",
     color: "text-emerald-600",
-    category: "Profit Amount",
+    category: "Successful Trading",
     requirement: "Account profit %",
     isTiered: true,
     maxTiers: 5,
@@ -468,7 +468,7 @@ export const BADGES: Record<string, Badge> = {
     description: "Build total account profit",
     icon: "💰",
     color: "text-yellow-600",
-    category: "Profit Amount",
+    category: "Successful Trading",
     requirement: "Account profit $",
     isTiered: true,
     maxTiers: 5,
