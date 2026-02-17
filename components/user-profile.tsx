@@ -162,7 +162,7 @@ export function UserProfile({ onViewAchievements }: { onViewAchievements?: () =>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {(profileUser.unlockedBadges || []).map((userBadge, index) => (
+            {(profileUser.unlockedBadges || []).slice(0, 8).map((userBadge, index) => (
               <motion.div
                 key={userBadge.badge.id}
                 id={userBadge.badge.id}
@@ -199,18 +199,20 @@ export function UserProfile({ onViewAchievements }: { onViewAchievements?: () =>
                 </p>
               </motion.div>
             ))}
-            {/* Locked Achievements */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: (profileUser.unlockedBadges?.length || 0) * 0.1 }}
-              className="glass-card rounded-lg p-4 text-center opacity-30"
-            >
-              <div className="text-4xl mb-2">🔒</div>
-              <p className="text-sm font-semibold text-slate-500">
-                Mystery Badge
-              </p>
-            </motion.div>
+            {/* Locked Achievements - only show if less than 8 badges */}
+            {(profileUser.unlockedBadges?.length || 0) < 8 && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: Math.min((profileUser.unlockedBadges?.length || 0), 8) * 0.1 }}
+                className="glass-card rounded-lg p-4 text-center opacity-30"
+              >
+                <div className="text-4xl mb-2">🔒</div>
+                <p className="text-sm font-semibold text-slate-500">
+                  Mystery Badge
+                </p>
+              </motion.div>
+            )}
           </div>
         </CardContent>
       </Card>
