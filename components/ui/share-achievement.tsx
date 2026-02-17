@@ -24,7 +24,6 @@ export function ShareAchievement({
 }: ShareAchievementProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
-  const [showAbove, setShowAbove] = useState(false);
   const buttonRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
 
@@ -35,56 +34,14 @@ export function ShareAchievement({
   const tierText = currentTier && maxTiers ? ` (${currentTier}⭐ / ${maxTiers}⭐)` : "";
   const shareText = `🎉 I just unlocked the "${achievementName}"${tierText} achievement on The 5ers! ${achievementIcon}\n\n${achievementDescription}`;
 
-  useEffect(() => {
-    if (isOpen && buttonRef.current) {
-      const rect = buttonRef.current.getBoundingClientRect();
-      const dropdownHeight = 600; // Approximate height of the dropdown
-      const dropdownWidth = 288; // w-72 = 288px
-      const spaceBelow = window.innerHeight - rect.bottom;
-      const spaceAbove = rect.top;
-      
-      // Check if we should show above or below
-      const shouldShowAbove = spaceBelow < dropdownHeight && spaceAbove > spaceBelow;
-      setShowAbove(shouldShowAbove);
-      
-      // Position directly adjacent to the button (right-aligned)
-      let leftPos = rect.right + window.scrollX - dropdownWidth;
-      
-      // Ensure dropdown doesn't go off the left edge
-      if (leftPos < 16) {
-        leftPos = 16; // 16px padding from left edge
-      }
-      
-      // Ensure dropdown doesn't go off the right edge
-      if (leftPos + dropdownWidth > window.innerWidth - 16) {
-        leftPos = window.innerWidth - dropdownWidth - 16;
-      }
-      
-      let topPos: number;
-      
-      if (shouldShowAbove) {
-        // Position above the button
-        topPos = rect.top + window.scrollY - dropdownHeight - 8;
-        // Ensure it doesn't go above the viewport
-        if (topPos < window.scrollY + 16) {
-          topPos = window.scrollY + 16; // 16px padding from top
-        }
-      } else {
-        // Position below the button, aligned with button top
-        topPos = rect.top + window.scrollY;
-        // Ensure it doesn't go below the viewport
-        const maxTop = window.scrollY + window.innerHeight - dropdownHeight - 16;
-        if (topPos > maxTop) {
-          topPos = maxTop;
-        }
-      }
-      
-      setPosition({
-        top: topPos,
-        left: leftPos,
-      });
-    }
-  }, [isOpen]);
+  const handleClick = (e: React.MouseEvent) => {
+    // Position dropdown at cursor location
+    setPosition({
+      top: e.clientY + window.scrollY,
+      left: e.clientX + window.scrollX,
+    });
+    setIsOpen(!isOpen);
+  };
 
   const shareUrl = "https://the5ers.com"; // Replace with actual URL
 
@@ -128,7 +85,7 @@ export function ShareAchievement({
         <Button
           variant="outline"
           size="sm"
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={handleClick}
           className="border-slate-700 hover:border-slate-600 text-slate-300 hover:text-slate-100"
         >
           <Share2 className="w-4 h-4" />
@@ -144,15 +101,15 @@ export function ShareAchievement({
                 onClick={() => setIsOpen(false)}
               />
               <motion.div
-                initial={{ opacity: 0, scale: 0.9, x: 20 }}
-                animate={{ opacity: 1, scale: 1, x: 0 }}
-                exit={{ opacity: 0, scale: 0.9, x: 20 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0 }}
+                transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}
                 className="fixed w-72 z-[10001]"
                 style={{
                   top: `${position.top}px`,
                   left: `${position.left}px`,
-                  transformOrigin: "top right",
+                  transformOrigin: "top left",
                 }}
               >
                 <Card className="glass-card border-slate-700 shadow-2xl">
