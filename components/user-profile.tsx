@@ -206,19 +206,9 @@ export function UserProfile({
                     />
                   </div>
                 )}
-                <p className="text-xs text-slate-500 mb-2" suppressHydrationWarning>
+                <p className="text-xs text-slate-500" suppressHydrationWarning>
                   {formatDate(userBadge.unlockedAt)}
                 </p>
-                <Tooltip content="Wear this Badge in the community">
-                  <div className="flex justify-center">
-                    <input
-                      type="checkbox"
-                      checked={wornBadges.has(userBadge.badge.id)}
-                      onChange={() => onToggleBadge(userBadge.badge.id)}
-                      className="w-4 h-4 rounded border-slate-600 bg-slate-800 text-success focus:ring-success focus:ring-offset-0 focus:ring-2 cursor-pointer"
-                    />
-                  </div>
-                </Tooltip>
               </motion.div>
             ))}
             {/* Locked Achievements - only show if less than 8 badges */}
