@@ -175,7 +175,11 @@ export function UserProfile({ onViewAchievements }: { onViewAchievements?: () =>
                   <ShareAchievement
                     achievementName={userBadge.badge.name}
                     achievementIcon={userBadge.badge.icon}
-                    achievementDescription={userBadge.badge.description}
+                    achievementDescription={
+                      userBadge.badge.isTiered && userBadge.currentTier && userBadge.badge.tierRequirements
+                        ? userBadge.badge.tierRequirements.find(t => t.tier === userBadge.currentTier)?.requirement || userBadge.badge.description
+                        : userBadge.badge.description
+                    }
                     currentTier={userBadge.currentTier}
                     maxTiers={userBadge.badge.maxTiers}
                     showOnHover={true}

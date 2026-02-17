@@ -279,7 +279,7 @@ export const BADGES: Record<string, Badge> = {
   totalTrades: {
     id: "totalTrades",
     name: "Active Trader",
-    description: "Complete 50, 200, 500, 1,000, or 2,500 total trades",
+    description: "Complete trades to level up",
     icon: "📊",
     color: "text-blue-500",
     category: "Trade Amount",
@@ -297,7 +297,7 @@ export const BADGES: Record<string, Badge> = {
   shortPositions: {
     id: "shortPositions",
     name: "Short Seller",
-    description: "Complete 25, 100, 250, 500, or 1,000 sell trades (short positions)",
+    description: "Complete sell trades from short positions",
     icon: "📉",
     color: "text-red-500",
     category: "Trade Amount",
@@ -315,7 +315,7 @@ export const BADGES: Record<string, Badge> = {
   longPositions: {
     id: "longPositions",
     name: "Long Trader",
-    description: "Complete 25, 100, 250, 500, or 1,000 buy trades (long positions)",
+    description: "Complete buy trades from long positions",
     icon: "📈",
     color: "text-green-500",
     category: "Trade Amount",
@@ -333,7 +333,7 @@ export const BADGES: Record<string, Badge> = {
   assetSpecialist: {
     id: "assetSpecialist",
     name: "Asset Specialist",
-    description: "Trade the same asset 50, 100, 250, 500, or 1,000 times",
+    description: "Trade the same asset repeatedly",
     icon: "🎯",
     color: "text-purple-500",
     category: "Trade Amount",
@@ -353,7 +353,7 @@ export const BADGES: Record<string, Badge> = {
   dailyConsistency: {
     id: "dailyConsistency",
     name: "Consistent Trader",
-    description: "Trade 7, 14, 30, 60, or 90 consecutive days without breaks",
+    description: "Trade consecutive days without breaks",
     icon: "🔥",
     color: "text-orange-500",
     category: "Trade Quality",
@@ -373,7 +373,7 @@ export const BADGES: Record<string, Badge> = {
   highQualityTrade: {
     id: "highQualityTrade",
     name: "Quality Trade",
-    description: "Execute a trade with quality score of 80, 85, 90, 95, or 98",
+    description: "Execute trades with high quality scores",
     icon: "💎",
     color: "text-cyan-500",
     category: "Trade Quality",
@@ -391,7 +391,7 @@ export const BADGES: Record<string, Badge> = {
   averageQuality: {
     id: "averageQuality",
     name: "Disciplined Trader",
-    description: "Maintain avg quality score of 70+, 75+, 80+, 85+, or 90+ for 7-90 days",
+    description: "Maintain high average quality over time",
     icon: "🛡️",
     color: "text-indigo-500",
     category: "Trade Quality",
@@ -411,7 +411,7 @@ export const BADGES: Record<string, Badge> = {
   singleTradePercentProfit: {
     id: "singleTradePercentProfit",
     name: "Percentage Master",
-    description: "Achieve 5%, 10%, 15%, 20%, or 25% profit on a single trade",
+    description: "Achieve high profit percentage on a single trade",
     icon: "📊",
     color: "text-teal-500",
     category: "Profit Amount",
@@ -429,7 +429,7 @@ export const BADGES: Record<string, Badge> = {
   singleTradeDollarProfit: {
     id: "singleTradeDollarProfit",
     name: "Big Win",
-    description: "Earn $500, $1,000, $2,500, $5,000, or $10,000 profit on a single trade",
+    description: "Earn high dollar profit on a single trade",
     icon: "💵",
     color: "text-green-600",
     category: "Profit Amount",
@@ -447,7 +447,7 @@ export const BADGES: Record<string, Badge> = {
   accountPercentProfit: {
     id: "accountPercentProfit",
     name: "Account Growth",
-    description: "Grow your account by 10%, 25%, 50%, 75%, or 100%",
+    description: "Grow your account by percentage",
     icon: "📈",
     color: "text-emerald-600",
     category: "Profit Amount",
@@ -465,7 +465,7 @@ export const BADGES: Record<string, Badge> = {
   accountDollarProfit: {
     id: "accountDollarProfit",
     name: "Profit Builder",
-    description: "Build $1k, $5k, $10k, $50k, or $100k in total account profit",
+    description: "Build total account profit",
     icon: "💰",
     color: "text-yellow-600",
     category: "Profit Amount",
