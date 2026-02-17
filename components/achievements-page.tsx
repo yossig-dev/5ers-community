@@ -196,23 +196,26 @@ function AchievementCard({
               {/* Requirement / Progress */}
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-xs flex-wrap">
-                  <Badge
-                    variant="outline"
-                    className={`${
-                      unlocked
-                        ? "border-success/30 bg-success/10 text-success"
-                        : "border-slate-700 bg-slate-800/50 text-slate-500"
-                    }`}
-                  >
-                    {unlocked 
-                      ? achievement.isTiered 
-                        ? `Tier ${currentTier} Unlocked`
-                        : "Unlocked"
-                      : achievement.isTiered && tierRequirement
-                        ? tierRequirement.requirement
-                        : achievement.requirement
-                    }
-                  </Badge>
+                  {/* Show badge for tiered achievements or requirement for locked achievements */}
+                  {(achievement.isTiered && unlocked) || !unlocked ? (
+                    <Badge
+                      variant="outline"
+                      className={`${
+                        unlocked
+                          ? "border-success/30 bg-success/10 text-success"
+                          : "border-slate-700 bg-slate-800/50 text-slate-500"
+                      }`}
+                    >
+                      {unlocked 
+                        ? achievement.isTiered 
+                          ? `Tier ${currentTier} Unlocked`
+                          : "Unlocked"
+                        : achievement.isTiered && tierRequirement
+                          ? tierRequirement.requirement
+                          : achievement.requirement
+                      }
+                    </Badge>
+                  ) : null}
                   {unlocked && unlockDate && (
                     <span className="text-xs text-slate-500" suppressHydrationWarning>
                       {getRelativeTime(unlockDate)}

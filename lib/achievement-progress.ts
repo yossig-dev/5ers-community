@@ -6,6 +6,9 @@ export const USER_ACHIEVEMENT_PROGRESS: Record<string, { current: number; requir
   funded: { current: 1, required: 1 },
   firstPayout: { current: 1, required: 1 },
   contest1st: { current: 1, required: 1 },
+  contest2nd: { current: 1, required: 1 },
+  contest3rd: { current: 1, required: 1 },
+  contestParticipant: { current: 1, required: 1 },
   
   // ===== TIERED ACHIEVEMENTS (with current tier progress) =====
   // Tier 3 complete, working on Tier 4
