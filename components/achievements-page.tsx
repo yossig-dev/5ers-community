@@ -70,7 +70,7 @@ export function AchievementsPage({ onBack }: { onBack: () => void }) {
             </Badge>
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-fr">
             {category.achievements.map((achievement, index) => {
               const progress = USER_ACHIEVEMENT_PROGRESS[achievement.id];
               const unlockDate = unlockDates.get(achievement.id);
@@ -133,19 +133,20 @@ function AchievementCard({
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay }}
+      className="h-full"
     >
       <Card
-        className={`glass-card transition-all ${
+        className={`glass-card transition-all h-full ${
           unlocked 
             ? "border-success/40 bg-slate-800/30 hover:border-success/60" 
             : "border-slate-800 hover:border-slate-700 opacity-60"
         }`}
       >
-        <CardContent className="p-6">
-          <div className="flex items-start gap-4">
+        <CardContent className="p-6 h-full flex flex-col">
+          <div className="flex items-start gap-4 flex-1">
             {/* Icon */}
             <div
-              className={`text-5xl ${
+              className={`text-5xl flex-shrink-0 ${
                 unlocked ? "filter-none" : "grayscale opacity-40"
               }`}
             >
@@ -153,7 +154,7 @@ function AchievementCard({
             </div>
 
             {/* Content */}
-            <div className="flex-1">
+            <div className="flex-1 min-w-0">
               <div className="flex items-start justify-between mb-2">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
