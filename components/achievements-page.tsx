@@ -109,8 +109,12 @@ function AchievementCard({
   const currentTier = progress?.currentTier || 0;
   const nextTier = currentTier + 1;
   
-  // For tiered achievements, get the next tier requirement
-  const tierRequirement = achievement.isTiered && achievement.tierRequirements
+  // For tiered achievements, get current and next tier requirements
+  const currentTierRequirement = achievement.isTiered && achievement.tierRequirements
+    ? achievement.tierRequirements.find(t => t.tier === currentTier)
+    : null;
+  
+  const nextTierRequirement = achievement.isTiered && achievement.tierRequirements
     ? achievement.tierRequirements.find(t => t.tier === nextTier)
     : null;
   
@@ -165,7 +169,9 @@ function AchievementCard({
                     )}
                   </div>
                   <p className="text-sm text-slate-400 mb-2">
-                    {achievement.description}
+                    {achievement.isTiered && unlocked && currentTierRequirement
+                      ? `${currentTierRequirement.requirement} achieved`
+                      : achievement.description}
                   </p>
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
@@ -218,20 +224,20 @@ function AchievementCard({
                 )}
                 
                 {/* Progress for tiered achievements working on next tier */}
-                {achievement.isTiered && unlocked && tierRequirement && progress && progress.current < tierRequirement.value && (
-                  <div className="space-y-1">
+                {achievement.isTiered && unlocked && nextTierRequirement && progress && progress.current < nextTierRequirement.value && (
+                  <div className="space-y-1 mt-2">
                     <div className="flex items-center justify-between text-xs">
                       <span className="text-slate-400">
-                        Next tier: {progress.current.toLocaleString()} / {tierRequirement.value.toLocaleString()}
+                        Next: {nextTierRequirement.requirement}
                       </span>
                       <span className="text-slate-400 font-semibold">
-                        {((progress.current / tierRequirement.value) * 100).toFixed(0)}%
+                        {progress.current.toLocaleString()} / {nextTierRequirement.value.toLocaleString()}
                       </span>
                     </div>
                     <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
-                        animate={{ width: `${(progress.current / tierRequirement.value) * 100}%` }}
+                        animate={{ width: `${(progress.current / nextTierRequirement.value) * 100}%` }}
                         transition={{ duration: 0.5, delay: delay + 0.2 }}
                         className="bg-gradient-to-r from-yellow-500 to-yellow-600 h-full rounded-full"
                       />
