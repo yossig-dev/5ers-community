@@ -20,7 +20,7 @@ export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [wornBadges, setWornBadges] = useState<Set<string>>(new Set([
-    "funded", "contest2nd", "totalTrades" // Default worn badges
+    "funded", "totalTrades" // Default worn badges (only wearable ones)
   ]));
 
   return (

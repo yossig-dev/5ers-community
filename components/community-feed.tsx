@@ -18,7 +18,7 @@ import { Badge } from "@/components/ui/badge";
 import { LevelBadge } from "@/components/ui/level-badge";
 import { Tooltip } from "@/components/ui/tooltip";
 import { MiniChart } from "@/components/ui/mini-chart";
-import { MOCK_POSTS } from "@/lib/constants";
+import { MOCK_POSTS, WEARABLE_BADGE_IDS } from "@/lib/constants";
 import { getRelativeTime } from "@/lib/utils";
 import type { Post } from "@/lib/constants";
 
@@ -144,7 +144,7 @@ function PostCard({ post, onLike, wornBadges }: { post: Post; onLike: () => void
                   <CheckCircle2 className="w-4 h-4 text-success fill-success" />
                 )}
                 {post.user.badges
-                  .filter((badge) => wornBadges.has(badge.id))
+                  .filter((badge) => WEARABLE_BADGE_IDS.includes(badge.id) && wornBadges.has(badge.id))
                   .slice(0, 3)
                   .map((badge) => (
                     <Tooltip key={badge.id} content={badge.name}>

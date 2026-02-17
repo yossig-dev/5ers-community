@@ -484,6 +484,14 @@ export const BADGES: Record<string, Badge> = {
 
 export const ALL_ACHIEVEMENTS = Object.values(BADGES);
 
+// Wearable badges that can be displayed in the community
+export const WEARABLE_BADGE_IDS = [
+  "funded",          // Funded Trader
+  "contest1st",      // Contest 1st Place
+  "totalTrades",     // Active Trader
+  "accountDollarProfit", // Profit Builder
+];
+
 // Mock Clans
 export const MOCK_CLANS: Clan[] = [
   {

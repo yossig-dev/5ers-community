@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { ShareAchievement } from "@/components/ui/share-achievement";
 import { TierStars } from "@/components/ui/tier-stars";
 import { Tooltip } from "@/components/ui/tooltip";
-import { ALL_ACHIEVEMENTS, MOCK_USERS } from "@/lib/constants";
+import { ALL_ACHIEVEMENTS, MOCK_USERS, WEARABLE_BADGE_IDS } from "@/lib/constants";
 import { USER_ACHIEVEMENT_PROGRESS } from "@/lib/achievement-progress";
 import { formatDate } from "@/lib/utils";
 import type { Badge as AchievementBadge } from "@/lib/constants";
@@ -163,7 +163,7 @@ function AchievementCard({
               >
                 {achievement.icon}
               </div>
-              {unlocked && (
+              {unlocked && WEARABLE_BADGE_IDS.includes(achievement.id) && (
                 <Tooltip content="Wear this Badge in the community">
                   <input
                     type="checkbox"
