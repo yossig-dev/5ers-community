@@ -21,7 +21,7 @@ import { Tooltip } from "@/components/ui/tooltip";
 import { ShareAchievement } from "@/components/ui/share-achievement";
 import { TierStars } from "@/components/ui/tier-stars";
 import { MOCK_USERS, MOCK_POSTS, TRADING_LEVELS, MOCK_TRADE_HISTORY, MOCK_TRADING_ACCOUNTS } from "@/lib/constants";
-import { formatNumber, formatPercentage, getRelativeTime } from "@/lib/utils";
+import { formatNumber, formatPercentage, getRelativeTime, formatDate } from "@/lib/utils";
 import type { TradeHistory, TradingAccount } from "@/lib/constants";
 
 // Using the first user as the profile user
@@ -195,7 +195,7 @@ export function UserProfile({ onViewAchievements }: { onViewAchievements?: () =>
                   </div>
                 )}
                 <p className="text-xs text-slate-500" suppressHydrationWarning>
-                  {getRelativeTime(userBadge.unlockedAt)}
+                  {formatDate(userBadge.unlockedAt)}
                 </p>
               </motion.div>
             ))}

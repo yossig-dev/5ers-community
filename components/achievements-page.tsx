@@ -9,6 +9,7 @@ import { ShareAchievement } from "@/components/ui/share-achievement";
 import { TierStars } from "@/components/ui/tier-stars";
 import { ALL_ACHIEVEMENTS, MOCK_USERS } from "@/lib/constants";
 import { USER_ACHIEVEMENT_PROGRESS } from "@/lib/achievement-progress";
+import { formatDate } from "@/lib/utils";
 import type { Badge as AchievementBadge } from "@/lib/constants";
 
 export function AchievementsPage({ onBack }: { onBack: () => void }) {
@@ -117,16 +118,6 @@ function AchievementCard({
     ? (progress.current / progress.required) * 100
     : 0;
   
-  const getRelativeTime = (date: Date): string => {
-    const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
-    if (seconds < 60) return "just now";
-    const minutes = Math.floor(seconds / 60);
-    if (minutes < 60) return `${minutes}m ago`;
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24) return `${hours}h ago`;
-    const days = Math.floor(hours / 24);
-    return `${days}d ago`;
-  };
   return (
     <motion.div
       id={achievement.id}
@@ -199,7 +190,7 @@ function AchievementCard({
                 {unlocked && unlockDate && (
                   <div className="flex items-center gap-2 text-xs flex-wrap">
                     <span className="text-xs text-slate-500" suppressHydrationWarning>
-                      {getRelativeTime(unlockDate)}
+                      {formatDate(unlockDate)}
                     </span>
                   </div>
                 )}
