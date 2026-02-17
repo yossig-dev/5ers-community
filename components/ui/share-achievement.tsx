@@ -81,7 +81,10 @@ export function ShareAchievement({
 
   return (
     <>
-      <div ref={buttonRef}>
+      <div 
+        ref={buttonRef} 
+        className={`opacity-0 group-hover:opacity-100 transition-opacity ${isOpen ? '!opacity-100' : ''}`}
+      >
         <Button
           variant="outline"
           size="sm"
