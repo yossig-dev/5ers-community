@@ -36,12 +36,19 @@ export function ShareAchievement({
       const spaceBelow = window.innerHeight - rect.bottom;
       const spaceAbove = rect.top;
       
+      // Find the parent card element for better positioning
+      let cardRect = rect;
+      const parentCard = buttonRef.current.closest('.glass-card-hover, .glass-card');
+      if (parentCard) {
+        cardRect = parentCard.getBoundingClientRect();
+      }
+      
       // Check if we should show above or below
       const shouldShowAbove = spaceBelow < dropdownHeight && spaceAbove > spaceBelow;
       setShowAbove(shouldShowAbove);
       
-      // Calculate left position (aligned to right edge of button)
-      let leftPos = rect.right + window.scrollX - dropdownWidth;
+      // Position to the right of the card, slightly overlapping
+      let leftPos = cardRect.right + window.scrollX - dropdownWidth + 20;
       
       // Ensure dropdown doesn't go off the left edge
       if (leftPos < 16) {
@@ -56,15 +63,15 @@ export function ShareAchievement({
       let topPos: number;
       
       if (shouldShowAbove) {
-        // Position above the button
-        topPos = rect.top + window.scrollY - dropdownHeight - 8;
+        // Position above, aligned with top of card
+        topPos = cardRect.top + window.scrollY - dropdownHeight + 40;
         // Ensure it doesn't go above the viewport
         if (topPos < window.scrollY + 16) {
           topPos = window.scrollY + 16; // 16px padding from top
         }
       } else {
-        // Position below the button (default)
-        topPos = rect.bottom + window.scrollY + 8;
+        // Position below, aligned with top of card
+        topPos = cardRect.top + window.scrollY - 40;
         // Ensure it doesn't go below the viewport
         const maxTop = window.scrollY + window.innerHeight - dropdownHeight - 16;
         if (topPos > maxTop) {
