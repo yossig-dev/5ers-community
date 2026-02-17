@@ -30,7 +30,6 @@ export const USER_ACHIEVEMENT_PROGRESS: Record<string, { current: number; requir
   highQualityTrade: { current: 75, required: 80 }, // 94% toward Tier 1
   averageQuality: { current: 5, required: 7 }, // 71% toward Tier 1
   singleTradeDollarProfit: { current: 380, required: 500 }, // 76% toward Tier 1
-  accountPercentProfit: { current: 7, required: 10 }, // 70% toward Tier 1
   
   // ===== NO PROGRESS YET =====
   contest1st: { current: 0, required: 1 },

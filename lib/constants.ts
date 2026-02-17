@@ -221,7 +221,7 @@ export const BADGES: Record<string, Badge> = {
   funded: {
     id: "funded",
     name: "Funded Trader",
-    description: "Receive your first funding",
+    description: "Get funded for the first time",
     icon: "💲",
     color: "text-yellow-400",
     category: "Milestones",
@@ -238,12 +238,12 @@ export const BADGES: Record<string, Badge> = {
   },
   hugePayout: {
     id: "hugePayout",
-    name: "Huge Payout",
-    description: "Receive large payouts from your trading",
+    name: "Huge Withdrawal",
+    description: "Make a withdrawal of $15,000",
     icon: "💵",
     color: "text-amber-500",
     category: "Milestones",
-    requirement: "Receive large payouts",
+    requirement: "Make large withdrawals",
     isTiered: true,
     maxTiers: 5,
     tierRequirements: [
@@ -297,7 +297,7 @@ export const BADGES: Record<string, Badge> = {
   totalTrades: {
     id: "totalTrades",
     name: "Experienced Trader",
-    description: "Complete trades to level up",
+    description: "Make 200 trades",
     icon: "📊",
     color: "text-blue-500",
     category: "Trading Experience",
@@ -315,7 +315,7 @@ export const BADGES: Record<string, Badge> = {
   shortPositions: {
     id: "shortPositions",
     name: "Short Seller",
-    description: "Complete sell trades from short positions",
+    description: "Complete 25 trades from a short position",
     icon: "📉",
     color: "text-red-500",
     category: "Trading Experience",
@@ -333,7 +333,7 @@ export const BADGES: Record<string, Badge> = {
   longPositions: {
     id: "longPositions",
     name: "Long Trader",
-    description: "Complete buy trades from long positions",
+    description: "Complete 25 trades from a long position",
     icon: "📈",
     color: "text-green-500",
     category: "Trading Experience",
@@ -351,7 +351,7 @@ export const BADGES: Record<string, Badge> = {
   assetSpecialist: {
     id: "assetSpecialist",
     name: "Asset Specialist",
-    description: "Trade the same asset repeatedly",
+    description: "Trade the same asset 50 times",
     icon: "🎯",
     color: "text-purple-500",
     category: "Trading Experience",
@@ -428,8 +428,8 @@ export const BADGES: Record<string, Badge> = {
   // ===== SUCCESSFUL TRADING (Tiered) =====
   singleTradePercentProfit: {
     id: "singleTradePercentProfit",
-    name: "Percentage Master",
-    description: "Achieve high profit percentage on a single trade",
+    name: "Growth Master",
+    description: "Achieve a 15% profit on a single trade",
     icon: "📊",
     color: "text-teal-500",
     category: "Successful Trading",
@@ -464,21 +464,21 @@ export const BADGES: Record<string, Badge> = {
   },
   accountPercentProfit: {
     id: "accountPercentProfit",
-    name: "Account Growth",
-    description: "Grow your account by percentage",
+    name: "Good Day",
+    description: "Reach a daily profit of 20% on your account",
     icon: "📈",
     color: "text-emerald-600",
     category: "Successful Trading",
-    requirement: "Account profit %",
-    isTiered: true,
-    maxTiers: 5,
-    tierRequirements: [
-      { tier: 1, requirement: "10% account growth", value: 10 },
-      { tier: 2, requirement: "25% account growth", value: 25 },
-      { tier: 3, requirement: "50% account growth", value: 50 },
-      { tier: 4, requirement: "75% account growth", value: 75 },
-      { tier: 5, requirement: "100% account growth", value: 100 },
-    ],
+    requirement: "Daily profit 20%",
+  },
+  miraculousRecovery: {
+    id: "miraculousRecovery",
+    name: "Miraculous Recovery",
+    description: "Turn a big loss day to a successful one",
+    icon: "🔄",
+    color: "text-purple-500",
+    category: "Successful Trading",
+    requirement: "Recover from loss",
   },
   accountDollarProfit: {
     id: "accountDollarProfit",
