@@ -212,7 +212,7 @@ export const BADGES: Record<string, Badge> = {
   passEvaluation: {
     id: "passEvaluation",
     name: "Evaluation Passed",
-    description: "Successfully passed your evaluation",
+    description: "Successfully pass your evaluation",
     icon: "✅",
     color: "text-green-400",
     category: "Milestones",
@@ -221,7 +221,7 @@ export const BADGES: Record<string, Badge> = {
   funded: {
     id: "funded",
     name: "Funded Trader",
-    description: "Received your first funding",
+    description: "Receive your first funding",
     icon: "💲",
     color: "text-yellow-400",
     category: "Milestones",
@@ -230,7 +230,7 @@ export const BADGES: Record<string, Badge> = {
   firstPayout: {
     id: "firstPayout",
     name: "First Payout",
-    description: "Received your first payout",
+    description: "Receive your first payout",
     icon: "💸",
     color: "text-emerald-400",
     category: "Milestones",
@@ -241,7 +241,7 @@ export const BADGES: Record<string, Badge> = {
   contestParticipant: {
     id: "contestParticipant",
     name: "Contest Participant",
-    description: "Participated in a trading contest",
+    description: "Participate in a trading contest",
     icon: "🎯",
     color: "text-blue-400",
     category: "Contests",
@@ -250,7 +250,7 @@ export const BADGES: Record<string, Badge> = {
   contest3rd: {
     id: "contest3rd",
     name: "Contest 3rd Place",
-    description: "Finished 3rd in a trading contest",
+    description: "Finish 3rd in a trading contest",
     icon: "🥉",
     color: "text-orange-400",
     category: "Contests",
@@ -259,7 +259,7 @@ export const BADGES: Record<string, Badge> = {
   contest2nd: {
     id: "contest2nd",
     name: "Contest 2nd Place",
-    description: "Finished 2nd in a trading contest",
+    description: "Finish 2nd in a trading contest",
     icon: "🥈",
     color: "text-slate-400",
     category: "Contests",
@@ -268,7 +268,7 @@ export const BADGES: Record<string, Badge> = {
   contest1st: {
     id: "contest1st",
     name: "Contest 1st Place",
-    description: "Won 1st place in a trading contest",
+    description: "Win 1st place in a trading contest",
     icon: "🏆",
     color: "text-yellow-500",
     category: "Contests",
