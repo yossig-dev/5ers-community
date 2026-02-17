@@ -602,16 +602,12 @@ export const MOCK_USERS: User[] = [
     id: "1",
     username: "TradeKing",
     avatar: "👑",
-    badges: [BADGES.contest1st, BADGES.contest2nd, BADGES.contest3rd, BADGES.contestParticipant, BADGES.funded, BADGES.firstPayout, BADGES.passEvaluation, BADGES.accountDollarProfit, BADGES.totalTrades, BADGES.dailyConsistency],
+    badges: [BADGES.contest2nd, BADGES.contest3rd, BADGES.contestParticipant, BADGES.funded, BADGES.firstPayout, BADGES.passEvaluation, BADGES.accountDollarProfit, BADGES.totalTrades, BADGES.dailyConsistency],
     unlockedBadges: [
       {
         badge: BADGES.accountDollarProfit,
         unlockedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // 1 day ago
         currentTier: 3, // $10,000 account profit
-      },
-      {
-        badge: BADGES.contest1st,
-        unlockedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
       },
       {
         badge: BADGES.totalTrades,
