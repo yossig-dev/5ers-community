@@ -164,6 +164,7 @@ export function UserProfile({ onViewAchievements }: { onViewAchievements?: () =>
             {(profileUser.unlockedBadges || []).map((userBadge, index) => (
               <motion.div
                 key={userBadge.badge.id}
+                id={userBadge.badge.id}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.1 }}

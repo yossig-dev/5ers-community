@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { MOCK_NOTIFICATIONS } from "@/lib/notifications";
 import type { Notification } from "@/lib/notifications";
 
-export function NotificationsDropdown({ onNavigate }: { onNavigate: (page: string) => void }) {
+export function NotificationsDropdown({ onNavigate }: { onNavigate: (page: string, targetId?: string) => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState(MOCK_NOTIFICATIONS);
 
@@ -24,7 +24,7 @@ export function NotificationsDropdown({ onNavigate }: { onNavigate: (page: strin
   const handleNotificationClick = (notification: Notification) => {
     markAsRead(notification.id);
     if (notification.targetPage) {
-      onNavigate(notification.targetPage);
+      onNavigate(notification.targetPage, notification.targetId);
       setIsOpen(false);
     }
   };

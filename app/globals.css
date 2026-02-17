@@ -80,3 +80,19 @@
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-slate-600/50;
 }
+
+/* Highlight animation for notifications */
+@keyframes highlight-flash {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.3);
+    transform: scale(1.02);
+  }
+}
+
+.highlight-flash {
+  animation: highlight-flash 1s ease-in-out;
+}

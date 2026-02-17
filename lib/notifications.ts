@@ -9,6 +9,7 @@ export type Notification = {
   timestamp: Date;
   read: boolean;
   targetPage?: "achievements" | "profile" | "clan";
+  targetId?: string; // ID of the specific achievement/badge to scroll to
 };
 
 export const MOCK_NOTIFICATIONS: Notification[] = [
@@ -21,6 +22,7 @@ export const MOCK_NOTIFICATIONS: Notification[] = [
     timestamp: new Date(Date.now() - 10 * 60 * 1000), // 10 min ago
     read: false,
     targetPage: "achievements",
+    targetId: "contest1st", // Badge ID to scroll to
   },
   {
     id: "notif2",
@@ -31,6 +33,7 @@ export const MOCK_NOTIFICATIONS: Notification[] = [
     timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
     read: false,
     targetPage: "profile",
+    targetId: "funded", // Badge ID to scroll to
   },
   {
     id: "notif3",

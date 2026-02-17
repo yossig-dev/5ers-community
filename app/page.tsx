@@ -256,7 +256,23 @@ export default function Home() {
             </Button>
 
             {/* Notification Bell */}
-            <NotificationsDropdown onNavigate={(page) => setActiveTab(page as TabType)} />
+            <NotificationsDropdown 
+              onNavigate={(page, targetId) => {
+                setActiveTab(page as TabType);
+                if (targetId) {
+                  // Wait for page to render, then scroll to the target element
+                  setTimeout(() => {
+                    const element = document.getElementById(targetId);
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      // Add a highlight effect
+                      element.classList.add('highlight-flash');
+                      setTimeout(() => element.classList.remove('highlight-flash'), 2000);
+                    }
+                  }, 100);
+                }
+              }} 
+            />
 
             {/* Profile Picture */}
             <button 
