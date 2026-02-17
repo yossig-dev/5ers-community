@@ -236,6 +236,24 @@ export const BADGES: Record<string, Badge> = {
     category: "Milestones",
     requirement: "Get a payout",
   },
+  hugePayout: {
+    id: "hugePayout",
+    name: "Huge Payout",
+    description: "Receive large payouts from your trading",
+    icon: "💰",
+    color: "text-amber-500",
+    category: "Milestones",
+    requirement: "Receive large payouts",
+    isTiered: true,
+    maxTiers: 5,
+    tierRequirements: [
+      { tier: 1, requirement: "$5,000 payout", value: 5000 },
+      { tier: 2, requirement: "$10,000 payout", value: 10000 },
+      { tier: 3, requirement: "$15,000 payout", value: 15000 },
+      { tier: 4, requirement: "$30,000 payout", value: 30000 },
+      { tier: 5, requirement: "$50,000 payout", value: 50000 },
+    ],
+  },
 
   // ===== CONTESTS (Non-Tiered) =====
   contestParticipant: {
@@ -610,7 +628,7 @@ export const MOCK_USERS: User[] = [
     id: "1",
     username: "TradeKing",
     avatar: "👑",
-    badges: [BADGES.contest2nd, BADGES.contest3rd, BADGES.contestParticipant, BADGES.funded, BADGES.firstPayout, BADGES.passEvaluation, BADGES.accountDollarProfit, BADGES.totalTrades, BADGES.dailyConsistency],
+    badges: [BADGES.contest2nd, BADGES.contest3rd, BADGES.contestParticipant, BADGES.funded, BADGES.firstPayout, BADGES.passEvaluation, BADGES.accountDollarProfit, BADGES.totalTrades, BADGES.dailyConsistency, BADGES.hugePayout],
     unlockedBadges: [
       {
         badge: BADGES.accountDollarProfit,
@@ -642,6 +660,11 @@ export const MOCK_USERS: User[] = [
       {
         badge: BADGES.firstPayout,
         unlockedAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 30 days ago
+      },
+      {
+        badge: BADGES.hugePayout,
+        unlockedAt: new Date(Date.now() - 27 * 24 * 60 * 60 * 1000), // 27 days ago
+        currentTier: 1, // $5,000 payout
       },
       {
         badge: BADGES.contestParticipant,
