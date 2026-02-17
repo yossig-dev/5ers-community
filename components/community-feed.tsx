@@ -18,6 +18,7 @@ import { Badge } from "@/components/ui/badge";
 import { LevelBadge } from "@/components/ui/level-badge";
 import { Tooltip } from "@/components/ui/tooltip";
 import { MiniChart } from "@/components/ui/mini-chart";
+import Image from "next/image";
 import { MOCK_POSTS, WEARABLE_BADGE_IDS } from "@/lib/constants";
 import { getRelativeTime } from "@/lib/utils";
 import type { Post } from "@/lib/constants";
@@ -146,13 +147,31 @@ function PostCard({ post, onLike, wornBadges }: { post: Post; onLike: () => void
                 {post.user.badges
                   .filter((badge) => WEARABLE_BADGE_IDS.includes(badge.id) && wornBadges.has(badge.id))
                   .slice(0, 3)
-                  .map((badge) => (
-                    <Tooltip key={badge.id} content={badge.name}>
-                      <span className={`text-base ${badge.color} cursor-help`}>
-                        {badge.icon}
-                      </span>
-                    </Tooltip>
-                  ))}
+                  .map((badge) => {
+                    // Find the tier info from unlockedBadges
+                    const unlockedBadge = post.user.unlockedBadges?.find(ub => ub.badge.id === badge.id);
+                    const currentTier = unlockedBadge?.currentTier;
+                    const isTiered = badge.isTiered && currentTier;
+
+                    return (
+                      <Tooltip key={badge.id} content={badge.name}>
+                        <div className="relative inline-flex items-center justify-center">
+                          <span className={`text-base ${badge.color} cursor-help`}>
+                            {badge.icon}
+                          </span>
+                          {isTiered && currentTier && (
+                            <Image
+                              src={`/badges/${currentTier} ${currentTier === 1 ? 'star' : 'stars'}.png`}
+                              alt={`${currentTier} star${currentTier > 1 ? 's' : ''}`}
+                              width={20}
+                              height={20}
+                              className="absolute -bottom-1 -right-1"
+                            />
+                          )}
+                        </div>
+                      </Tooltip>
+                    );
+                  })}
                 <LevelBadge level={post.user.level} />
               </div>
               <p className="text-xs text-slate-500 mt-1" suppressHydrationWarning>
