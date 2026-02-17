@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ShareAchievement } from "@/components/ui/share-achievement";
+import { TierStars } from "@/components/ui/tier-stars";
 import { ALL_ACHIEVEMENTS, MOCK_USERS } from "@/lib/constants";
 import { USER_ACHIEVEMENT_PROGRESS } from "@/lib/achievement-progress";
 import type { Badge as AchievementBadge } from "@/lib/constants";
@@ -102,10 +103,18 @@ function AchievementCard({
 }: {
   achievement: AchievementBadge;
   unlocked: boolean;
-  progress?: { current: number; required: number };
+  progress?: { current: number; required: number; currentTier?: number };
   unlockDate?: Date;
   delay: number;
 }) {
+  const currentTier = progress?.currentTier || 0;
+  const nextTier = currentTier + 1;
+  
+  // For tiered achievements, get the next tier requirement
+  const tierRequirement = achievement.isTiered && achievement.tierRequirements
+    ? achievement.tierRequirements.find(t => t.tier === nextTier)
+    : null;
+  
   const progressPercent = progress
     ? (progress.current / progress.required) * 100
     : 0;
@@ -147,13 +156,22 @@ function AchievementCard({
             <div className="flex-1">
               <div className="flex items-start justify-between mb-2">
                 <div className="flex-1">
-                  <h4
-                    className={`text-lg font-semibold mb-1 ${
-                      unlocked ? achievement.color : "text-slate-500"
-                    }`}
-                  >
-                    {achievement.name}
-                  </h4>
+                  <div className="flex items-center gap-2 mb-1">
+                    <h4
+                      className={`text-lg font-semibold ${
+                        unlocked ? achievement.color : "text-slate-500"
+                      }`}
+                    >
+                      {achievement.name}
+                    </h4>
+                    {achievement.isTiered && unlocked && currentTier > 0 && (
+                      <TierStars
+                        currentTier={currentTier}
+                        maxTiers={achievement.maxTiers || 5}
+                        size="sm"
+                      />
+                    )}
+                  </div>
                   <p className="text-sm text-slate-400 mb-2">
                     {achievement.description}
                   </p>
@@ -165,6 +183,8 @@ function AchievementCard({
                         achievementName={achievement.name}
                         achievementIcon={achievement.icon}
                         achievementDescription={achievement.description}
+                        currentTier={currentTier}
+                        maxTiers={achievement.maxTiers}
                       />
                       <CheckCircle2 className="w-6 h-6 text-success" />
                     </>
@@ -186,7 +206,14 @@ function AchievementCard({
                         : "border-slate-700 bg-slate-800/50 text-slate-500"
                     }`}
                   >
-                    {unlocked ? "Unlocked" : achievement.requirement}
+                    {unlocked 
+                      ? achievement.isTiered 
+                        ? `Tier ${currentTier} Unlocked`
+                        : "Unlocked"
+                      : achievement.isTiered && tierRequirement
+                        ? tierRequirement.requirement
+                        : achievement.requirement
+                    }
                   </Badge>
                   {unlocked && unlockDate && (
                     <span className="text-xs text-slate-500" suppressHydrationWarning>
@@ -195,8 +222,31 @@ function AchievementCard({
                   )}
                 </div>
 
+                {/* Tier List for Tiered Achievements */}
+                {achievement.isTiered && achievement.tierRequirements && (
+                  <div className="space-y-1 mt-2">
+                    {achievement.tierRequirements.map((tier) => {
+                      const tierUnlocked = tier.tier <= currentTier;
+                      const isCurrentGoal = tier.tier === nextTier;
+                      
+                      return (
+                        <div
+                          key={tier.tier}
+                          className={`flex items-center gap-2 text-xs ${
+                            tierUnlocked ? "text-success" : isCurrentGoal ? "text-slate-300" : "text-slate-600"
+                          }`}
+                        >
+                          <TierStars currentTier={tier.tier} maxTiers={tier.tier} size="sm" />
+                          <span>{tier.requirement}</span>
+                          {tierUnlocked && <CheckCircle2 className="w-3 h-3 ml-auto" />}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+
                 {/* Progress Bar for In-Progress Achievements */}
-                {!unlocked && progress && progress.current > 0 && (
+                {!unlocked && progress && progress.current > 0 && !achievement.isTiered && (
                   <div className="space-y-1">
                     <div className="flex items-center justify-between text-xs">
                       <span className="text-slate-400">
@@ -212,6 +262,28 @@ function AchievementCard({
                         animate={{ width: `${progressPercent}%` }}
                         transition={{ duration: 0.5, delay: delay + 0.2 }}
                         className="bg-gradient-to-r from-success to-emerald-600 h-full rounded-full"
+                      />
+                    </div>
+                  </div>
+                )}
+                
+                {/* Progress for tiered achievements working on next tier */}
+                {achievement.isTiered && unlocked && tierRequirement && progress && progress.current < tierRequirement.value && (
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-slate-400">
+                        Next tier: {progress.current.toLocaleString()} / {tierRequirement.value.toLocaleString()}
+                      </span>
+                      <span className="text-slate-400 font-semibold">
+                        {((progress.current / tierRequirement.value) * 100).toFixed(0)}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${(progress.current / tierRequirement.value) * 100}%` }}
+                        transition={{ duration: 0.5, delay: delay + 0.2 }}
+                        className="bg-gradient-to-r from-yellow-500 to-yellow-600 h-full rounded-full"
                       />
                     </div>
                   </div>

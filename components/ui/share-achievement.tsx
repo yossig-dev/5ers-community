@@ -11,12 +11,16 @@ type ShareAchievementProps = {
   achievementName: string;
   achievementIcon: string;
   achievementDescription: string;
+  currentTier?: number;
+  maxTiers?: number;
 };
 
 export function ShareAchievement({
   achievementName,
   achievementIcon,
   achievementDescription,
+  currentTier,
+  maxTiers,
 }: ShareAchievementProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
@@ -27,6 +31,9 @@ export function ShareAchievement({
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const tierText = currentTier && maxTiers ? ` (${currentTier}⭐ / ${maxTiers}⭐)` : "";
+  const shareText = `🎉 I just unlocked the "${achievementName}"${tierText} achievement on The 5ers! ${achievementIcon}\n\n${achievementDescription}`;
 
   useEffect(() => {
     if (isOpen && buttonRef.current) {
@@ -86,8 +93,6 @@ export function ShareAchievement({
     }
   }, [isOpen]);
 
-  const shareText = `🎉 I just unlocked the "${achievementName}" achievement on The 5ers! ${achievementIcon}\n\n${achievementDescription}`;
-  
   const shareUrl = "https://the5ers.com"; // Replace with actual URL
 
   const handleShare = (platform: string) => {

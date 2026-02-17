@@ -1,3 +1,9 @@
+export type BadgeTier = {
+  tier: number;
+  requirement: string;
+  value: number;
+};
+
 export type Badge = {
   id: string;
   name: string;
@@ -6,6 +12,9 @@ export type Badge = {
   color: string;
   category: string;
   requirement: string;
+  isTiered?: boolean;
+  maxTiers?: number;
+  tierRequirements?: BadgeTier[];
 };
 
 export type TradingLevel = {
@@ -38,6 +47,7 @@ export type Clan = {
 export type UserBadge = {
   badge: Badge;
   unlockedAt: Date;
+  currentTier?: number; // For tiered achievements
 };
 
 export type User = {
@@ -232,7 +242,16 @@ export const BADGES: Record<string, Badge> = {
     icon: "🥇",
     color: "text-amber-400",
     category: "Trading",
-    requirement: "50 profitable Gold trades",
+    requirement: "Profitable Gold trades",
+    isTiered: true,
+    maxTiers: 5,
+    tierRequirements: [
+      { tier: 1, requirement: "10 profitable Gold trades", value: 10 },
+      { tier: 2, requirement: "25 profitable Gold trades", value: 25 },
+      { tier: 3, requirement: "50 profitable Gold trades", value: 50 },
+      { tier: 4, requirement: "100 profitable Gold trades", value: 100 },
+      { tier: 5, requirement: "250 profitable Gold trades", value: 250 },
+    ],
   },
   earlySupporter: {
     id: "earlySupporter",
@@ -297,14 +316,41 @@ export const BADGES: Record<string, Badge> = {
     category: "Community",
     requirement: "10 helpful posts",
   },
-  profitMachine: {
-    id: "profitMachine",
-    name: "Profit Machine",
-    description: "Achieved 30% monthly return",
+  profitableTrader: {
+    id: "profitableTrader",
+    name: "Profitable Trader",
+    description: "Consistent profitability milestone",
     icon: "💰",
     color: "text-green-500",
     category: "Trading",
-    requirement: "30% monthly profit",
+    requirement: "Achieve profit milestones",
+    isTiered: true,
+    maxTiers: 5,
+    tierRequirements: [
+      { tier: 1, requirement: "$1,000 total profit", value: 1000 },
+      { tier: 2, requirement: "$5,000 total profit", value: 5000 },
+      { tier: 3, requirement: "$10,000 total profit", value: 10000 },
+      { tier: 4, requirement: "$50,000 total profit", value: 50000 },
+      { tier: 5, requirement: "$100,000 total profit", value: 100000 },
+    ],
+  },
+  profitMachine: {
+    id: "profitMachine",
+    name: "Monthly Profit Master",
+    description: "Achieved high monthly returns",
+    icon: "📈",
+    color: "text-emerald-500",
+    category: "Trading",
+    requirement: "Achieve monthly profit goals",
+    isTiered: true,
+    maxTiers: 5,
+    tierRequirements: [
+      { tier: 1, requirement: "10% monthly return", value: 10 },
+      { tier: 2, requirement: "20% monthly return", value: 20 },
+      { tier: 3, requirement: "30% monthly return", value: 30 },
+      { tier: 4, requirement: "40% monthly return", value: 40 },
+      { tier: 5, requirement: "50% monthly return", value: 50 },
+    ],
   },
   forexKing: {
     id: "forexKing",
@@ -464,11 +510,21 @@ export const MOCK_USERS: User[] = [
     id: "1",
     username: "TradeKing",
     avatar: "👑",
-    badges: [BADGES.contest1st, BADGES.funded, BADGES.club100k],
+    badges: [BADGES.contest1st, BADGES.funded, BADGES.club100k, BADGES.profitableTrader, BADGES.goldExpert],
     unlockedBadges: [
+      {
+        badge: BADGES.profitableTrader,
+        unlockedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // 1 day ago
+        currentTier: 3, // $10,000 profit
+      },
       {
         badge: BADGES.contest1st,
         unlockedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+      },
+      {
+        badge: BADGES.goldExpert,
+        unlockedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000), // 10 days ago
+        currentTier: 2, // 25 profitable Gold trades
       },
       {
         badge: BADGES.funded,
