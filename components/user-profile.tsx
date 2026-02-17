@@ -18,6 +18,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { LevelBadge, XPProgressBar } from "@/components/ui/level-badge";
 import { Tooltip } from "@/components/ui/tooltip";
+import { ShareAchievement } from "@/components/ui/share-achievement";
 import { MOCK_USERS, MOCK_POSTS, TRADING_LEVELS, MOCK_TRADE_HISTORY, MOCK_TRADING_ACCOUNTS } from "@/lib/constants";
 import { formatNumber, formatPercentage, getRelativeTime } from "@/lib/utils";
 import type { TradeHistory, TradingAccount } from "@/lib/constants";
@@ -166,8 +167,15 @@ export function UserProfile({ onViewAchievements }: { onViewAchievements?: () =>
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.1 }}
-                className="glass-card-hover rounded-lg p-4 text-center"
+                className="glass-card-hover rounded-lg p-4 text-center relative group"
               >
+                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <ShareAchievement
+                    achievementName={userBadge.badge.name}
+                    achievementIcon={userBadge.badge.icon}
+                    achievementDescription={userBadge.badge.description}
+                  />
+                </div>
                 <div className="text-4xl mb-2">{userBadge.badge.icon}</div>
                 <p className={`text-sm font-semibold ${userBadge.badge.color} mb-1`}>
                   {userBadge.badge.name}

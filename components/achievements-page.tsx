@@ -5,6 +5,7 @@ import { Award, Lock, CheckCircle2, ArrowLeft } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ShareAchievement } from "@/components/ui/share-achievement";
 import { ALL_ACHIEVEMENTS, MOCK_USERS } from "@/lib/constants";
 import { USER_ACHIEVEMENT_PROGRESS } from "@/lib/achievement-progress";
 import type { Badge as AchievementBadge } from "@/lib/constants";
@@ -144,7 +145,7 @@ function AchievementCard({
             {/* Content */}
             <div className="flex-1">
               <div className="flex items-start justify-between mb-2">
-                <div>
+                <div className="flex-1">
                   <h4
                     className={`text-lg font-semibold mb-1 ${
                       unlocked ? achievement.color : "text-slate-500"
@@ -156,12 +157,20 @@ function AchievementCard({
                     {achievement.description}
                   </p>
                 </div>
-                {unlocked && (
-                  <CheckCircle2 className="w-6 h-6 text-success flex-shrink-0" />
-                )}
-                {!unlocked && (
-                  <Lock className="w-6 h-6 text-slate-600 flex-shrink-0" />
-                )}
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  {unlocked && (
+                    <>
+                      <ShareAchievement
+                        achievementName={achievement.name}
+                        achievementIcon={achievement.icon}
+                        achievementDescription={achievement.description}
+                      />
+                      <CheckCircle2 className="w-6 h-6 text-success" />
+                    </>
+                  )}
+                  {!unlocked && (
+                    <Lock className="w-6 h-6 text-slate-600" />
+                  )}
               </div>
 
               {/* Requirement / Progress */}
