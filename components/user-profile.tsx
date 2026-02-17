@@ -21,7 +21,7 @@ import { Tooltip } from "@/components/ui/tooltip";
 import { ShareAchievement } from "@/components/ui/share-achievement";
 import { TierStars } from "@/components/ui/tier-stars";
 import Image from "next/image";
-import { MOCK_USERS, MOCK_POSTS, TRADING_LEVELS, MOCK_TRADE_HISTORY, MOCK_TRADING_ACCOUNTS } from "@/lib/constants";
+import { MOCK_USERS, MOCK_POSTS, TRADING_LEVELS, MOCK_TRADE_HISTORY, MOCK_TRADING_ACCOUNTS, WEARABLE_BADGE_IDS } from "@/lib/constants";
 import { formatNumber, formatPercentage, getRelativeTime, formatDate } from "@/lib/utils";
 import type { TradeHistory, TradingAccount } from "@/lib/constants";
 
@@ -63,7 +63,7 @@ export function UserProfile({
                   <CheckCircle2 className="w-6 h-6 text-success fill-success" />
                 )}
                 {profileUser.badges
-                  .filter((badge) => wornBadges.has(badge.id))
+                  .filter((badge) => WEARABLE_BADGE_IDS.includes(badge.id) && wornBadges.has(badge.id))
                   .map((badge) => {
                     // Find the tier info from unlockedBadges
                     const unlockedBadge = profileUser.unlockedBadges?.find(ub => ub.badge.id === badge.id);
