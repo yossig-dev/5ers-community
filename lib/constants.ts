@@ -240,7 +240,7 @@ export const BADGES: Record<string, Badge> = {
     id: "hugePayout",
     name: "Huge Payout",
     description: "Receive large payouts from your trading",
-    icon: "💰",
+    icon: "💵",
     color: "text-amber-500",
     category: "Milestones",
     requirement: "Receive large payouts",
@@ -665,7 +665,7 @@ export const MOCK_USERS: User[] = [
       {
         badge: BADGES.hugePayout,
         unlockedAt: new Date(Date.now() - 27 * 24 * 60 * 60 * 1000), // 27 days ago
-        currentTier: 1, // $5,000 payout
+        currentTier: 3, // $15,000 payout
       },
       {
         badge: BADGES.contestParticipant,

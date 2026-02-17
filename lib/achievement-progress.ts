@@ -17,10 +17,12 @@ export const USER_ACHIEVEMENT_PROGRESS: Record<string, { current: number; requir
   totalTrades: { current: 350, required: 500, currentTier: 2 }, // 350/500 for Tier 3
   dailyConsistency: { current: 22, required: 30, currentTier: 2 }, // 22/30 days for Tier 3
   
+  // Tier 3 complete, working on Tier 4
+  hugePayout: { current: 20000, required: 30000, currentTier: 3 }, // $20k/$30k for Tier 4
+  
   // Tier 1 complete, working on Tier 2
   longPositions: { current: 60, required: 100, currentTier: 1 }, // 60/100 for Tier 2
   singleTradePercentProfit: { current: 8, required: 10, currentTier: 1 }, // 8%/10% for Tier 2
-  hugePayout: { current: 7000, required: 10000, currentTier: 1 }, // $7k/$10k for Tier 2
   
   // ===== IN-PROGRESS (No tier unlocked yet) =====
   shortPositions: { current: 15, required: 25 }, // 60% toward Tier 1
