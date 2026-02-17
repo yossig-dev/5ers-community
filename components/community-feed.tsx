@@ -24,7 +24,7 @@ import type { Post } from "@/lib/constants";
 
 type TopicType = "all" | "materials" | "forex" | "stocks" | "crypto";
 
-export function CommunityFeed() {
+export function CommunityFeed({ wornBadges }: { wornBadges: Set<string> }) {
   const [posts, setPosts] = useState<Post[]>(MOCK_POSTS);
   const [activeTopic, setActiveTopic] = useState<TopicType>("all");
 
@@ -143,13 +143,16 @@ function PostCard({ post, onLike }: { post: Post; onLike: () => void }) {
                 {post.user.verified && (
                   <CheckCircle2 className="w-4 h-4 text-success fill-success" />
                 )}
-                {post.user.badges.slice(0, 3).map((badge) => (
-                  <Tooltip key={badge.id} content={badge.name}>
-                    <span className={`text-base ${badge.color} cursor-help`}>
-                      {badge.icon}
-                    </span>
-                  </Tooltip>
-                ))}
+                {post.user.badges
+                  .filter((badge) => wornBadges.has(badge.id))
+                  .slice(0, 3)
+                  .map((badge) => (
+                    <Tooltip key={badge.id} content={badge.name}>
+                      <span className={`text-base ${badge.color} cursor-help`}>
+                        {badge.icon}
+                      </span>
+                    </Tooltip>
+                  ))}
                 <LevelBadge level={post.user.level} />
               </div>
               <p className="text-xs text-slate-500 mt-1" suppressHydrationWarning>

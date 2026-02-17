@@ -19,6 +19,9 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<TabType>("feed");
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [wornBadges, setWornBadges] = useState<Set<string>>(new Set([
+    "funded", "contest2nd", "totalTrades" // Default worn badges
+  ]));
 
   return (
     <div className="flex h-screen overflow-hidden bg-slate-950">
@@ -312,7 +315,7 @@ export default function Home() {
           className="container mx-auto px-4 py-8 max-w-4xl flex-1"
         >
           {activeTab === "programs" && <MyPrograms />}
-          {activeTab === "feed" && <CommunityFeed />}
+          {activeTab === "feed" && <CommunityFeed wornBadges={wornBadges} />}
           {activeTab === "clan" && <ClanPage />}
           {activeTab === "contests" && (
             <div className="flex items-center justify-center h-[60vh]">
@@ -333,8 +336,40 @@ export default function Home() {
               </div>
             </div>
           )}
-          {activeTab === "profile" && <UserProfile onViewAchievements={() => setActiveTab("achievements")} />}
-          {activeTab === "achievements" && <AchievementsPage onBack={() => setActiveTab("profile")} />}
+          {activeTab === "profile" && (
+            <UserProfile 
+              onViewAchievements={() => setActiveTab("achievements")}
+              wornBadges={wornBadges}
+              onToggleBadge={(badgeId) => {
+                setWornBadges(prev => {
+                  const newSet = new Set(prev);
+                  if (newSet.has(badgeId)) {
+                    newSet.delete(badgeId);
+                  } else {
+                    newSet.add(badgeId);
+                  }
+                  return newSet;
+                });
+              }}
+            />
+          )}
+          {activeTab === "achievements" && (
+            <AchievementsPage 
+              onBack={() => setActiveTab("profile")}
+              wornBadges={wornBadges}
+              onToggleBadge={(badgeId) => {
+                setWornBadges(prev => {
+                  const newSet = new Set(prev);
+                  if (newSet.has(badgeId)) {
+                    newSet.delete(badgeId);
+                  } else {
+                    newSet.add(badgeId);
+                  }
+                  return newSet;
+                });
+              }}
+            />
+          )}
         </motion.div>
       </main>
     </div>

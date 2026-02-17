@@ -7,12 +7,21 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ShareAchievement } from "@/components/ui/share-achievement";
 import { TierStars } from "@/components/ui/tier-stars";
+import { Tooltip } from "@/components/ui/tooltip";
 import { ALL_ACHIEVEMENTS, MOCK_USERS } from "@/lib/constants";
 import { USER_ACHIEVEMENT_PROGRESS } from "@/lib/achievement-progress";
 import { formatDate } from "@/lib/utils";
 import type { Badge as AchievementBadge } from "@/lib/constants";
 
-export function AchievementsPage({ onBack }: { onBack: () => void }) {
+export function AchievementsPage({ 
+  onBack,
+  wornBadges,
+  onToggleBadge
+}: { 
+  onBack: () => void;
+  wornBadges: Set<string>;
+  onToggleBadge: (badgeId: string) => void;
+}) {
   // Get the current user's achievements (TradeKing)
   const currentUser = MOCK_USERS[0];
   const userAchievements = currentUser.badges.map((b) => b.id);
@@ -83,6 +92,8 @@ export function AchievementsPage({ onBack }: { onBack: () => void }) {
                   progress={progress}
                   unlockDate={unlockDate}
                   delay={index * 0.05}
+                  wornBadges={wornBadges}
+                  onToggleBadge={onToggleBadge}
                 />
               );
             })}
@@ -99,12 +110,16 @@ function AchievementCard({
   progress,
   unlockDate,
   delay,
+  wornBadges,
+  onToggleBadge,
 }: {
   achievement: AchievementBadge;
   unlocked: boolean;
   progress?: { current: number; required: number; currentTier?: number };
   unlockDate?: Date;
   delay: number;
+  wornBadges: Set<string>;
+  onToggleBadge: (badgeId: string) => void;
 }) {
   const currentTier = progress?.currentTier || 0;
   const nextTier = currentTier + 1;
@@ -139,13 +154,25 @@ function AchievementCard({
       >
         <CardContent className="p-6 h-full flex flex-col">
           <div className="flex items-start gap-4 flex-1">
-            {/* Icon */}
-            <div
-              className={`text-5xl flex-shrink-0 ${
-                unlocked ? "filter-none" : "grayscale opacity-40"
-              }`}
-            >
-              {achievement.icon}
+            {/* Icon and Checkbox */}
+            <div className="flex flex-col items-center gap-2 flex-shrink-0">
+              <div
+                className={`text-5xl ${
+                  unlocked ? "filter-none" : "grayscale opacity-40"
+                }`}
+              >
+                {achievement.icon}
+              </div>
+              {unlocked && (
+                <Tooltip content="Wear this Badge in the community">
+                  <input
+                    type="checkbox"
+                    checked={wornBadges.has(achievement.id)}
+                    onChange={() => onToggleBadge(achievement.id)}
+                    className="w-4 h-4 rounded border-slate-600 bg-slate-800 text-success focus:ring-success focus:ring-offset-0 focus:ring-2 cursor-pointer"
+                  />
+                </Tooltip>
+              )}
             </div>
 
             {/* Content */}
