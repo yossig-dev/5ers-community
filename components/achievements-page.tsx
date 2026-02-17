@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Award, Lock, CheckCircle2, ArrowLeft } from "lucide-react";
+import { Award, Lock, ArrowLeft } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -137,8 +137,10 @@ function AchievementCard({
       transition={{ delay }}
     >
       <Card
-        className={`glass-card border-slate-800 transition-all hover:border-slate-700 ${
-          unlocked ? "bg-slate-800/30" : "opacity-60"
+        className={`glass-card transition-all ${
+          unlocked 
+            ? "border-success/40 bg-slate-800/30 hover:border-success/60" 
+            : "border-slate-800 hover:border-slate-700 opacity-60"
         }`}
       >
         <CardContent className="p-6">
@@ -178,16 +180,13 @@ function AchievementCard({
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
                   {unlocked && (
-                    <>
-                      <ShareAchievement
-                        achievementName={achievement.name}
-                        achievementIcon={achievement.icon}
-                        achievementDescription={achievement.description}
-                        currentTier={currentTier}
-                        maxTiers={achievement.maxTiers}
-                      />
-                      <CheckCircle2 className="w-6 h-6 text-success" />
-                    </>
+                    <ShareAchievement
+                      achievementName={achievement.name}
+                      achievementIcon={achievement.icon}
+                      achievementDescription={achievement.description}
+                      currentTier={currentTier}
+                      maxTiers={achievement.maxTiers}
+                    />
                   )}
                   {!unlocked && (
                     <Lock className="w-6 h-6 text-slate-600" />
@@ -221,29 +220,6 @@ function AchievementCard({
                     </span>
                   )}
                 </div>
-
-                {/* Tier List for Tiered Achievements */}
-                {achievement.isTiered && achievement.tierRequirements && (
-                  <div className="space-y-1 mt-2">
-                    {achievement.tierRequirements.map((tier) => {
-                      const tierUnlocked = tier.tier <= currentTier;
-                      const isCurrentGoal = tier.tier === nextTier;
-                      
-                      return (
-                        <div
-                          key={tier.tier}
-                          className={`flex items-center gap-2 text-xs ${
-                            tierUnlocked ? "text-success" : isCurrentGoal ? "text-slate-300" : "text-slate-600"
-                          }`}
-                        >
-                          <TierStars currentTier={tier.tier} maxTiers={tier.tier} size="sm" />
-                          <span>{tier.requirement}</span>
-                          {tierUnlocked && <CheckCircle2 className="w-3 h-3 ml-auto" />}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
 
                 {/* Progress Bar for In-Progress Achievements */}
                 {!unlocked && progress && progress.current > 0 && !achievement.isTiered && (
