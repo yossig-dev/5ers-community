@@ -165,7 +165,7 @@ function PostCard({ post, onLike, wornBadges }: { post: Post; onLike: () => void
                               alt={`${currentTier} star${currentTier > 1 ? 's' : ''}`}
                               width={20}
                               height={20}
-                              className="absolute -bottom-1 -right-1"
+                              className={`absolute ${currentTier === 2 ? '-bottom-0.5 -right-0.5' : '-bottom-1 -right-1'}`}
                             />
                           )}
                         </div>
