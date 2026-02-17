@@ -264,7 +264,23 @@ export default function Home() {
                   setTimeout(() => {
                     const element = document.getElementById(targetId);
                     if (element) {
-                      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      const rect = element.getBoundingClientRect();
+                      const viewportHeight = window.innerHeight;
+                      const dropdownHeight = 600; // Approximate height of share dropdown
+                      const elementHeight = rect.height;
+                      const spaceNeeded = elementHeight + dropdownHeight + 100; // 100px buffer
+                      
+                      // Check if we have enough space below when centered
+                      if (spaceNeeded > viewportHeight * 0.8) {
+                        // Not enough space, scroll to top with padding
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // Add extra scroll to account for header
+                        window.scrollBy({ top: -100, behavior: 'smooth' });
+                      } else {
+                        // Enough space, center it
+                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }
+                      
                       // Add a highlight effect
                       element.classList.add('highlight-flash');
                       setTimeout(() => element.classList.remove('highlight-flash'), 2000);

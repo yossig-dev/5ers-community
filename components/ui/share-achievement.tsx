@@ -20,6 +20,7 @@ export function ShareAchievement({
 }: ShareAchievementProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
+  const [showAbove, setShowAbove] = useState(false);
   const buttonRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
 
@@ -30,9 +31,50 @@ export function ShareAchievement({
   useEffect(() => {
     if (isOpen && buttonRef.current) {
       const rect = buttonRef.current.getBoundingClientRect();
+      const dropdownHeight = 600; // Approximate height of the dropdown
+      const dropdownWidth = 288; // w-72 = 288px
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      
+      // Check if we should show above or below
+      const shouldShowAbove = spaceBelow < dropdownHeight && spaceAbove > spaceBelow;
+      setShowAbove(shouldShowAbove);
+      
+      // Calculate left position (aligned to right edge of button)
+      let leftPos = rect.right + window.scrollX - dropdownWidth;
+      
+      // Ensure dropdown doesn't go off the left edge
+      if (leftPos < 16) {
+        leftPos = 16; // 16px padding from left edge
+      }
+      
+      // Ensure dropdown doesn't go off the right edge
+      if (leftPos + dropdownWidth > window.innerWidth - 16) {
+        leftPos = window.innerWidth - dropdownWidth - 16;
+      }
+      
+      let topPos: number;
+      
+      if (shouldShowAbove) {
+        // Position above the button
+        topPos = rect.top + window.scrollY - dropdownHeight - 8;
+        // Ensure it doesn't go above the viewport
+        if (topPos < window.scrollY + 16) {
+          topPos = window.scrollY + 16; // 16px padding from top
+        }
+      } else {
+        // Position below the button (default)
+        topPos = rect.bottom + window.scrollY + 8;
+        // Ensure it doesn't go below the viewport
+        const maxTop = window.scrollY + window.innerHeight - dropdownHeight - 16;
+        if (topPos > maxTop) {
+          topPos = maxTop;
+        }
+      }
+      
       setPosition({
-        top: rect.bottom + window.scrollY + 8,
-        left: rect.right + window.scrollX - 288, // 288px = w-72
+        top: topPos,
+        left: leftPos,
       });
     }
   }, [isOpen]);
