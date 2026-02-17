@@ -82,7 +82,7 @@ export function UserProfile({
                               alt={`${currentTier} star${currentTier > 1 ? 's' : ''}`}
                               width={20}
                               height={20}
-                              className={`absolute ${currentTier === 2 ? 'bottom-0 right-0' : '-bottom-1 -right-1'}`}
+                              className={`absolute ${currentTier === 2 ? 'bottom-1 right-1' : 'bottom-0 right-0'}`}
                             />
                           )}
                         </div>
