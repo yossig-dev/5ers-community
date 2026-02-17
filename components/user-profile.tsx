@@ -20,6 +20,7 @@ import { LevelBadge, XPProgressBar } from "@/components/ui/level-badge";
 import { Tooltip } from "@/components/ui/tooltip";
 import { ShareAchievement } from "@/components/ui/share-achievement";
 import { TierStars } from "@/components/ui/tier-stars";
+import Image from "next/image";
 import { MOCK_USERS, MOCK_POSTS, TRADING_LEVELS, MOCK_TRADE_HISTORY, MOCK_TRADING_ACCOUNTS } from "@/lib/constants";
 import { formatNumber, formatPercentage, getRelativeTime, formatDate } from "@/lib/utils";
 import type { TradeHistory, TradingAccount } from "@/lib/constants";
@@ -61,13 +62,33 @@ export function UserProfile({
                 {profileUser.verified && (
                   <CheckCircle2 className="w-6 h-6 text-success fill-success" />
                 )}
-                {profileUser.badges.map((badge) => (
-                  <Tooltip key={badge.id} content={badge.name}>
-                    <span className={`text-xl ${badge.color} cursor-help`}>
-                      {badge.icon}
-                    </span>
-                  </Tooltip>
-                ))}
+                {profileUser.badges
+                  .filter((badge) => wornBadges.has(badge.id))
+                  .map((badge) => {
+                    // Find the tier info from unlockedBadges
+                    const unlockedBadge = profileUser.unlockedBadges?.find(ub => ub.badge.id === badge.id);
+                    const currentTier = unlockedBadge?.currentTier;
+                    const isTiered = badge.isTiered && currentTier;
+
+                    return (
+                      <Tooltip key={badge.id} content={badge.name}>
+                        <div className="relative inline-flex items-center justify-center">
+                          <span className={`text-xl ${badge.color} cursor-help`}>
+                            {badge.icon}
+                          </span>
+                          {isTiered && currentTier && (
+                            <Image
+                              src={`/badges/${currentTier} ${currentTier === 1 ? 'star' : 'stars'}.png`}
+                              alt={`${currentTier} star${currentTier > 1 ? 's' : ''}`}
+                              width={20}
+                              height={20}
+                              className={`absolute ${currentTier === 2 ? 'bottom-0 right-0' : '-bottom-1 -right-1'}`}
+                            />
+                          )}
+                        </div>
+                      </Tooltip>
+                    );
+                  })}
                 <LevelBadge level={profileUser.level} className="text-xl" />
               </div>
               <div className="flex gap-6 text-sm">
