@@ -13,6 +13,7 @@ type ShareAchievementProps = {
   achievementDescription: string;
   currentTier?: number;
   maxTiers?: number;
+  showOnHover?: boolean; // If true, button only appears on parent hover
 };
 
 export function ShareAchievement({
@@ -21,6 +22,7 @@ export function ShareAchievement({
   achievementDescription,
   currentTier,
   maxTiers,
+  showOnHover = false,
 }: ShareAchievementProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
@@ -83,7 +85,7 @@ export function ShareAchievement({
     <>
       <div 
         ref={buttonRef} 
-        className={`opacity-0 group-hover:opacity-100 transition-opacity ${isOpen ? '!opacity-100' : ''}`}
+        className={showOnHover ? `opacity-0 group-hover:opacity-100 transition-opacity ${isOpen ? '!opacity-100' : ''}` : ''}
       >
         <Button
           variant="outline"

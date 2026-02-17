@@ -178,6 +178,7 @@ export function UserProfile({ onViewAchievements }: { onViewAchievements?: () =>
                     achievementDescription={userBadge.badge.description}
                     currentTier={userBadge.currentTier}
                     maxTiers={userBadge.badge.maxTiers}
+                    showOnHover={true}
                   />
                 </div>
                 <div className="text-4xl mb-2">{userBadge.badge.icon}</div>
