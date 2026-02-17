@@ -5,7 +5,6 @@ export const USER_ACHIEVEMENT_PROGRESS: Record<string, { current: number; requir
   passEvaluation: { current: 1, required: 1 },
   funded: { current: 1, required: 1 },
   firstPayout: { current: 1, required: 1 },
-  contest1st: { current: 1, required: 1 },
   contest2nd: { current: 1, required: 1 },
   contest3rd: { current: 1, required: 1 },
   contestParticipant: { current: 1, required: 1 },
@@ -31,7 +30,5 @@ export const USER_ACHIEVEMENT_PROGRESS: Record<string, { current: number; requir
   accountPercentProfit: { current: 7, required: 10 }, // 70% toward Tier 1
   
   // ===== NO PROGRESS YET =====
-  contestParticipant: { current: 0, required: 1 },
-  contest2nd: { current: 0, required: 1 },
-  contest3rd: { current: 0, required: 1 },
+  contest1st: { current: 0, required: 1 },
 };
