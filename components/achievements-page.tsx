@@ -195,25 +195,14 @@ function AchievementCard({
 
               {/* Requirement / Progress */}
               <div className="space-y-2">
-                <div className="flex items-center gap-2 text-xs flex-wrap">
-                  {/* Show requirement badge only for locked achievements */}
-                  {!unlocked && (
-                    <Badge
-                      variant="outline"
-                      className="border-slate-700 bg-slate-800/50 text-slate-500"
-                    >
-                      {achievement.isTiered && tierRequirement
-                        ? tierRequirement.requirement
-                        : achievement.requirement
-                      }
-                    </Badge>
-                  )}
-                  {unlocked && unlockDate && (
+                {/* Only show unlock date for unlocked achievements */}
+                {unlocked && unlockDate && (
+                  <div className="flex items-center gap-2 text-xs flex-wrap">
                     <span className="text-xs text-slate-500" suppressHydrationWarning>
                       {getRelativeTime(unlockDate)}
                     </span>
-                  )}
-                </div>
+                  </div>
+                )}
 
                 {/* Progress Bar for In-Progress Achievements */}
                 {!unlocked && progress && progress.current > 0 && !achievement.isTiered && (
