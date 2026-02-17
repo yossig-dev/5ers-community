@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Share2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,6 +19,23 @@ export function ShareAchievement({
   achievementDescription,
 }: ShareAchievementProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [position, setPosition] = useState({ top: 0, left: 0 });
+  const buttonRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isOpen && buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setPosition({
+        top: rect.bottom + window.scrollY + 8,
+        left: rect.right + window.scrollX - 288, // 288px = w-72
+      });
+    }
+  }, [isOpen]);
 
   const shareText = `🎉 I just unlocked the "${achievementName}" achievement on The 5ers! ${achievementIcon}\n\n${achievementDescription}`;
   
@@ -58,45 +76,52 @@ export function ShareAchievement({
   };
 
   return (
-    <div className="relative">
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => setIsOpen(!isOpen)}
-        className="border-slate-700 hover:border-slate-600 text-slate-300 hover:text-slate-100"
-      >
-        <Share2 className="w-4 h-4" />
-      </Button>
+    <>
+      <div ref={buttonRef}>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setIsOpen(!isOpen)}
+          className="border-slate-700 hover:border-slate-600 text-slate-300 hover:text-slate-100"
+        >
+          <Share2 className="w-4 h-4" />
+        </Button>
+      </div>
 
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            <div
-              className="fixed inset-0 z-[10000]"
-              onClick={() => setIsOpen(false)}
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: -10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: -10 }}
-              transition={{ duration: 0.15 }}
-              className="absolute right-0 top-full mt-2 w-72 z-[10001]"
-            >
-              <Card className="glass-card border-slate-700 shadow-2xl">
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between mb-4">
-                    <p className="text-sm font-semibold text-slate-100">
-                      Share Achievement
-                    </p>
-                    <button
-                      onClick={() => setIsOpen(false)}
-                      className="text-slate-400 hover:text-slate-200 transition-colors"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
-                  </div>
+      {mounted && createPortal(
+        <AnimatePresence>
+          {isOpen && (
+            <>
+              <div
+                className="fixed inset-0 z-[10000]"
+                onClick={() => setIsOpen(false)}
+              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: -10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                transition={{ duration: 0.15 }}
+                className="fixed w-72 z-[10001]"
+                style={{
+                  top: `${position.top}px`,
+                  left: `${position.left}px`,
+                }}
+              >
+                <Card className="glass-card border-slate-700 shadow-2xl">
+                  <CardContent className="p-4">
+                    <div className="flex items-center justify-between mb-4">
+                      <p className="text-sm font-semibold text-slate-100">
+                        Share Achievement
+                      </p>
+                      <button
+                        onClick={() => setIsOpen(false)}
+                        className="text-slate-400 hover:text-slate-200 transition-colors"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
 
-                  <div className="space-y-2">
+                    <div className="space-y-2">
                     <SocialButton
                       icon={
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -160,14 +185,16 @@ export function ShareAchievement({
                       onClick={copyToClipboard}
                       color="hover:bg-slate-800"
                     />
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-    </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
+    </>
   );
 }
 
