@@ -155,7 +155,7 @@ function AchievementCard({
         <CardContent className="p-6 h-full flex flex-col">
           <div className="flex items-start gap-4 flex-1">
             {/* Icon and Checkbox */}
-            <div className="flex flex-col items-center gap-2 flex-shrink-0">
+            <div className="flex flex-col items-center gap-3 flex-shrink-0">
               <div
                 className={`text-5xl ${
                   unlocked ? "filter-none" : "grayscale opacity-40"
@@ -169,7 +169,7 @@ function AchievementCard({
                     type="checkbox"
                     checked={wornBadges.has(achievement.id)}
                     onChange={() => onToggleBadge(achievement.id)}
-                    className="w-4 h-4 rounded border-slate-600 bg-slate-800 text-success focus:ring-success focus:ring-offset-0 focus:ring-2 cursor-pointer"
+                    className="w-4 h-4 rounded border-slate-600 bg-slate-800 text-success focus:ring-success focus:ring-offset-0 focus:ring-2 cursor-pointer mt-1"
                   />
                 </Tooltip>
               )}
