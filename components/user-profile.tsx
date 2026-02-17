@@ -182,7 +182,7 @@ export function UserProfile({ onViewAchievements }: { onViewAchievements?: () =>
                   />
                 </div>
                 <div className="text-4xl mb-2">{userBadge.badge.icon}</div>
-                <p className={`text-sm font-semibold ${userBadge.badge.color} mb-1`}>
+                <p className="text-sm font-semibold text-slate-100 mb-1">
                   {userBadge.badge.name}
                 </p>
                 {userBadge.badge.isTiered && userBadge.currentTier && (

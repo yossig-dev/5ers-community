@@ -155,7 +155,7 @@ function AchievementCard({
                   <div className="flex items-center gap-2 mb-1">
                     <h4
                       className={`text-lg font-semibold ${
-                        unlocked ? achievement.color : "text-slate-500"
+                        unlocked ? "text-slate-100" : "text-slate-500"
                       }`}
                     >
                       {achievement.name}
@@ -168,7 +168,9 @@ function AchievementCard({
                       />
                     )}
                   </div>
-                  <p className="text-sm text-slate-400 mb-2">
+                  <p className={`text-sm mb-2 ${
+                    unlocked ? "text-slate-400" : "text-slate-500"
+                  }`}>
                     {achievement.isTiered && unlocked && currentTierRequirement
                       ? `${currentTierRequirement.requirement} achieved`
                       : achievement.description}
