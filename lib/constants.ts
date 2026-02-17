@@ -371,7 +371,7 @@ export const BADGES: Record<string, Badge> = {
   dailyConsistency: {
     id: "dailyConsistency",
     name: "Consistent Trader",
-    description: "Trade consecutive days without breaks",
+    description: "Trade 14 days in a row",
     icon: "🔥",
     color: "text-orange-500",
     category: "Trade Quality",
