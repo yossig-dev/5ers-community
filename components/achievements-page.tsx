@@ -171,6 +171,7 @@ function AchievementCard({
                   {!unlocked && (
                     <Lock className="w-6 h-6 text-slate-600" />
                   )}
+                </div>
               </div>
 
               {/* Requirement / Progress */}
