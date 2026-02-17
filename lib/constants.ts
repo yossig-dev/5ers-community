@@ -508,6 +508,7 @@ export const WEARABLE_BADGE_IDS = [
   "contest1st",      // Contest 1st Place
   "totalTrades",     // Experienced Trader
   "accountDollarProfit", // Profit Builder
+  "hugePayout",      // Huge Payout
 ];
 
 // Mock Clans
