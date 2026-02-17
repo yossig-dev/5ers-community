@@ -172,9 +172,9 @@ function AchievementCard({
                     unlocked ? "text-slate-400" : "text-slate-500"
                   }`}>
                     {achievement.isTiered
-                      ? unlocked && nextTierRequirement
-                        ? `Make ${nextTierRequirement.requirement.toLowerCase()}`
-                        : unlocked && !nextTierRequirement
+                      ? unlocked && currentTierRequirement
+                        ? `Make ${currentTierRequirement.requirement.toLowerCase()}`
+                        : unlocked && !currentTierRequirement
                           ? "Max tier achieved!"
                           : achievement.tierRequirements?.[0]
                             ? `Make ${achievement.tierRequirements[0].requirement.toLowerCase()}`
