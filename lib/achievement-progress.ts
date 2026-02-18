@@ -33,4 +33,6 @@ export const USER_ACHIEVEMENT_PROGRESS: Record<string, { current: number; requir
   
   // ===== NO PROGRESS YET =====
   contest1st: { current: 0, required: 1 },
+  accountPercentProfit: { current: 0, required: 1 }, // Good Day achievement
+  miraculousRecovery: { current: 0, required: 1 },
 };
