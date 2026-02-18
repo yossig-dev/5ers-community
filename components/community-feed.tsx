@@ -79,17 +79,19 @@ export function CommunityFeed({ wornBadges }: { wornBadges: Set<string> }) {
 
       {/* Posts */}
       <AnimatePresence>
-        {posts.map((post, index) => (
-          <motion.div
-            key={post.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ delay: index * 0.1 }}
-          >
-            <PostCard post={post} onLike={() => handleLike(post.id)} wornBadges={wornBadges} />
-          </motion.div>
-        ))}
+        {posts
+          .filter((post) => activeTopic === "all" || post.topic === activeTopic)
+          .map((post, index) => (
+            <motion.div
+              key={post.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ delay: index * 0.1 }}
+            >
+              <PostCard post={post} onLike={() => handleLike(post.id)} wornBadges={wornBadges} />
+            </motion.div>
+          ))}
       </AnimatePresence>
     </div>
   );
@@ -129,7 +131,7 @@ function PostCard({ post, onLike, wornBadges }: { post: Post; onLike: () => void
       {/* Post Header */}
       <div className="p-6">
         <div className="flex items-start justify-between mb-4">
-          <div className="flex gap-3">
+          <div className="flex gap-3 flex-1">
             <Avatar className="w-12 h-12 bg-gradient-to-br from-success to-emerald-600 border-2 border-success/20">
               <AvatarFallback className="text-2xl">
                 {post.user.avatar}
@@ -182,6 +184,9 @@ function PostCard({ post, onLike, wornBadges }: { post: Post; onLike: () => void
               </p>
             </div>
           </div>
+          <Badge className="bg-slate-800/50 text-slate-300 border-slate-700 capitalize text-xs">
+            {post.topic}
+          </Badge>
         </div>
 
         {/* Post Content */}

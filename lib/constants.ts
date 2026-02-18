@@ -97,6 +97,7 @@ export type Post = {
   id: string;
   user: User;
   content: string;
+  topic: "materials" | "forex" | "stocks" | "crypto";
   image?: string;
   chart?: {
     type: "line" | "bar";
@@ -753,6 +754,7 @@ export const MOCK_POSTS: Post[] = [
     user: MOCK_USERS[0],
     content:
       "Just closed a massive Gold trade! +$8,450 in 45 minutes. The key was waiting for the London open breakout. Patience pays! 🚀📈",
+    topic: "forex",
     chart: {
       type: "line",
       title: "XAU/USD - 1H Chart",
@@ -776,6 +778,7 @@ export const MOCK_POSTS: Post[] = [
     user: MOCK_USERS[1],
     content:
       "My XAU/USD setup for today: Long @ 2050, TP @ 2065, SL @ 2045. Risk:Reward is 3:1. Let's see how this plays out! 💰",
+    topic: "forex",
     timestamp: new Date(Date.now() - 120 * 60000),
     likes: 156,
     comments: 28,
@@ -786,6 +789,7 @@ export const MOCK_POSTS: Post[] = [
     user: MOCK_USERS[3],
     content:
       "Passed my evaluation! 🎉 After 3 attempts, finally got funded with a $100k account. The journey was tough but worth it. Tips for beginners: stick to your plan and manage risk religiously.",
+    topic: "materials",
     timestamp: new Date(Date.now() - 180 * 60000),
     likes: 512,
     comments: 89,
@@ -796,6 +800,7 @@ export const MOCK_POSTS: Post[] = [
     user: MOCK_USERS[2],
     content:
       "EUR/USD consolidating nicely. Looking for a breakout above 1.0950 for a long position. Anyone else watching this pair?",
+    topic: "forex",
     timestamp: new Date(Date.now() - 240 * 60000),
     likes: 87,
     comments: 19,
@@ -806,6 +811,7 @@ export const MOCK_POSTS: Post[] = [
     user: MOCK_USERS[6],
     content:
       "Weekly recap: +$12,340 (+15.4%). My best trades were on Gold and NAS100. Key lesson: trading less = making more. Quality over quantity every time. 📊✨",
+    topic: "materials",
     chart: {
       type: "bar",
       title: "Weekly P&L by Day",
