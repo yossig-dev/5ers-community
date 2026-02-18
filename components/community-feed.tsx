@@ -78,21 +78,20 @@ export function CommunityFeed({ wornBadges }: { wornBadges: Set<string> }) {
       </div>
 
       {/* Posts */}
-      <AnimatePresence>
+      <div className="space-y-6">
         {posts
           .filter((post) => activeTopic === "all" || post.topic === activeTopic)
-          .map((post, index) => (
+          .map((post) => (
             <motion.div
               key={post.id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ duration: 0.2 }}
             >
               <PostCard post={post} onLike={() => handleLike(post.id)} wornBadges={wornBadges} />
             </motion.div>
           ))}
-      </AnimatePresence>
+      </div>
     </div>
   );
 }

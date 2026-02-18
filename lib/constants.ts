@@ -97,7 +97,7 @@ export type Post = {
   id: string;
   user: User;
   content: string;
-  topic: "materials" | "forex" | "stocks" | "crypto";
+  topic: "materials" | "forex" | "stocks" | "crypto" | "general";
   image?: string;
   chart?: {
     type: "line" | "bar";
@@ -1264,6 +1264,107 @@ export const MOCK_POSTS: Post[] = [
     likes: 267,
     comments: 43,
     shares: 14,
+  },
+  // GENERAL POSTS
+  {
+    id: "49",
+    user: MOCK_USERS[1],
+    content: "Good morning traders! Remember: the market doesn't care about your opinions. Trade what you see, not what you think. Let's make today profitable! ☕🌅",
+    topic: "general",
+    timestamp: new Date(Date.now() - 30 * 60000),
+    likes: 445,
+    comments: 67,
+    shares: 23,
+  },
+  {
+    id: "50",
+    user: MOCK_USERS[3],
+    content: "Weekend plans: Review trades, update journal, and recharge. Taking breaks is part of the job. What's your weekend routine? 🎮🏋️",
+    topic: "general",
+    timestamp: new Date(Date.now() - 200 * 60000),
+    likes: 356,
+    comments: 89,
+    shares: 31,
+  },
+  {
+    id: "51",
+    user: MOCK_USERS[5],
+    content: "Hit my monthly profit goal with 2 weeks to spare! 🎉 Time to reduce risk and protect gains. Discipline > Greed always! 💪✨",
+    topic: "general",
+    timestamp: new Date(Date.now() - 280 * 60000),
+    likes: 678,
+    comments: 134,
+    shares: 56,
+  },
+  {
+    id: "52",
+    user: MOCK_USERS[0],
+    content: "Trading tip: Your worst enemy is overtrading. Quality setups only. I went from 20 trades/day to 5 and doubled my profits. Less is more! 🎯",
+    topic: "general",
+    timestamp: new Date(Date.now() - 350 * 60000),
+    likes: 823,
+    comments: 167,
+    shares: 71,
+  },
+  {
+    id: "53",
+    user: MOCK_USERS[2],
+    content: "Shoutout to everyone grinding evaluations! Remember why you started. The breakthrough is coming. Keep pushing! 💪🔥",
+    topic: "general",
+    timestamp: new Date(Date.now() - 420 * 60000),
+    likes: 612,
+    comments: 102,
+    shares: 48,
+  },
+  {
+    id: "54",
+    user: MOCK_USERS[4],
+    content: "Best feeling: Closing green on a red market day. When others panic, you profit. Risk management saves accounts! 🛡️💚",
+    topic: "general",
+    timestamp: new Date(Date.now() - 490 * 60000),
+    likes: 534,
+    comments: 91,
+    shares: 42,
+  },
+  {
+    id: "55",
+    user: MOCK_USERS[6],
+    content: "One year anniversary of going full-time! From struggling to consistent. If you're doubting yourself, keep going. It gets better! 🎊📈",
+    topic: "general",
+    timestamp: new Date(Date.now() - 560 * 60000),
+    likes: 912,
+    comments: 189,
+    shares: 84,
+  },
+  {
+    id: "56",
+    user: MOCK_USERS[1],
+    content: "Market closed. Time to analyze today's trades. Won some, lost some, stayed disciplined. That's all that matters. See you tomorrow! 🌙📊",
+    topic: "general",
+    timestamp: new Date(Date.now() - 630 * 60000),
+    likes: 478,
+    comments: 73,
+    shares: 35,
+  },
+  {
+    id: "57",
+    user: MOCK_USERS[3],
+    content: "Pro tip: Screenshot your setups BEFORE entering. Review them later. You'll be amazed at what you learn about your patterns. 📸🧠",
+    topic: "general",
+    timestamp: new Date(Date.now() - 700 * 60000),
+    likes: 701,
+    comments: 125,
+    shares: 59,
+  },
+  {
+    id: "58",
+    user: MOCK_USERS[5],
+    content: "Celebrating small wins today: Followed my plan, cut losses early, let a winner run. Building good habits one trade at a time! 🎯✅",
+    topic: "general",
+    timestamp: new Date(Date.now() - 770 * 60000),
+    likes: 567,
+    comments: 98,
+    shares: 44,
   },
 ];
 
