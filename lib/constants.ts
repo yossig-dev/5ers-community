@@ -690,6 +690,7 @@ export const MOCK_USERS: User[] = [
     verified: true,
     xp: 12300,
     level: getLevelByXP(12300),
+    clanId: "clan3",
   },
   {
     id: "3",
@@ -699,6 +700,7 @@ export const MOCK_USERS: User[] = [
     verified: false,
     xp: 4200,
     level: getLevelByXP(4200),
+    clanId: "clan5",
   },
   {
     id: "4",
@@ -708,6 +710,7 @@ export const MOCK_USERS: User[] = [
     verified: true,
     xp: 8700,
     level: getLevelByXP(8700),
+    clanId: "clan2",
   },
   {
     id: "5",
@@ -717,6 +720,7 @@ export const MOCK_USERS: User[] = [
     verified: false,
     xp: 2100,
     level: getLevelByXP(2100),
+    clanId: "clan4",
   },
   {
     id: "6",
@@ -726,6 +730,7 @@ export const MOCK_USERS: User[] = [
     verified: true,
     xp: 14800,
     level: getLevelByXP(14800),
+    clanId: "clan1",
   },
   {
     id: "7",
@@ -735,6 +740,7 @@ export const MOCK_USERS: User[] = [
     verified: true,
     xp: 11200,
     level: getLevelByXP(11200),
+    clanId: "clan6",
   },
   {
     id: "8",
