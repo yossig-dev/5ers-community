@@ -218,84 +218,85 @@ function AchievementCard({
               </div>
 
               {/* Requirement / Progress */}
-              <div className="space-y-2">
-                {/* Only show unlock date for unlocked achievements */}
-                {unlocked && unlockDate && (
-                  <div className="flex items-center gap-2 text-xs flex-wrap">
+              <div className="space-y-2 min-h-[52px]">
+                {/* Unlock date in consistent position */}
+                <div className="h-5 flex items-center">
+                  {unlocked && unlockDate && (
                     <span className="text-xs text-slate-500" suppressHydrationWarning>
                       {formatDate(unlockDate)}
                     </span>
-                  </div>
-                )}
+                  )}
+                </div>
 
-                {/* Progress Bar for Non-Tiered Achievements */}
-                {!unlocked && !achievement.isTiered && (
-                  <div className="space-y-1">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-slate-400">
-                        {progress?.current || 0} / {progress?.required || 1}
-                      </span>
-                      <span className="text-slate-400 font-semibold">
-                        {progressPercent.toFixed(0)}%
-                      </span>
-                    </div>
-                    <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${progressPercent}%` }}
-                        transition={{ duration: 0.5, delay: delay + 0.2 }}
-                        className="bg-gradient-to-r from-success to-emerald-600 h-full rounded-full"
-                      />
-                    </div>
-                  </div>
-                )}
-                
-                {/* Progress for tiered achievements */}
-                {achievement.isTiered && (
-                  <div className="space-y-1 mt-2">
-                    {unlocked && nextTierRequirement && progress && progress.current < nextTierRequirement.value ? (
-                      // Unlocked, working on next tier
-                      <>
-                        <div className="flex items-center justify-between text-xs">
-                          <span className="text-slate-400">
-                            Next: {nextTierRequirement.requirement}
-                          </span>
-                          <span className="text-slate-400 font-semibold">
-                            {progress.current.toLocaleString()} / {nextTierRequirement.value.toLocaleString()}
-                          </span>
-                        </div>
-                        <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: `${(progress.current / nextTierRequirement.value) * 100}%` }}
-                            transition={{ duration: 0.5, delay: delay + 0.2 }}
-                            className="bg-gradient-to-r from-yellow-500 to-yellow-600 h-full rounded-full"
-                          />
-                        </div>
-                      </>
-                    ) : !unlocked && achievement.tierRequirements?.[0] ? (
-                      // Locked, working on first tier
-                      <>
-                        <div className="flex items-center justify-between text-xs">
-                          <span className="text-slate-400">
-                            {achievement.tierRequirements[0].requirement}
-                          </span>
-                          <span className="text-slate-400 font-semibold">
-                            {progress?.current?.toLocaleString() || 0} / {achievement.tierRequirements[0].value.toLocaleString()}
-                          </span>
-                        </div>
-                        <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: `${((progress?.current || 0) / achievement.tierRequirements[0].value) * 100}%` }}
-                            transition={{ duration: 0.5, delay: delay + 0.2 }}
-                            className="bg-gradient-to-r from-success to-emerald-600 h-full rounded-full"
-                          />
-                        </div>
-                      </>
-                    ) : null}
-                  </div>
-                )}
+                {/* Progress Bar - Always in same position */}
+                <div className="space-y-1">
+                  {/* Progress Bar for Non-Tiered Achievements */}
+                  {!unlocked && !achievement.isTiered && (
+                    <>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-slate-400">
+                          {progress?.current || 0} / {progress?.required || 1}
+                        </span>
+                        <span className="text-slate-400 font-semibold">
+                          {progressPercent.toFixed(0)}%
+                        </span>
+                      </div>
+                      <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${progressPercent}%` }}
+                          transition={{ duration: 0.5, delay: delay + 0.2 }}
+                          className="bg-gradient-to-r from-success to-emerald-600 h-full rounded-full"
+                        />
+                      </div>
+                    </>
+                  )}
+                  
+                  {/* Progress for tiered achievements */}
+                  {achievement.isTiered && unlocked && nextTierRequirement && progress && progress.current < nextTierRequirement.value && (
+                    // Unlocked, working on next tier
+                    <>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-slate-400">
+                          Next: {nextTierRequirement.requirement}
+                        </span>
+                        <span className="text-slate-400 font-semibold">
+                          {progress.current.toLocaleString()} / {nextTierRequirement.value.toLocaleString()}
+                        </span>
+                      </div>
+                      <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${(progress.current / nextTierRequirement.value) * 100}%` }}
+                          transition={{ duration: 0.5, delay: delay + 0.2 }}
+                          className="bg-gradient-to-r from-yellow-500 to-yellow-600 h-full rounded-full"
+                        />
+                      </div>
+                    </>
+                  )}
+                  
+                  {achievement.isTiered && !unlocked && achievement.tierRequirements?.[0] && (
+                    // Locked, working on first tier
+                    <>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-slate-400">
+                          {achievement.tierRequirements[0].requirement}
+                        </span>
+                        <span className="text-slate-400 font-semibold">
+                          {progress?.current?.toLocaleString() || 0} / {achievement.tierRequirements[0].value.toLocaleString()}
+                        </span>
+                      </div>
+                      <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${((progress?.current || 0) / achievement.tierRequirements[0].value) * 100}%` }}
+                          transition={{ duration: 0.5, delay: delay + 0.2 }}
+                          className="bg-gradient-to-r from-success to-emerald-600 h-full rounded-full"
+                        />
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </div>
