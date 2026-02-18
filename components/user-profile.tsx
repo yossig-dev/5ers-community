@@ -20,7 +20,7 @@ import { LevelBadge, XPProgressBar } from "@/components/ui/level-badge";
 import { Tooltip } from "@/components/ui/tooltip";
 import { ShareAchievement } from "@/components/ui/share-achievement";
 import { TierStars } from "@/components/ui/tier-stars";
-import { MOCK_USERS, MOCK_POSTS, TRADING_LEVELS, MOCK_TRADE_HISTORY, MOCK_TRADING_ACCOUNTS, WEARABLE_BADGE_IDS } from "@/lib/constants";
+import { MOCK_USERS, MOCK_POSTS, TRADING_LEVELS, MOCK_TRADE_HISTORY, MOCK_TRADING_ACCOUNTS, WEARABLE_BADGE_IDS, MOCK_CLANS } from "@/lib/constants";
 import { formatNumber, formatPercentage, getRelativeTime, formatDate, abbreviateNumber } from "@/lib/utils";
 import type { TradeHistory, TradingAccount } from "@/lib/constants";
 
@@ -54,7 +54,7 @@ export function UserProfile({
               </AvatarFallback>
             </Avatar>
             <div className="flex-1 mt-16 sm:mt-20">
-              <div className="flex items-center gap-2 mb-2 flex-wrap">
+              <div className="flex items-center gap-2 mb-1 flex-wrap">
                 <h3 className="text-2xl font-bold text-slate-100">
                   {profileUser.username}
                 </h3>
@@ -94,6 +94,11 @@ export function UserProfile({
                   })}
                 <LevelBadge level={profileUser.level} className="text-xl" />
               </div>
+              {profileUser.clanId && (
+                <p className="text-sm text-slate-400 mb-2">
+                  {MOCK_CLANS.find(clan => clan.id === profileUser.clanId)?.name || ""}
+                </p>
+              )}
               <div className="flex gap-6 text-sm">
                 <div>
                   <span className="text-slate-400">Posts</span>

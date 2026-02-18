@@ -18,7 +18,7 @@ import { Badge } from "@/components/ui/badge";
 import { LevelBadge } from "@/components/ui/level-badge";
 import { Tooltip } from "@/components/ui/tooltip";
 import { MiniChart } from "@/components/ui/mini-chart";
-import { MOCK_POSTS, WEARABLE_BADGE_IDS } from "@/lib/constants";
+import { MOCK_POSTS, WEARABLE_BADGE_IDS, MOCK_CLANS } from "@/lib/constants";
 import { getRelativeTime, abbreviateNumber } from "@/lib/utils";
 import type { Post } from "@/lib/constants";
 
@@ -179,6 +179,11 @@ function PostCard({ post, onLike, wornBadges }: { post: Post; onLike: () => void
                   })}
                 <LevelBadge level={post.user.level} />
               </div>
+              {post.user.clanId && (
+                <p className="text-xs text-slate-400 mt-0.5">
+                  {MOCK_CLANS.find(clan => clan.id === post.user.clanId)?.name || ""}
+                </p>
+              )}
               <p className="text-xs text-slate-500 mt-1" suppressHydrationWarning>
                 {getRelativeTime(post.timestamp)}
               </p>
