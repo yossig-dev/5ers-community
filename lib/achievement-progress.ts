@@ -20,9 +20,6 @@ export const USER_ACHIEVEMENT_PROGRESS: Record<string, { current: number; requir
   // Tier 3 complete, working on Tier 4
   hugePayout: { current: 20000, required: 30000, currentTier: 3 }, // $20k/$30k for Tier 4
   
-  // Tier 1 complete, working on Tier 2
-  singleTradePercentProfit: { current: 8, required: 10, currentTier: 1 }, // 8%/10% for Tier 2
-  
   // ===== IN-PROGRESS (No tier unlocked yet) =====
   shortPositions: { current: 15, required: 25 }, // 60% toward Tier 1
   longPositions: { current: 18, required: 25 }, // 72% toward Tier 1
@@ -30,6 +27,7 @@ export const USER_ACHIEVEMENT_PROGRESS: Record<string, { current: number; requir
   highQualityTrade: { current: 75, required: 80 }, // 94% toward Tier 1
   averageQuality: { current: 5, required: 7 }, // 71% toward Tier 1
   singleTradeDollarProfit: { current: 380, required: 500 }, // 76% toward Tier 1
+  singleTradePercentProfit: { current: 3.8, required: 5 }, // 76% toward Tier 1 (3.8%/5% profit)
   
   // ===== NO PROGRESS YET =====
   contest1st: { current: 0, required: 1 },
