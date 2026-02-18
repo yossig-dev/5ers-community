@@ -19,7 +19,7 @@ import { LevelBadge } from "@/components/ui/level-badge";
 import { Tooltip } from "@/components/ui/tooltip";
 import { MiniChart } from "@/components/ui/mini-chart";
 import { MOCK_POSTS, WEARABLE_BADGE_IDS } from "@/lib/constants";
-import { getRelativeTime } from "@/lib/utils";
+import { getRelativeTime, abbreviateNumber } from "@/lib/utils";
 import type { Post } from "@/lib/constants";
 
 type TopicType = "all" | "materials" | "forex" | "stocks" | "crypto";
@@ -162,9 +162,16 @@ function PostCard({ post, onLike, wornBadges }: { post: Post; onLike: () => void
 
                     return (
                       <Tooltip key={badge.id} content={displayName}>
-                        <span className={`text-base ${badge.color} cursor-help`}>
-                          {badge.icon}
-                        </span>
+                        <div className="flex flex-col items-center cursor-help">
+                          <span className={`text-base ${badge.color}`}>
+                            {badge.icon}
+                          </span>
+                          {badge.isTiered && currentTier && badge.tierRequirements && (
+                            <span className="text-[8px] font-semibold text-slate-300 -mt-1">
+                              {abbreviateNumber(badge.tierRequirements.find(t => t.tier === currentTier)?.value || 0)}
+                            </span>
+                          )}
+                        </div>
                       </Tooltip>
                     );
                   })}

@@ -21,7 +21,7 @@ import { Tooltip } from "@/components/ui/tooltip";
 import { ShareAchievement } from "@/components/ui/share-achievement";
 import { TierStars } from "@/components/ui/tier-stars";
 import { MOCK_USERS, MOCK_POSTS, TRADING_LEVELS, MOCK_TRADE_HISTORY, MOCK_TRADING_ACCOUNTS, WEARABLE_BADGE_IDS } from "@/lib/constants";
-import { formatNumber, formatPercentage, getRelativeTime, formatDate } from "@/lib/utils";
+import { formatNumber, formatPercentage, getRelativeTime, formatDate, abbreviateNumber } from "@/lib/utils";
 import type { TradeHistory, TradingAccount } from "@/lib/constants";
 
 // Using the first user as the profile user
@@ -79,9 +79,16 @@ export function UserProfile({
 
                     return (
                       <Tooltip key={badge.id} content={displayName}>
-                        <span className={`text-xl ${badge.color} cursor-help`}>
-                          {badge.icon}
-                        </span>
+                        <div className="flex flex-col items-center cursor-help">
+                          <span className={`text-xl ${badge.color}`}>
+                            {badge.icon}
+                          </span>
+                          {badge.isTiered && currentTier && badge.tierRequirements && (
+                            <span className="text-[10px] font-semibold text-slate-300 -mt-1">
+                              {abbreviateNumber(badge.tierRequirements.find(t => t.tier === currentTier)?.value || 0)}
+                            </span>
+                          )}
+                        </div>
                       </Tooltip>
                     );
                   })}
