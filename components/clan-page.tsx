@@ -31,7 +31,7 @@ export function ClanPage() {
   // State to track user's clan membership
   const currentUser = MOCK_USERS[0];
   const initialClan = currentUser.clanId 
-    ? MOCK_CLANS.find(c => c.id === currentUser.clanId)
+    ? MOCK_CLANS.find(c => c.id === currentUser.clanId) ?? null
     : null;
   
   const [userClan, setUserClan] = useState<Clan | null>(initialClan);
