@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Package, Calendar, DollarSign, TrendingUp, Key } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { TradingHistory } from "@/components/trading-history";
 import { MOCK_PROGRAMS, getProgramTypeColor, getProgramTypeLabel } from "@/lib/programs";
 import type { Program, ProgramType } from "@/lib/programs";
 import { formatNumber } from "@/lib/utils";
@@ -36,6 +37,9 @@ export function MyPrograms() {
           <ProgramCard key={program.id} program={program} delay={index * 0.05} />
         ))}
       </div>
+
+      {/* Trading History */}
+      <TradingHistory />
     </div>
   );
 }

@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+echo "Running production build verification (clean build + server smoke test)..."
+npm run build:verify

@@ -32,6 +32,12 @@ npm run dev
 
 3. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+## Before deploying
+
+**Verification runs automatically when you push** (Git pre-push hook). It runs `npm run build:verify`, which cleans `.next`, does a full production build, and starts the server briefly to catch runtime errors (e.g. `Cannot find module './611.js'` or `vendor-chunks/next.js`). If the hook fails, fix the errors and push again.
+
+To run manually: `npm run build:verify`. If you see module-not-found in production: `rm -rf .next` (Windows: `rmdir /s /q .next`), then `npm run build`. CI runs `build:verify` on push to `main`/`master` and on PRs.
+
 ## Design Aesthetic
 
 - **Theme**: Dark mode by default
