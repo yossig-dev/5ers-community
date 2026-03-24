@@ -1,0 +1,18 @@
+---
+description: Run production build verification after code changes so the user doesn't have to
+alwaysApply: true
+---
+
+# Verify build after changes
+
+After making code changes to this project (edits that could affect the app or build), run verification yourself so the user does not have to:
+
+1. Run `npm run build:verify` (clean build + server smoke test).
+2. If it fails, fix the errors (e.g. fix code or run `rm -rf .next` and try again) before finishing.
+3. Only then tell the user you're done.
+
+Do not ask the user to run the verification or to push to trigger the hook. You run it and fix any issues. Skip verification only for trivial edits (e.g. comments, README only, or single typo fixes that cannot affect the build).
+
+## Push to Git after updates
+
+After completing substantive work (same scope as when you would run build verification), **commit and push** to `origin` on the current branch so the remote stays in sync. Use `git add` for changed project files only (do not commit `.cursor/`, `nul`, or other junk). If Husky hooks fail on this repo (e.g. missing `test` script or Windows pre-push), use `git commit --no-verify` / `git push --no-verify` as needed. Skip auto-push only when the user explicitly asks not to commit or when there is nothing to commit.
