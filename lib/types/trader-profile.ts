@@ -35,6 +35,8 @@ export type TradeTalkPost = {
   commentsCount: number;
   /** Optional link to full post (e.g. /trade-talk/123) */
   url?: string;
+  /** Optional mini series for a small sparkline (e.g. daily P&L or engagement) */
+  sparkline?: number[];
 };
 
 export type TopTradedAsset = {
@@ -104,6 +106,8 @@ export type ViewerComparisonStats = {
   skills?: TraderSkills;
   /** Viewer's display name for chart legend (e.g. "You" or username) */
   viewerNickname?: string;
+  /** Same shape as profile topTradedAssets — used in asset pie hover compare */
+  viewerTopTradedAssets?: TopTradedAsset[];
 };
 
 export type PreferredStrategy =

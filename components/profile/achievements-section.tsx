@@ -46,18 +46,22 @@ function TierDots({ tier, maxTiers }: { tier: number; maxTiers: number }) {
 
 export interface AchievementsSectionProps {
   achievements: AchievementCredential[];
+  /** Wide layout: full-width grid with more columns and taller area */
+  layout?: "default" | "wide";
   className?: string;
 }
 
 export function AchievementsSection({
   achievements,
+  layout = "default",
   className,
 }: AchievementsSectionProps) {
   const [modalOpen, setModalOpen] = useState(false);
 
   if (achievements.length === 0) return null;
 
-  const preview = achievements.slice(0, 6);
+  const isWide = layout === "wide";
+  const preview = isWide ? achievements.slice(0, 12) : achievements.slice(0, 6);
 
   const sectionTitleClass = "text-sm font-semibold uppercase tracking-wider text-slate-500";
 
@@ -65,6 +69,7 @@ export function AchievementsSection({
     <section
       className={cn(
         "rounded-xl border border-slate-700/60 bg-slate-900/80 p-5",
+        isWide && "min-h-[280px] lg:min-h-[320px]",
         className
       )}
     >
@@ -84,9 +89,19 @@ export function AchievementsSection({
           </Button>
         )}
       </div>
-      <div className="grid grid-cols-2 gap-3 overflow-visible">
+      <div
+        className={cn(
+          "grid gap-3 overflow-visible",
+          isWide
+            ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
+            : "grid-cols-2"
+        )}
+      >
         {preview.map((a) => (
-          <div key={a.id} className="min-w-0 overflow-visible h-[132px]">
+          <div
+            key={a.id}
+            className={cn("min-w-0 overflow-visible", isWide ? "h-[128px]" : "h-[132px]")}
+          >
             <AchievementCard achievement={a} />
           </div>
         ))}

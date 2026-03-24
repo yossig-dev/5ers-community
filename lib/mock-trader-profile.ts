@@ -70,9 +70,30 @@ export const MOCK_TRADER_PROFILE: TraderProfile = {
   },
 
   tradeTalkPosts: [
-    { id: "p1", snippet: "Gold holding key support at 2620 – watching for a bounce into NY session. Risk managed with tight SL.", timestamp: "2025-03-17T14:30:00.000Z", likesCount: 24, commentsCount: 8 },
-    { id: "p2", snippet: "EURUSD scalping the London range. 3 trades, 2 wins. Discipline paid off today.", timestamp: "2025-03-16T11:00:00.000Z", likesCount: 12, commentsCount: 3 },
-    { id: "p3", snippet: "Shared my monthly recap: 68% win rate, 1.82 PF. Consistency over home runs.", timestamp: "2025-03-15T09:00:00.000Z", likesCount: 56, commentsCount: 14 },
+    {
+      id: "p1",
+      snippet: "Gold holding key support at 2620 – watching for a bounce into NY session. Risk managed with tight SL.",
+      timestamp: "2025-03-17T14:30:00.000Z",
+      likesCount: 24,
+      commentsCount: 8,
+      sparkline: [12, 18, 15, 22, 28, 24, 31, 35, 32, 38],
+    },
+    {
+      id: "p2",
+      snippet: "EURUSD scalping the London range. 3 trades, 2 wins. Discipline paid off today.",
+      timestamp: "2025-03-16T11:00:00.000Z",
+      likesCount: 12,
+      commentsCount: 3,
+      sparkline: [8, 6, 9, 11, 10, 14, 12, 15],
+    },
+    {
+      id: "p3",
+      snippet: "Shared my monthly recap: 68% win rate, 1.82 PF. Consistency over home runs.",
+      timestamp: "2025-03-15T09:00:00.000Z",
+      likesCount: 56,
+      commentsCount: 14,
+      sparkline: [42, 45, 48, 52, 55, 58, 62, 65, 68, 70, 72],
+    },
   ],
 
   viewerStats: {
@@ -89,5 +110,12 @@ export const MOCK_TRADER_PROFILE: TraderProfile = {
       sizing: 60,
       riskManagement: 68,
     },
+    viewerTopTradedAssets: [
+      { symbol: "XAUUSD", label: "XAUUSD", icon: "🥇", assetType: "Metals", tradeCount: 180, sharePercent: 15, winRatePercent: 58 },
+      { symbol: "EURUSD", label: "EURUSD", icon: "💱", assetType: "Forex", tradeCount: 420, sharePercent: 35, winRatePercent: 64 },
+      { symbol: "BTCUSD", label: "BTCUSD", icon: "₿", assetType: "Crypto", tradeCount: 96, sharePercent: 8, winRatePercent: 51 },
+      { symbol: "GBPUSD", label: "GBPUSD", icon: "💱", assetType: "Forex", tradeCount: 240, sharePercent: 20, winRatePercent: 59 },
+      { symbol: "NAS100", label: "NAS100", icon: "📈", assetType: "Indices", tradeCount: 264, sharePercent: 22, winRatePercent: 55 },
+    ],
   },
 };

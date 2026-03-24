@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Heart, MessageCircle, ExternalLink, Search, X } from "lucide-react";
+import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import type { TradeTalkPost } from "@/lib/types/trader-profile";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -13,7 +14,38 @@ export interface TradeTalkFeedProps {
   maxVisible?: number;
   /** Base path for post links, e.g. /trade-talk (post.id appended) */
   postLinkBase?: string;
+  /** Wide: taller scroll area, full-width feel */
+  layout?: "default" | "wide";
   className?: string;
+}
+
+function PostSparkline({ postId, values }: { postId: string; values: number[] }) {
+  const data = values.map((v, i) => ({ i, v }));
+  const gradId = `spark-${postId}`;
+  return (
+    <div className="w-full sm:w-[168px] h-[76px] shrink-0 rounded-lg border border-slate-700/50 bg-slate-800/40 overflow-hidden">
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart data={data} margin={{ top: 6, right: 6, left: 0, bottom: 0 }}>
+          <defs>
+            <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="rgb(16 185 129)" stopOpacity={0.4} />
+              <stop offset="100%" stopColor="rgb(16 185 129)" stopOpacity={0.02} />
+            </linearGradient>
+          </defs>
+          <XAxis dataKey="i" hide />
+          <YAxis hide domain={["dataMin - 2", "dataMax + 2"]} />
+          <Area
+            type="monotone"
+            dataKey="v"
+            stroke="rgb(16 185 129)"
+            fill={`url(#${gradId})`}
+            strokeWidth={1.5}
+            isAnimationActive={false}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
+  );
 }
 
 function formatRelativeTime(iso: string): string {
@@ -37,33 +69,43 @@ function PostRow({
   postLinkBase: string;
 }) {
   const href = post.url ?? `${postLinkBase}/${post.id}`;
+  const hasSpark = post.sparkline && post.sparkline.length > 1;
   return (
-    <article className="py-3 px-5 hover:bg-slate-800/30 transition-colors group">
-      <Link href={href} className="block">
-        <p className="text-slate-200 text-base leading-relaxed mb-2 group-hover:text-slate-100">
-          {post.snippet}
-        </p>
-      </Link>
-      <div className="flex items-center justify-between gap-2 flex-wrap">
-        <div className="flex items-center gap-4 text-sm text-slate-500">
-          <span>{formatRelativeTime(post.timestamp)}</span>
-          <span className="flex items-center gap-1" title="Likes">
-            <Heart className="w-3 h-3" />
-            {post.likesCount}
-          </span>
-          <span className="flex items-center gap-1" title="Comments">
-            <MessageCircle className="w-3 h-3" />
-            {post.commentsCount}
-          </span>
+    <article className="py-4 px-5 hover:bg-slate-800/30 transition-colors group">
+      <div className="flex flex-col sm:flex-row sm:items-stretch gap-4">
+        <div className="min-w-0 flex-1">
+          <Link href={href} className="block">
+            <p className="text-slate-200 text-base leading-relaxed mb-3 group-hover:text-slate-100">
+              {post.snippet}
+            </p>
+          </Link>
+          <div className="flex items-center justify-between gap-2 flex-wrap">
+            <div className="flex items-center gap-4 text-sm text-slate-500">
+              <span>{formatRelativeTime(post.timestamp)}</span>
+              <span className="flex items-center gap-1" title="Likes">
+                <Heart className="w-3 h-3" />
+                {post.likesCount}
+              </span>
+              <span className="flex items-center gap-1" title="Comments">
+                <MessageCircle className="w-3 h-3" />
+                {post.commentsCount}
+              </span>
+            </div>
+            <Link
+              href={href}
+              className="text-sm text-slate-500 hover:text-success flex items-center gap-1 transition-colors font-medium"
+              title="View post"
+            >
+              View post
+              <ExternalLink className="w-3 h-3" />
+            </Link>
+          </div>
         </div>
-        <Link
-          href={href}
-          className="text-sm text-slate-500 hover:text-success flex items-center gap-1 transition-colors font-medium"
-          title="View post"
-        >
-          View post
-          <ExternalLink className="w-3 h-3" />
-        </Link>
+        {hasSpark && (
+          <div className="sm:self-center">
+            <PostSparkline postId={post.id} values={post.sparkline!} />
+          </div>
+        )}
       </div>
     </article>
   );
@@ -73,6 +115,7 @@ export function TradeTalkFeed({
   posts,
   maxVisible = 5,
   postLinkBase = "/trade-talk",
+  layout = "default",
   className,
 }: TradeTalkFeedProps) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -90,6 +133,7 @@ export function TradeTalkFeed({
   }, [posts, searchQuery]);
 
   const sectionTitleClass = "text-sm font-semibold uppercase tracking-wider text-slate-500";
+  const isWide = layout === "wide";
 
   if (posts.length === 0) {
     return (
@@ -112,6 +156,7 @@ export function TradeTalkFeed({
       <section
         className={cn(
           "rounded-xl border border-slate-700/60 bg-slate-900/80 overflow-hidden flex flex-col",
+          isWide && "min-h-[320px] lg:min-h-[400px]",
           className
         )}
       >
@@ -130,7 +175,12 @@ export function TradeTalkFeed({
             </Button>
           )}
         </div>
-        <div className="overflow-y-auto max-h-[380px] divide-y divide-slate-700/50">
+        <div
+          className={cn(
+            "overflow-y-auto divide-y divide-slate-700/50",
+            isWide ? "max-h-[min(560px,70vh)]" : "max-h-[380px]"
+          )}
+        >
           {visible.map((post) => (
             <PostRow key={post.id} post={post} postLinkBase={postLinkBase} />
           ))}

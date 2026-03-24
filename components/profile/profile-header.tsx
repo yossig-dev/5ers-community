@@ -1,12 +1,14 @@
 "use client";
 
+import type { ReactNode } from "react";
 import Link from "next/link";
-import { UserPlus, Share2, Check } from "lucide-react";
+import { UserPlus, Share2, Check, TrendingUp, Percent, Award } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tooltip } from "@/components/ui/tooltip";
-import type { TraderProfile } from "@/lib/types/trader-profile";
+import { getStrategyDescription } from "@/lib/strategy-descriptions";
+import type { PreferredStrategy, TraderProfile } from "@/lib/types/trader-profile";
 import { cn } from "@/lib/utils";
 
 /** Country flag image from ISO 3166-1 alpha-2 code (flagcdn.com) */
@@ -30,19 +32,46 @@ const COUNTRY_NAMES: Record<string, string> = {
   ES: "Spain", IT: "Italy", NL: "Netherlands", PL: "Poland", RU: "Russia", KR: "South Korea",
 };
 
+/** Performance metrics shown in the header strip (moved from profile snapshot) */
+export type ProfileHeaderPerformance = {
+  preferredStrategy: PreferredStrategy;
+  qualityScore: number;
+  overallWinRatePercent?: number;
+  totalTrades?: number;
+  strategySharePercent?: number;
+  communityAvgWinRatePercent?: number;
+  communityAvgQualityScore?: number;
+};
+
 export interface ProfileHeaderProps {
   profile: Pick<
     TraderProfile,
     "nickname" | "avatar" | "createdAt" | "countryCode" | "clan" | "badges"
   >;
+  /** When set, renders a professional stats strip below identity */
+  performance?: ProfileHeaderPerformance;
   onFollow?: () => void;
   onShare?: () => void;
   isFollowing?: boolean;
   className?: string;
 }
 
+function StatIcon({ children, className }: { children: ReactNode; className?: string }) {
+  return (
+    <span
+      className={cn(
+        "flex h-8 w-8 items-center justify-center rounded-lg bg-slate-700/50 border border-slate-600/60 text-slate-400",
+        className
+      )}
+    >
+      {children}
+    </span>
+  );
+}
+
 export function ProfileHeader({
   profile,
+  performance,
   onFollow,
   onShare,
   isFollowing,
@@ -54,6 +83,8 @@ export function ProfileHeader({
   });
   const memberSince = `Member since ${joinDate}`;
   const countryName = profile.countryCode ? (COUNTRY_NAMES[profile.countryCode.toUpperCase()] ?? profile.countryCode) : null;
+  const strategyHint = performance ? getStrategyDescription(performance.preferredStrategy) : undefined;
+  const qualityRounded = performance ? Math.round(performance.qualityScore) : 0;
 
   return (
     <header
@@ -63,8 +94,8 @@ export function ProfileHeader({
       )}
     >
       <div className="h-14 aria-hidden relative z-0" />
-      <div className="relative px-5 sm:px-6 pb-5 pt-0 z-10">
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 -mt-9">
+      <div className={cn("relative px-5 sm:px-6 pt-0 z-10", !performance && "pb-5")}>
+        <div className={cn("flex flex-col sm:flex-row gap-4 sm:gap-5 -mt-9", !performance && "pb-5")}>
           <Avatar className="w-20 h-20 rounded-xl border-2 border-slate-700 bg-slate-800 shadow-lg flex-shrink-0">
             <AvatarFallback className="text-base rounded-xl bg-slate-700 text-slate-200 font-semibold">
               {profile.avatar || profile.nickname.slice(0, 2).toUpperCase()}
@@ -150,6 +181,95 @@ export function ProfileHeader({
             </Button>
           </div>
         </div>
+
+        {performance && (
+          <div className="-mx-5 sm:-mx-6 border-t border-slate-700/60 bg-gradient-to-b from-slate-900/55 via-slate-900/35 to-transparent px-5 sm:px-6 py-5 pb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 xl:gap-0 xl:divide-x xl:divide-slate-700/50">
+              <div className="xl:pr-6 min-w-0">
+                <div className="flex items-start gap-3">
+                  <StatIcon>
+                    <TrendingUp className="h-4 w-4" aria-hidden />
+                  </StatIcon>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-500 mb-2">
+                      Preferred strategy
+                    </p>
+                    <span className="inline-flex rounded-md border border-slate-600 bg-slate-800/90 px-2.5 py-1 text-base font-semibold text-slate-100">
+                      {performance.preferredStrategy}
+                    </span>
+                    {(performance.strategySharePercent != null ||
+                      (performance.totalTrades != null && performance.totalTrades > 0)) && (
+                      <p className="mt-2 text-xs text-slate-500">
+                        {performance.strategySharePercent != null && (
+                          <span>{performance.strategySharePercent}% of traders</span>
+                        )}
+                        {performance.strategySharePercent != null &&
+                          performance.totalTrades != null &&
+                          performance.totalTrades > 0 &&
+                          " · "}
+                        {performance.totalTrades != null && performance.totalTrades > 0 && (
+                          <span>{performance.totalTrades.toLocaleString()} trades</span>
+                        )}
+                      </p>
+                    )}
+                    {strategyHint && (
+                      <p className="mt-1 text-xs text-slate-500 leading-relaxed line-clamp-2">{strategyHint}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {performance.overallWinRatePercent != null && (
+                <div className="xl:px-6 min-w-0">
+                  <div className="flex items-start gap-3">
+                    <StatIcon>
+                      <Percent className="h-4 w-4" aria-hidden />
+                    </StatIcon>
+                    <div className="min-w-0">
+                      <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-500 mb-2">
+                        Overall average win rate
+                      </p>
+                      <p className="text-2xl font-semibold tabular-nums text-slate-100 tracking-tight">
+                        {performance.overallWinRatePercent.toFixed(1)}
+                        <span className="text-lg text-slate-400 font-medium">%</span>
+                      </p>
+                      {performance.communityAvgWinRatePercent != null && (
+                        <p className="mt-1.5 text-xs text-slate-500">
+                          Community average{" "}
+                          <span className="tabular-nums text-slate-400">
+                            {performance.communityAvgWinRatePercent.toFixed(1)}%
+                          </span>
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className="xl:px-6 min-w-0">
+                <div className="flex items-start gap-3">
+                  <StatIcon>
+                    <Award className="h-4 w-4" aria-hidden />
+                  </StatIcon>
+                  <div className="min-w-0">
+                    <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-500 mb-2">
+                      Average trade quality
+                    </p>
+                    <p className="text-2xl font-semibold tabular-nums text-white tracking-tight">{qualityRounded}</p>
+                    {performance.communityAvgQualityScore != null && (
+                      <p className="mt-1.5 text-xs text-slate-500">
+                        Community average{" "}
+                        <span className="tabular-nums text-slate-400">
+                          {Math.round(performance.communityAvgQualityScore)}
+                        </span>
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );

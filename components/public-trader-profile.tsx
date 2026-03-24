@@ -2,20 +2,18 @@
 
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import {
-  ProfileHeader,
-  TraderIdPerformanceSnapshot,
-  TopTradedAssetsSection,
-  AchievementsSection,
-  TradeTalkFeed,
-} from "@/components/profile";
+import { ProfileHeader, AchievementsSection, TradeTalkFeed } from "@/components/profile";
 import { ShareProfile } from "@/components/ui/share-profile";
 import type { TraderProfile } from "@/lib/types/trader-profile";
 
-/** Recharts can cause Webpack runtime errors with Next.js; load only on client */
 const SkillsSpiderChart = dynamic(
   () => import("@/components/profile").then((mod) => mod.SkillsSpiderChart),
   { ssr: false, loading: () => <SkillsChartPlaceholder /> }
+);
+
+const TopTradedAssetsPieChart = dynamic(
+  () => import("@/components/profile").then((mod) => mod.TopTradedAssetsPieChart),
+  { ssr: false, loading: () => <PieChartPlaceholder /> }
 );
 
 function SkillsChartPlaceholder() {
@@ -26,15 +24,18 @@ function SkillsChartPlaceholder() {
   );
 }
 
+function PieChartPlaceholder() {
+  return (
+    <div className="min-h-[280px] w-full flex items-center justify-center">
+      <p className="text-slate-500 text-sm">Loading asset distribution…</p>
+    </div>
+  );
+}
+
 /**
  * Main public profile page layout.
- * Structure (top to bottom):
- * 1. Header & Identity (avatar, username, join date, flag, clan, badges, Follow / Message / Share)
- * 2. Trader ID & Performance Snapshot (Trader ID, Preferred Strategy, Quality Score)
- * 3. Skills Spider Chart (5 skills; hover overlays viewer comparison)
- * 4. Top Traded Assets (table: Asset, Type, Trades, Win Rate)
- * 5. Achievements (grid of unlocked only)
- * 6. Trade Talk feed (scrollable posts with snippet, time, likes/comments)
+ * Header includes identity + performance stats; skills + top-assets pie share one row;
+ * achievements and Trade Talk are full-width sections below.
  */
 export function PublicTraderProfile({ profile }: { profile: TraderProfile }) {
   const [isFollowing, setIsFollowing] = useState(false);
@@ -42,7 +43,6 @@ export function PublicTraderProfile({ profile }: { profile: TraderProfile }) {
 
   return (
     <div className="max-w-5xl mx-auto space-y-5 pb-16 px-4 sm:px-6">
-      {/* 1. Header & Identity */}
       <ProfileHeader
         profile={{
           nickname: profile.nickname,
@@ -51,6 +51,15 @@ export function PublicTraderProfile({ profile }: { profile: TraderProfile }) {
           countryCode: profile.countryCode,
           clan: profile.clan,
           badges: profile.badges,
+        }}
+        performance={{
+          preferredStrategy: profile.preferredStrategy,
+          qualityScore: profile.qualityScore,
+          overallWinRatePercent: profile.averages.winRatePercent,
+          totalTrades: profile.averages.totalTrades,
+          strategySharePercent: profile.strategySharePercent,
+          communityAvgWinRatePercent: profile.averages.communityAvgWinRatePercent,
+          communityAvgQualityScore: profile.averages.communityAvgQualityScore,
         }}
         onFollow={() => setIsFollowing((v) => !v)}
         onShare={() => setShareOpen(true)}
@@ -64,22 +73,19 @@ export function PublicTraderProfile({ profile }: { profile: TraderProfile }) {
         profileUrl=""
       />
 
-      {/* 2. Performance Snapshot + Skills Spider Chart (one row) */}
       <section className="rounded-xl border border-slate-700/60 bg-slate-900/80 overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-[280px]">
-          <div className="p-5 lg:p-6 border-b lg:border-b-0 lg:border-r border-slate-700/50 flex flex-col justify-start">
-            <TraderIdPerformanceSnapshot
-              preferredStrategy={profile.preferredStrategy}
-              qualityScore={profile.qualityScore}
-              overallAvgWinRatePercent={profile.averages.winRatePercent}
-              totalTrades={profile.averages.totalTrades}
-              strategySharePercent={profile.strategySharePercent}
-              communityAvgWinRatePercent={profile.averages.communityAvgWinRatePercent}
-              communityAvgQualityScore={profile.averages.communityAvgQualityScore}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-[300px]">
+          <div className="p-5 lg:p-6 border-b lg:border-b-0 lg:border-r border-slate-700/50 flex flex-col justify-start min-h-[300px]">
+            <TopTradedAssetsPieChart
+              assets={profile.topTradedAssets}
+              profileName={profile.nickname}
+              viewerAssets={profile.viewerStats?.viewerTopTradedAssets}
+              viewerName={profile.viewerStats?.viewerNickname ?? "You"}
+              height={260}
               embedded
             />
           </div>
-          <div className="p-5 lg:p-6 flex flex-col justify-start">
+          <div className="p-5 lg:p-6 flex flex-col justify-start min-h-[300px]">
             <SkillsSpiderChart
               skills={profile.skills}
               traderName={profile.nickname}
@@ -92,16 +98,13 @@ export function PublicTraderProfile({ profile }: { profile: TraderProfile }) {
         </div>
       </section>
 
-      {/* 4. Top Traded Assets */}
-      <TopTradedAssetsSection assets={profile.topTradedAssets} />
-
-      {/* 5. Achievements (bottom-left) | 6. Trade Talk (bottom-right or full width) */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <AchievementsSection achievements={profile.achievements} />
+      <div className="space-y-5">
+        <AchievementsSection achievements={profile.achievements} layout="wide" />
         <TradeTalkFeed
           posts={profile.tradeTalkPosts}
-          maxVisible={5}
+          maxVisible={8}
           postLinkBase="/trade-talk"
+          layout="wide"
         />
       </div>
     </div>
