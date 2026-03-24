@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { UserPlus, Share2, Check, TrendingUp, Percent, Award } from "lucide-react";
+import { UserPlus, Share2, Check, Percent, Award } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -129,7 +129,7 @@ export function ProfileHeader({
               </Link>
             )}
             {profile.badges.length > 0 && (
-              <div className="flex flex-wrap gap-1.5">
+              <div className={cn("flex flex-wrap gap-1.5", performance && "mb-1 sm:mb-2")}>
                 {[...profile.badges]
                   .sort((a, b) => {
                     const aFirst = /10k\s*payout/i.test(a.name) ? 0 : 1;
@@ -183,14 +183,10 @@ export function ProfileHeader({
         </div>
 
         {performance && (
-          <div className="-mx-5 sm:-mx-6 border-t border-slate-700/60 bg-gradient-to-b from-slate-900/55 via-slate-900/35 to-transparent px-5 sm:px-6 py-5 pb-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 xl:gap-0 xl:divide-x xl:divide-slate-700/50">
+          <div className="mt-9 -mx-5 sm:-mx-6 border-t border-slate-700/60 bg-gradient-to-b from-slate-900/55 via-slate-900/35 to-transparent px-5 sm:px-6 pt-7 pb-7">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 xl:gap-0 xl:divide-x xl:divide-slate-700/50">
               <div className="xl:pr-6 min-w-0">
-                <div className="flex items-start gap-3">
-                  <StatIcon>
-                    <TrendingUp className="h-4 w-4" aria-hidden />
-                  </StatIcon>
-                  <div className="min-w-0 flex-1">
+                <div className="min-w-0">
                     <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-500 mb-2">
                       Preferred strategy
                     </p>
@@ -215,7 +211,6 @@ export function ProfileHeader({
                     {strategyHint && (
                       <p className="mt-1 text-xs text-slate-500 leading-relaxed line-clamp-2">{strategyHint}</p>
                     )}
-                  </div>
                 </div>
               </div>
 

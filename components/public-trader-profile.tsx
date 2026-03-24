@@ -102,7 +102,7 @@ export function PublicTraderProfile({ profile }: { profile: TraderProfile }) {
         <AchievementsSection achievements={profile.achievements} layout="wide" />
         <TradeTalkFeed
           posts={profile.tradeTalkPosts}
-          maxVisible={8}
+          maxVisible={10}
           postLinkBase="/trade-talk"
           layout="wide"
         />

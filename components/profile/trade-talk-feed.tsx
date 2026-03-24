@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { Heart, MessageCircle, ExternalLink, Search, X } from "lucide-react";
+import { Heart, MessageCircle, Search, X } from "lucide-react";
 import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import type { TradeTalkPost } from "@/lib/types/trader-profile";
 import { Button } from "@/components/ui/button";
@@ -71,43 +71,35 @@ function PostRow({
   const href = post.url ?? `${postLinkBase}/${post.id}`;
   const hasSpark = post.sparkline && post.sparkline.length > 1;
   return (
-    <article className="py-4 px-5 hover:bg-slate-800/30 transition-colors group">
+    <Link
+      href={href}
+      className="block py-4 px-5 hover:bg-slate-800/30 transition-colors group focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500 focus-visible:ring-inset"
+      aria-label={`Open post: ${post.snippet.slice(0, 80)}${post.snippet.length > 80 ? "…" : ""}`}
+    >
       <div className="flex flex-col sm:flex-row sm:items-stretch gap-4">
         <div className="min-w-0 flex-1">
-          <Link href={href} className="block">
-            <p className="text-slate-200 text-base leading-relaxed mb-3 group-hover:text-slate-100">
-              {post.snippet}
-            </p>
-          </Link>
-          <div className="flex items-center justify-between gap-2 flex-wrap">
-            <div className="flex items-center gap-4 text-sm text-slate-500">
-              <span>{formatRelativeTime(post.timestamp)}</span>
-              <span className="flex items-center gap-1" title="Likes">
-                <Heart className="w-3 h-3" />
-                {post.likesCount}
-              </span>
-              <span className="flex items-center gap-1" title="Comments">
-                <MessageCircle className="w-3 h-3" />
-                {post.commentsCount}
-              </span>
-            </div>
-            <Link
-              href={href}
-              className="text-sm text-slate-500 hover:text-success flex items-center gap-1 transition-colors font-medium"
-              title="View post"
-            >
-              View post
-              <ExternalLink className="w-3 h-3" />
-            </Link>
+          <p className="text-slate-200 text-base leading-relaxed mb-3 group-hover:text-slate-100">
+            {post.snippet}
+          </p>
+          <div className="flex items-center gap-4 text-sm text-slate-500 flex-wrap">
+            <span>{formatRelativeTime(post.timestamp)}</span>
+            <span className="flex items-center gap-1" title="Likes">
+              <Heart className="w-3 h-3" />
+              {post.likesCount}
+            </span>
+            <span className="flex items-center gap-1" title="Comments">
+              <MessageCircle className="w-3 h-3" />
+              {post.commentsCount}
+            </span>
           </div>
         </div>
         {hasSpark && (
-          <div className="sm:self-center">
+          <div className="sm:self-center pointer-events-none" aria-hidden>
             <PostSparkline postId={post.id} values={post.sparkline!} />
           </div>
         )}
       </div>
-    </article>
+    </Link>
   );
 }
 

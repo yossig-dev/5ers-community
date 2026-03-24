@@ -61,15 +61,15 @@ export function AchievementsSection({
   if (achievements.length === 0) return null;
 
   const isWide = layout === "wide";
-  const preview = isWide ? achievements.slice(0, 12) : achievements.slice(0, 6);
+  const preview = isWide ? achievements.slice(0, 10) : achievements.slice(0, 6);
 
   const sectionTitleClass = "text-sm font-semibold uppercase tracking-wider text-slate-500";
 
   return (
     <section
       className={cn(
-        "rounded-xl border border-slate-700/60 bg-slate-900/80 p-5",
-        isWide && "min-h-[280px] lg:min-h-[320px]",
+        "rounded-xl border border-slate-700/60 bg-slate-900/80 p-5 sm:p-6",
+        isWide && "min-h-[380px] lg:min-h-[420px]",
         className
       )}
     >
@@ -91,18 +91,19 @@ export function AchievementsSection({
       </div>
       <div
         className={cn(
-          "grid gap-3 overflow-visible",
-          isWide
-            ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
-            : "grid-cols-2"
+          "grid overflow-visible",
+          isWide ? "gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5" : "gap-3 grid-cols-2"
         )}
       >
         {preview.map((a) => (
           <div
             key={a.id}
-            className={cn("min-w-0 overflow-visible", isWide ? "h-[128px]" : "h-[132px]")}
+            className={cn(
+              "min-w-0 overflow-visible",
+              isWide ? "min-h-[176px]" : "h-[132px]"
+            )}
           >
-            <AchievementCard achievement={a} />
+            <AchievementCard achievement={a} compact={!isWide} />
           </div>
         ))}
       </div>
@@ -116,7 +117,13 @@ export function AchievementsSection({
   );
 }
 
-function AchievementCard({ achievement }: { achievement: AchievementCredential }) {
+function AchievementCard({
+  achievement,
+  compact = false,
+}: {
+  achievement: AchievementCredential;
+  compact?: boolean;
+}) {
   const [showTooltip, setShowTooltip] = useState(false);
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { description: tooltipDescription } = getSystemAchievementText(achievement);
@@ -138,16 +145,31 @@ function AchievementCard({ achievement }: { achievement: AchievementCredential }
 
   const card = (
     <div
-      className="rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 text-center hover:border-slate-600/50 transition-colors cursor-default w-full h-full flex flex-col items-center justify-center"
+      className={cn(
+        "rounded-lg border border-slate-700/50 bg-slate-800/50 text-center hover:border-slate-600/50 transition-colors cursor-default w-full h-full flex flex-col items-center justify-center",
+        compact ? "p-3" : "p-4 sm:p-5 min-h-[176px]"
+      )}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
-      <span className="text-lg block mb-1 flex-shrink-0" aria-hidden>
+      <span
+        className={cn("block mb-2 flex-shrink-0 leading-none", compact ? "text-lg" : "text-2xl sm:text-3xl")}
+        aria-hidden
+      >
         {achievement.icon}
       </span>
-      <p className="text-base font-medium text-slate-200 truncate w-full">{achievement.name}</p>
+      <p
+        className={cn(
+          "font-medium text-slate-200 w-full px-0.5",
+          compact ? "text-base truncate" : "text-sm sm:text-base leading-snug line-clamp-2"
+        )}
+      >
+        {achievement.name}
+      </p>
       {achievement.earnedAt && (
-        <p className="text-sm text-slate-500 mt-0.5 flex-shrink-0">Earned {formatEarnedDate(achievement.earnedAt)}</p>
+        <p className={cn("text-slate-500 flex-shrink-0", compact ? "text-sm mt-0.5" : "text-xs sm:text-sm mt-1.5")}>
+          Earned {formatEarnedDate(achievement.earnedAt)}
+        </p>
       )}
       {achievement.tier != null && achievement.maxTiers != null && achievement.maxTiers > 1 && (
         <TierDots tier={achievement.tier} maxTiers={achievement.maxTiers} />
