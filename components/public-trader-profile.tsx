@@ -11,8 +11,12 @@ const SkillsSpiderChart = dynamic(
   { ssr: false, loading: () => <SkillsChartPlaceholder /> }
 );
 
+/** Import the module file directly so the client chunk always matches this chart (barrel re-exports can cache oddly). */
 const TopTradedAssetsPieChart = dynamic(
-  () => import("@/components/profile").then((mod) => mod.TopTradedAssetsPieChart),
+  () =>
+    import("@/components/profile/top-traded-assets-pie-chart").then(
+      (mod) => mod.TopTradedAssetsPieChart
+    ),
   { ssr: false, loading: () => <PieChartPlaceholder /> }
 );
 
@@ -74,7 +78,7 @@ export function PublicTraderProfile({ profile }: { profile: TraderProfile }) {
         profileUrl=""
       />
 
-      <section className="rounded-xl border border-slate-700/60 bg-slate-900/80 overflow-hidden">
+      <section className="rounded-xl border border-slate-700/60 bg-slate-900/80 overflow-visible">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-[300px]">
           <div className="p-5 lg:p-6 border-b lg:border-b-0 lg:border-r border-slate-700/50 flex flex-col justify-start min-h-[300px]">
             <TopTradedAssetsPieChart

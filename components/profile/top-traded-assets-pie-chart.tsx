@@ -217,31 +217,24 @@ export function TopTradedAssetsPieChart({
   }
 
   const toggleBtn =
-    "px-2.5 py-1 text-xs font-medium rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900";
+    "flex-1 px-3 py-2 text-sm font-medium rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 disabled:opacity-40 disabled:cursor-not-allowed";
 
   return (
-    <div className={cn("flex flex-col", className)}>
-      <div className="mb-2 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-        <div className="min-w-0">
-          <h3 className={sectionTitleClass}>Top traded assets</h3>
-          <p className="text-xs text-slate-500 mt-1">
-            {effectiveMode === "trades"
-              ? "By number of trades. Hover a slice for win rate and comparison."
-              : "By notional volume (USD). Hover a slice for details and comparison."}
-          </p>
-        </div>
+    <div className={cn("flex flex-col relative", className)}>
+      <div className="mb-3 w-full space-y-2">
+        <h3 className={sectionTitleClass}>Top traded assets</h3>
         <div
-          className="inline-flex rounded-lg border border-slate-600/80 bg-slate-800/90 p-0.5 shrink-0"
+          className="flex w-full max-w-full rounded-lg border border-slate-500/70 bg-slate-800 p-1 shadow-sm"
           role="group"
-          aria-label="Pie chart basis"
+          aria-label="Pie chart: trades or volume"
         >
           <button
             type="button"
             className={cn(
               toggleBtn,
               effectiveMode === "trades"
-                ? "bg-slate-600 text-slate-100 shadow-sm"
-                : "text-slate-400 hover:text-slate-200"
+                ? "bg-emerald-600/90 text-white shadow-sm"
+                : "text-slate-300 hover:text-white hover:bg-slate-700/80"
             )}
             onClick={() => setMode("trades")}
             aria-pressed={effectiveMode === "trades"}
@@ -253,8 +246,8 @@ export function TopTradedAssetsPieChart({
             className={cn(
               toggleBtn,
               effectiveMode === "volume"
-                ? "bg-slate-600 text-slate-100 shadow-sm"
-                : "text-slate-400 hover:text-slate-200"
+                ? "bg-emerald-600/90 text-white shadow-sm"
+                : "text-slate-300 hover:text-white hover:bg-slate-700/80"
             )}
             onClick={() => setMode("volume")}
             disabled={!volumeAvailable}
@@ -264,12 +257,17 @@ export function TopTradedAssetsPieChart({
             Volume ($)
           </button>
         </div>
+        <p className="text-xs text-slate-500">
+          {effectiveMode === "trades"
+            ? "By number of trades. Hover a slice for win rate and comparison."
+            : "By notional volume (USD). Hover a slice for details and comparison."}
+        </p>
       </div>
       {data.length === 0 ? (
         <p className="text-slate-500 text-sm py-8 text-center">No data for this view.</p>
       ) : (
         <>
-          <div className="w-full flex-1 min-h-0" style={{ minHeight: height }}>
+          <div className="w-full" style={{ minHeight: height, height }}>
             <ResponsiveContainer width="100%" height={height}>
               <PieChart>
                 <Pie
