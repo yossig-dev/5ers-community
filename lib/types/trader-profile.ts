@@ -47,6 +47,8 @@ export type TopTradedAsset = {
   tradeCount: number;
   sharePercent: number;
   winRatePercent: number;
+  /** Notional volume in USD for volume-based charts (optional until backend provides it) */
+  volumeUsd?: number;
   /** Per-asset trade quality 0–100; optional until backend provides it */
   tradeQualityScore?: number;
 };
