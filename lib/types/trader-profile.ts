@@ -47,6 +47,8 @@ export type TopTradedAsset = {
   tradeCount: number;
   sharePercent: number;
   winRatePercent: number;
+  /** Per-asset trade quality 0–100; optional until backend provides it */
+  tradeQualityScore?: number;
 };
 
 export type PerformanceAverages = {
@@ -55,6 +57,14 @@ export type PerformanceAverages = {
   avgHoldHours: number;
   totalTrades: number;
   consistencyScore: number; // 0–100
+  /**
+   * Win rate placement vs all traders: 60 means "Top 60%" (in the upper 60% by win rate).
+   */
+  winRateTopPercent?: number;
+  /**
+   * Trade quality placement vs all traders: e.g. 25 means "Top 25%".
+   */
+  tradeQualityTopPercent?: number;
   /** Community average win rate (for comparison) */
   communityAvgWinRatePercent?: number;
   /** Community average trade quality 0–100 (for comparison) */

@@ -54,13 +54,14 @@ export function PublicTraderProfile({ profile }: { profile: TraderProfile }) {
         }}
         performance={{
           preferredStrategy: profile.preferredStrategy,
-          qualityScore: profile.qualityScore,
-          overallWinRatePercent: profile.averages.winRatePercent,
           totalTrades: profile.averages.totalTrades,
           strategySharePercent: profile.strategySharePercent,
-          communityAvgWinRatePercent: profile.averages.communityAvgWinRatePercent,
-          communityAvgQualityScore: profile.averages.communityAvgQualityScore,
+          winRateTopPercent: profile.averages.winRateTopPercent,
+          tradeQualityTopPercent: profile.averages.tradeQualityTopPercent,
         }}
+        topTradedAssets={profile.topTradedAssets}
+        viewerTopTradedAssets={profile.viewerStats?.viewerTopTradedAssets}
+        viewerDisplayName={profile.viewerStats?.viewerNickname ?? "You"}
         onFollow={() => setIsFollowing((v) => !v)}
         onShare={() => setShareOpen(true)}
         isFollowing={isFollowing}

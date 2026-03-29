@@ -27,11 +27,11 @@ export const MOCK_TRADER_PROFILE: TraderProfile = {
   },
 
   topTradedAssets: [
-    { symbol: "XAUUSD", label: "XAUUSD", icon: "🥇", assetType: "Metals", tradeCount: 890, sharePercent: 24, winRatePercent: 62 },
-    { symbol: "EURUSD", label: "EURUSD", icon: "💱", assetType: "Forex", tradeCount: 1240, sharePercent: 32, winRatePercent: 68 },
-    { symbol: "BTCUSD", label: "BTCUSD", icon: "₿", assetType: "Crypto", tradeCount: 456, sharePercent: 12, winRatePercent: 54 },
-    { symbol: "GBPUSD", label: "GBPUSD", icon: "💱", assetType: "Forex", tradeCount: 380, sharePercent: 10, winRatePercent: 71 },
-    { symbol: "NAS100", label: "NAS100", icon: "📈", assetType: "Indices", tradeCount: 290, sharePercent: 8, winRatePercent: 48 },
+    { symbol: "XAUUSD", label: "XAUUSD", icon: "🥇", assetType: "Metals", tradeCount: 890, sharePercent: 24, winRatePercent: 62, tradeQualityScore: 84 },
+    { symbol: "EURUSD", label: "EURUSD", icon: "💱", assetType: "Forex", tradeCount: 1240, sharePercent: 32, winRatePercent: 68, tradeQualityScore: 88 },
+    { symbol: "BTCUSD", label: "BTCUSD", icon: "₿", assetType: "Crypto", tradeCount: 456, sharePercent: 12, winRatePercent: 54, tradeQualityScore: 72 },
+    { symbol: "GBPUSD", label: "GBPUSD", icon: "💱", assetType: "Forex", tradeCount: 380, sharePercent: 10, winRatePercent: 71, tradeQualityScore: 91 },
+    { symbol: "NAS100", label: "NAS100", icon: "📈", assetType: "Indices", tradeCount: 290, sharePercent: 8, winRatePercent: 48, tradeQualityScore: 69 },
   ],
 
   averages: {
@@ -40,6 +40,8 @@ export const MOCK_TRADER_PROFILE: TraderProfile = {
     avgHoldHours: 4.2,
     totalTrades: 3847,
     consistencyScore: 72,
+    winRateTopPercent: 60,
+    tradeQualityTopPercent: 18,
     communityAvgWinRatePercent: 58.2,
     communityAvgQualityScore: 62,
   },
@@ -173,11 +175,11 @@ export const MOCK_TRADER_PROFILE: TraderProfile = {
       riskManagement: 68,
     },
     viewerTopTradedAssets: [
-      { symbol: "XAUUSD", label: "XAUUSD", icon: "🥇", assetType: "Metals", tradeCount: 180, sharePercent: 15, winRatePercent: 58 },
-      { symbol: "EURUSD", label: "EURUSD", icon: "💱", assetType: "Forex", tradeCount: 420, sharePercent: 35, winRatePercent: 64 },
-      { symbol: "BTCUSD", label: "BTCUSD", icon: "₿", assetType: "Crypto", tradeCount: 96, sharePercent: 8, winRatePercent: 51 },
-      { symbol: "GBPUSD", label: "GBPUSD", icon: "💱", assetType: "Forex", tradeCount: 240, sharePercent: 20, winRatePercent: 59 },
-      { symbol: "NAS100", label: "NAS100", icon: "📈", assetType: "Indices", tradeCount: 264, sharePercent: 22, winRatePercent: 55 },
+      { symbol: "XAUUSD", label: "XAUUSD", icon: "🥇", assetType: "Metals", tradeCount: 180, sharePercent: 15, winRatePercent: 58, tradeQualityScore: 70 },
+      { symbol: "EURUSD", label: "EURUSD", icon: "💱", assetType: "Forex", tradeCount: 420, sharePercent: 35, winRatePercent: 64, tradeQualityScore: 76 },
+      { symbol: "BTCUSD", label: "BTCUSD", icon: "₿", assetType: "Crypto", tradeCount: 96, sharePercent: 8, winRatePercent: 51, tradeQualityScore: 62 },
+      { symbol: "GBPUSD", label: "GBPUSD", icon: "💱", assetType: "Forex", tradeCount: 240, sharePercent: 20, winRatePercent: 59, tradeQualityScore: 74 },
+      { symbol: "NAS100", label: "NAS100", icon: "📈", assetType: "Indices", tradeCount: 264, sharePercent: 22, winRatePercent: 55, tradeQualityScore: 68 },
     ],
   },
 };

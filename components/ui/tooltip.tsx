@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 interface TooltipProps {
   children: React.ReactNode;
-  content: string;
+  content: React.ReactNode;
   className?: string;
   /** Optional class for the popup (e.g. whitespace-normal max-w-xs for long text) */
   contentClassName?: string;
@@ -11,7 +11,7 @@ interface TooltipProps {
 
 export function Tooltip({ children, content, className, contentClassName }: TooltipProps) {
   return (
-    <div className={cn("relative group inline-flex", className)}>
+    <div className={cn("relative group", className ?? "inline-flex")}>
       {children}
       <div
         role="tooltip"
